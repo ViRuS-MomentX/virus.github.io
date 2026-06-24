@@ -6,7 +6,7 @@
     <title>Галерея — Моя страничка</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -22,14 +22,25 @@
     </div>
 </div>
 
-<!-- ═══ GALLERY ═══ -->
+<!-- ═══ GALLERY HEADER ═══ -->
 <div class="wrapper page-title">
     <h1>Галерея</h1>
     <p class="gallery-subtitle">Мои <span class="shimmer-text">ШЕДЕВРЫ</span></p>
-    <!-- 👇 НОВАЯ СТРОКА -->
     <p class="gallery-update-note">📸 Фото пополняются каждый день (если не лень)</p>
 </div>
 
+<!-- ═══ ФИЛЬТРЫ И ПОИСК ═══ -->
+<div class="wrapper gallery-controls">
+    <div class="filter-buttons" id="filterButtons">
+        <!-- Кнопки категорий генерируются из JS -->
+    </div>
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="🔍 Искать по комментарию..." />
+    </div>
+    <div class="photo-counter" id="photoCounter">Показано: 0 / 0</div>
+</div>
+
+<!-- ═══ СЕТКА ГАЛЕРЕИ ═══ -->
 <div class="wrapper">
     <div class="gallery-grid" id="galleryGrid"></div>
 </div>
@@ -58,106 +69,164 @@
     // === ГОД В ФУТЕРЕ ===
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // === МАССИВ КОММЕНТАРИЕВ ===
-    const comments = [
-        'От судьбы не убежишь',
-        'Обиделся, видимо',
-        'Только не в дырку',
-        'Так быстро пластинку я ещё никогда не нёс',
-        'Страшно',
-        'Рыбалка зашла слишком далеко',
-        'Ножом в спину',
-        '10 МИЛЛИОНОВ ГРАВИЯ ДОСТАВКОЙ В АД!',
-        'Китаец делал этот спуск',
-        'Лучший мой портал',
-        'А так хотелось',
-        'Не надо было пить то зелье...',
-        'Проверка античита',
-        'Сквад-ворлд. Золотые времена',
-        'Куда идём мы с пятачком',
-        'Копаем',
-        'Чёртов английский',
-        'Арабская мольба о помощи',
-        'Извращённый взгляд Рафаэля',
-        'Вирус - реально вирус',
-        'Опомнился',
-        'Мой подарок мейнеру паука на НГ',
-        'Тайлера здесь нет',
-        'Следующие часы будут незабываемыми',
-        'Второе присшествие Христа',
-        'Куда таким составом',
-        'Орешник направляется по курсу к дому Маратко',
-        'Похоронил мученика',
-        'Нюхачи расплодились',
-        'Воздушный дайвер',
-        `Кто мечтает быть пилотом
-Очень смелый видно тот
-Потому что только смелый
-Сам полезет в самолёт`,
-        'Вооздушно-оборонительные войска',
-        'Все динозавары боялись т-рекса',
-        `Двое лучших гостхантеров вышли на охоту
-Бойся нас, Полтергейст`,
-        'Полтергейст оторвал ему ноги',
-        'Полтергейст задавил моего друга',
-        'Гоняем лысого',
-        'Полтергейст свернул ему ноги'
+    // === ДАННЫЕ ГАЛЕРЕИ (каждое фото — объект) ===
+    const galleryData = [
+        { name: 'фух.jpg', comment: 'От судьбы не убежишь', tags: ['майнкрафт', 'мем'] },
+        { name: 'фармилка.jpg', comment: 'Обиделся, видимо', tags: ['майнкрафт'] },
+        { name: 'только не в жопу.jpg', comment: 'Только не в дырку', tags: ['мем'] },
+        { name: 'таракан.jpg', comment: 'Так быстро пластинку я ещё никогда не нёс', tags: ['мем'] },
+        { name: 'сушка.jpg', comment: 'Страшно', tags: ['арт'] },
+        { name: 'рыбка.jpg', comment: 'Рыбалка зашла слишком далеко', tags: ['майнкрафт'] },
+        { name: 'предательство.jpg', comment: 'Ножом в спину', tags: ['майнкрафт'] },
+        { name: 'пинг.jpg', comment: '10 МИЛЛИОНОВ ГРАВИЯ ДОСТАВКОЙ В АД!', tags: ['майнкрафт', 'мем'] },
+        { name: 'китаец.jpg', comment: 'Китаец делал этот спуск', tags: ['мем'] },
+        { name: 'джефф.jpg', comment: 'Лучший мой портал', tags: ['майнкрафт'] },
+        { name: 'бамбук.jpg', comment: 'А так хотелось', tags: ['арт'] },
+        { name: 'арт.jpg', comment: 'Не надо было пить то зелье...', tags: ['арт', 'майнкрафт'] },
+        { name: 'античит.jpg', comment: 'Проверка античита', tags: ['майнкрафт'] },
+        { name: 'смотрящий.jpg', comment: 'Сквад-ворлд. Золотые времена', tags: ['майнкрафт'] },
+        { name: 'зима.jpg', comment: 'Куда идём мы с пятачком', tags: ['арт'] },
+        { name: 'шахта.jpg', comment: 'Копаем', tags: ['майнкрафт'] },
+        { name: 'англия.jpg', comment: 'Чёртов английский', tags: ['мем'] },
+        { name: 'араб.jpg', comment: 'Арабская мольба о помощи', tags: ['мем'] },
+        { name: 'извращенец.jpg', comment: 'Извращённый взгляд Рафаэля', tags: ['арт'] },
+        { name: 'нагрузка.jpg', comment: 'Вирус - реально вирус', tags: ['мем'] },
+        { name: 'опомнился.jpg', comment: 'Опомнился', tags: ['мем'] },
+        { name: 'паук.jpg', comment: 'Мой подарок мейнеру паука на НГ', tags: ['майнкрафт'] },
+        { name: 'тайлер.jpg', comment: 'Тайлера здесь нет', tags: ['мем'] },
+        { name: 'лост.jpg', comment: 'Следующие часы будут незабываемыми', tags: ['арт'] },
+        { name: 'христос.png', comment: 'Второе пришествие Христа', tags: ['арт', 'мем'] },
+        { name: 'состав.png', comment: 'Куда таким составом', tags: ['мем'] },
+        { name: 'крипер.png', comment: 'Орешник направляется по курсу к дому Маратко', tags: ['майнкрафт'] },
+        { name: 'касперский.png', comment: 'Похоронил мученика', tags: ['мем'] },
+        { name: 'вардены.jpg', comment: 'Нюхачи расплодились', tags: ['майнкрафт'] },
+        { name: 'внедра.jpg', comment: 'Воздушный дайвер', tags: ['арт'] },
+        { name: 'самолёт.jpg', comment: 'Кто мечтает быть пилотом\nОчень смелый видно тот\nПотому что только смелый\nСам полезет в самолёт', tags: ['арт'] },
+        { name: 'катаклизм.jpg', comment: 'Вооздушно-оборонительные войска', tags: ['арт'] },
+        { name: 'дино.jpg', comment: 'Все динозавары боялись т-рекса', tags: ['арт'] },
+        { name: 'охота.jpg', comment: 'Двое лучших гостхантеров вышли на охоту\nБойся нас, Полтергейст', tags: ['арт'] },
+        { name: 'рука.png', comment: 'Полтергейст оторвал ему ноги', tags: ['арт'] },
+        { name: 'машина.png', comment: 'Полтергейст задавил моего друга', tags: ['арт'] },
+        { name: 'лысый.png', comment: 'Гоняем лысого', tags: ['мем'] },
+        { name: 'зарядка.png', comment: 'Полтергейст свернул ему ноги', tags: ['арт'] }
     ];
 
-    const totalSlots = 38;
+    // === ВЫТАСКИВАЕМ МАССИВЫ ДЛЯ ОБРАТНОЙ СОВМЕСТИМОСТИ ===
+    const comments = galleryData.map(item => item.comment);
+    const imageNames = galleryData.map(item => item.name);
+    // Теги мы будем брать из galleryData
+
+    const totalSlots = galleryData.length;
     const grid = document.getElementById('galleryGrid');
 
-    // === МАССИВ С ИМЕНАМИ ФАЙЛОВ ===
-    const imageNames = [
-        'фух.jpg', 'фармилка.jpg', 'только не в жопу.jpg', 'таракан.jpg', 'сушка.jpg', 'рыбка.jpg', 'предательство.jpg', 'пинг.jpg',
-        'китаец.jpg', 'джефф.jpg', 'бамбук.jpg', 'арт.jpg', 'античит.jpg', 'смотрящий.jpg', 'зима.jpg', 'шахта.jpg', 'англия.jpg',
-        'араб.jpg', 'извращенец.jpg', 'нагрузка.jpg', 'опомнился.jpg', 'паук.jpg', 'тайлер.jpg', 'лост.jpg', 'христос.png',
-        'состав.png', 'крипер.png', 'касперский.png', 'вардены.jpg', 'внедра.jpg', 'самолёт.jpg', 'катаклизм.jpg', 'дино.jpg',
-        'охота.jpg', 'рука.png', 'машина.png', 'лысый.png', 'зарядка.png'
-    ];
+    // === ФУНКЦИЯ ГЕНЕРАЦИИ КАРТОЧЕК С УЧЁТОМ ФИЛЬТРОВ ===
+    function renderGallery(filterCategory = 'all', searchText = '') {
+        grid.innerHTML = '';
+        let visibleCount = 0;
 
-    // === ГЕНЕРАЦИЯ КАРТОЧЕК ===
-    for (let i = 1; i <= totalSlots; i++) {
-        const item = document.createElement('div');
-        item.className = 'gallery-item';
+        galleryData.forEach((item, index) => {
+            const comment = item.comment;
+            const tags = item.tags || [];
+            const imageName = item.name;
 
-        const comment = comments[i-1] || `Комментарий к фото ${i}`;
-        item.dataset.comment = comment;
+            // Фильтр по категории
+            if (filterCategory !== 'all' && !tags.includes(filterCategory)) return;
 
-        const thumb = document.createElement('div');
-        thumb.style.width = '100%';
-        thumb.style.height = '200px';
-        thumb.style.backgroundColor = '#2a2a2a';
-        thumb.style.display = 'flex';
-        thumb.style.alignItems = 'center';
-        thumb.style.justifyContent = 'center';
-        thumb.style.color = '#666';
-        thumb.style.fontSize = '1rem';
-        thumb.style.fontWeight = '500';
+            // Фильтр по поиску (поиск в комментарии без учёта регистра)
+            if (searchText.trim() !== '' && !comment.toLowerCase().includes(searchText.toLowerCase())) return;
 
-        if (imageNames[i-1]) {
-            const img = document.createElement('img');
-            img.src = imageNames[i-1];
-            img.alt = `Фото ${i}`;
-            img.style.width = '100%';
-            img.style.height = '100%';
-            img.style.objectFit = 'cover';
-            img.style.display = 'block';
-            thumb.appendChild(img);
-        } else {
-            thumb.textContent = `Фото ${i}`;
-        }
+            visibleCount++;
 
-        const desc = document.createElement('div');
-        desc.className = 'desc';
-        desc.textContent = comment;
+            const card = document.createElement('div');
+            card.className = 'gallery-item';
+            card.dataset.comment = comment;
 
-        item.appendChild(thumb);
-        item.appendChild(desc);
-        grid.appendChild(item);
+            const thumb = document.createElement('div');
+            thumb.style.width = '100%';
+            thumb.style.height = '200px';
+            thumb.style.backgroundColor = '#2a2a2a';
+            thumb.style.display = 'flex';
+            thumb.style.alignItems = 'center';
+            thumb.style.justifyContent = 'center';
+            thumb.style.color = '#666';
+            thumb.style.fontSize = '1rem';
+            thumb.style.fontWeight = '500';
+
+            if (imageName) {
+                const img = document.createElement('img');
+                img.src = imageName;
+                img.alt = `Фото ${index+1}`;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'cover';
+                img.style.display = 'block';
+                thumb.appendChild(img);
+            } else {
+                thumb.textContent = `Фото ${index+1}`;
+            }
+
+            const desc = document.createElement('div');
+            desc.className = 'desc';
+            desc.textContent = comment;
+
+            // Добавляем теги (маленькие метки)
+            const tagsContainer = document.createElement('div');
+            tagsContainer.className = 'photo-tags';
+            tags.forEach(tag => {
+                const span = document.createElement('span');
+                span.className = 'tag';
+                span.textContent = tag;
+                tagsContainer.appendChild(span);
+            });
+
+            card.appendChild(thumb);
+            card.appendChild(desc);
+            card.appendChild(tagsContainer);
+            grid.appendChild(card);
+        });
+
+        // Обновляем счётчик
+        document.getElementById('photoCounter').textContent = `Показано: ${visibleCount} / ${totalSlots}`;
     }
 
-    // === LIGHTBOX ===
+    // === СОЗДАНИЕ КНОПОК ФИЛЬТРОВ ===
+    function buildFilters() {
+        const categories = new Set();
+        galleryData.forEach(item => {
+            item.tags.forEach(tag => categories.add(tag));
+        });
+        const sortedCategories = ['all', ...Array.from(categories).sort()];
+
+        const filterContainer = document.getElementById('filterButtons');
+        filterContainer.innerHTML = '';
+        sortedCategories.forEach(cat => {
+            const btn = document.createElement('button');
+            btn.className = 'filter-btn';
+            btn.dataset.cat = cat;
+            btn.textContent = cat === 'all' ? 'Все' : cat.charAt(0).toUpperCase() + cat.slice(1);
+            if (cat === 'all') btn.classList.add('active');
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const searchText = document.getElementById('searchInput').value;
+                renderGallery(cat, searchText);
+            });
+            filterContainer.appendChild(btn);
+        });
+    }
+
+    // === ПОИСК ===
+    document.getElementById('searchInput').addEventListener('input', function() {
+        const activeFilter = document.querySelector('.filter-btn.active');
+        const category = activeFilter ? activeFilter.dataset.cat : 'all';
+        renderGallery(category, this.value);
+    });
+
+    // === ИНИЦИАЛИЗАЦИЯ ===
+    buildFilters();
+    renderGallery('all', '');
+
+    // === LIGHTBOX (без изменений) ===
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
     const lightboxPlaceholder = document.getElementById('lightboxPlaceholder');
