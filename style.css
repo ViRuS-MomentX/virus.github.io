@@ -375,8 +375,9 @@ body::before {
 .search-box {
     width: 100%;
     max-width: 500px;
-    margin: 0 auto;  /* центрирование */
+    margin: 0 auto;
 }
+
 .search-box input {
     width: 100%;
     padding: 0.6rem 1.4rem;
@@ -388,11 +389,13 @@ body::before {
     font-family: inherit;
     outline: none;
     transition: border 0.2s;
-    text-align: center;  /* текст внутри тоже по центру */
+    text-align: center;
 }
+
 .search-box input:focus {
     border-color: var(--accent);
 }
+
 .search-box input::placeholder {
     color: var(--text-muted);
 }
@@ -401,7 +404,7 @@ body::before {
     font-size: 0.9rem;
     color: var(--text-muted);
     font-weight: 300;
-    text-align: center;  /* выравнивание по центру */
+    text-align: center;
 }
 
 /* ═══ LIGHTBOX (комментарий под фото) ═══ */
@@ -613,6 +616,69 @@ body::before {
     border: 1px solid var(--border-color);
 }
 
+/* ═══ БЕГУЩАЯ СТРОКА С ИИ ═══ */
+.ai-scroll {
+    margin: 3rem 0 1rem;
+    padding: 1.5rem 0;
+    background: rgba(30, 30, 30, 0.3);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.ai-scroll-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: 1rem;
+    letter-spacing: 0.03em;
+}
+
+.scroll-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.scroll-track {
+    display: flex;
+    gap: 2.5rem;
+    width: max-content;
+    animation: scrollLeft 30s linear infinite;
+    will-change: transform;
+}
+
+.ai-item {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-weight: 400;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.ai-item i {
+    font-size: 1.2rem;
+    width: 1.5rem;
+    text-align: center;
+    color: var(--accent);
+}
+
+.ai-item:hover {
+    opacity: 1;
+}
+
+@keyframes scrollLeft {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
 /* ═══ RESPONSIVE ═══ */
 @media (max-width: 768px) {
     .topbar .wrapper {
@@ -680,6 +746,15 @@ body::before {
     .search-box {
         max-width: 100%;
     }
+
+    .ai-item {
+        font-size: 0.9rem;
+        gap: 0.2rem;
+    }
+    .scroll-track {
+        gap: 1.5rem;
+        animation-duration: 25s;
+    }
 }
 
 @media (max-width: 480px) {
@@ -687,72 +762,4 @@ body::before {
         font-size: 1.4rem;
         padding: 0.6rem 1.2rem;
     }
-    /* ═══ БЕГУЩАЯ СТРОКА С ИИ ═══ */
-.ai-scroll {
-    margin: 3rem 0 1rem;
-    padding: 1.5rem 0;
-    background: rgba(30, 30, 30, 0.3);
-    border-top: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
-    overflow: hidden;
-}
-
-.ai-scroll-title {
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-    text-align: center;
-    margin-bottom: 1rem;
-    letter-spacing: 0.03em;
-}
-
-.scroll-container {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-}
-
-.scroll-track {
-    display: flex;
-    gap: 2.5rem;
-    width: max-content;
-    animation: scrollLeft 30s linear infinite;
-}
-
-.ai-item {
-    font-size: 1.1rem;
-    color: var(--text-primary);
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-weight: 400;
-    opacity: 0.8;
-    transition: opacity 0.2s;
-}
-
-.ai-item:hover {
-    opacity: 1;
-}
-
-@keyframes scrollLeft {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
-}
-
-/* Адаптив для мобильных */
-@media (max-width: 768px) {
-    .ai-item {
-        font-size: 0.9rem;
-        gap: 0.2rem;
-    }
-    .scroll-track {
-        gap: 1.5rem;
-        animation-duration: 25s; /* чуть быстрее на маленьких экранах */
-    }
-}
 }
