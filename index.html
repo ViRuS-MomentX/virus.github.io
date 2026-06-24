@@ -85,43 +85,103 @@
 <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // === ГЕНЕРАЦИЯ 50 ИИ ===
+    // === СПИСОК РЕАЛЬНЫХ ИИ (более 50 штук) ===
     const aiList = [
-        'ChatGPT', 'Claude', 'Gemini', 'DeepSeek', 'YandexGPT', 'GigaChat',
-        'Midjourney', 'DALL-E', 'Stable Diffusion', 'Copilot', 'Codex', 'Bard',
-        'Perplexity', 'Kandinsky', 'Sora', 'Runway Gen-2', 'Pika', 'ElevenLabs',
-        'Suno', 'Mubert', 'Jasper', 'Writesonic', 'Copy.ai', 'Rytr', 'HyperWrite',
-        'Anthropic Claude', 'Mistral', 'Llama', 'Falcon', 'MosaicML', 'HuggingChat',
-        'Grok', 'Pi', 'Replika', 'Character.AI', 'SoulGen', 'DreamStudio', 'Lexica',
-        'Bing Image Creator', 'Leonardo.ai', 'Playground AI', 'NightCafe', 'DeepAI',
-        'AI Painter', 'Neuralis', 'Synthia', 'OmniMind', 'QuantumBrain', 'Aetheris',
-        'CogniSphere', 'EidosAI', 'Lumina', 'NexusAI', 'Synthetix', 'VirtuCore',
-        'Neuroflux', 'ExoMind', 'ZephyrAI', 'Apex Intelligence', 'Echo Neural'
+        { name: 'ChatGPT', icon: 'fa-robot' },
+        { name: 'Claude', icon: 'fa-brain' },
+        { name: 'Gemini', icon: 'fa-star' },
+        { name: 'DeepSeek', icon: 'fa-database' },
+        { name: 'YandexGPT', icon: 'fa-cloud' },
+        { name: 'GigaChat', icon: 'fa-microchip' },
+        { name: 'Midjourney', icon: 'fa-palette' },
+        { name: 'DALL-E', icon: 'fa-image' },
+        { name: 'Stable Diffusion', icon: 'fa-paint-brush' },
+        { name: 'GitHub Copilot', icon: 'fa-code' },
+        { name: 'Codex', icon: 'fa-terminal' },
+        { name: 'Bard (Gemini)', icon: 'fa-comment-dots' },
+        { name: 'Perplexity', icon: 'fa-search' },
+        { name: 'Kandinsky', icon: 'fa-artstation' },
+        { name: 'Sora', icon: 'fa-video' },
+        { name: 'Runway Gen-2', icon: 'fa-film' },
+        { name: 'Pika', icon: 'fa-camera' },
+        { name: 'ElevenLabs', icon: 'fa-music' },
+        { name: 'Suno', icon: 'fa-headphones' },
+        { name: 'Mubert', icon: 'fa-bolt' },
+        { name: 'Jasper', icon: 'fa-pen-fancy' },
+        { name: 'Writesonic', icon: 'fa-pen' },
+        { name: 'Copy.ai', icon: 'fa-copy' },
+        { name: 'Rytr', icon: 'fa-edit' },
+        { name: 'HyperWrite', icon: 'fa-feather' },
+        { name: 'Mistral', icon: 'fa-wind' },
+        { name: 'Llama', icon: 'fa-crown' },
+        { name: 'Falcon', icon: 'fa-bird' },
+        { name: 'HuggingChat', icon: 'fa-hug' },
+        { name: 'Grok', icon: 'fa-galaxy' },
+        { name: 'Pi', icon: 'fa-circle' },
+        { name: 'Character.AI', icon: 'fa-user-astronaut' },
+        { name: 'Leonardo.ai', icon: 'fa-paint-roller' },
+        { name: 'Playground AI', icon: 'fa-gamepad' },
+        { name: 'NightCafe', icon: 'fa-moon' },
+        { name: 'DeepAI', icon: 'fa-eye' },
+        { name: 'Bing Image Creator', icon: 'fa-images' },
+        { name: 'Lexica', icon: 'fa-book' },
+        { name: 'DreamStudio', icon: 'fa-stars' },
+        { name: 'SoulGen', icon: 'fa-heart' },
+        { name: 'Replika', icon: 'fa-robot' },
+        { name: 'AI Painter', icon: 'fa-brush' },
+        { name: 'Neuralis', icon: 'fa-network-wired' },
+        { name: 'Synthia', icon: 'fa-sync' },
+        { name: 'OmniMind', icon: 'fa-brain' },
+        { name: 'QuantumBrain', icon: 'fa-atom' },
+        { name: 'Aetheris', icon: 'fa-feather-alt' },
+        { name: 'CogniSphere', icon: 'fa-globe' },
+        { name: 'EidosAI', icon: 'fa-shield' },
+        { name: 'Lumina', icon: 'fa-lightbulb' },
+        { name: 'NexusAI', icon: 'fa-link' },
+        { name: 'Synthetix', icon: 'fa-cogs' },
+        { name: 'VirtuCore', icon: 'fa-cpu' },
+        { name: 'Neuroflux', icon: 'fa-bolt' },
+        { name: 'ExoMind', icon: 'fa-rocket' },
+        { name: 'ZephyrAI', icon: 'fa-cloud-sun' },
+        { name: 'Apex Intelligence', icon: 'fa-chart-line' },
+        { name: 'Echo Neural', icon: 'fa-voice' }
     ];
 
-    // Берём первые 50 (на всякий случай, если их больше)
+    // Берём все (их больше 50, но оставим до 50 для ровного счёта)
     const selectedAI = aiList.slice(0, 50);
     const track = document.getElementById('aiTrack');
 
-    // Функция для создания элемента
-    function createAIItem(name) {
-        const item = document.createElement('span');
-        item.className = 'ai-item';
-        // Случайная иконка из набора
-        const icons = ['🤖', '🧠', '⚡', '🔮', '🌟', '💡', '🦾', '📡', '🎯', '🌀'];
-        const icon = icons[Math.floor(Math.random() * icons.length)];
-        item.innerHTML = `${icon} ${name}`;
-        return item;
+    // Функция создания элемента с иконкой FontAwesome
+    function createAIItem(item) {
+        const span = document.createElement('span');
+        span.className = 'ai-item';
+        const i = document.createElement('i');
+        i.className = `fas ${item.icon}`;
+        i.style.marginRight = '0.4rem';
+        span.appendChild(i);
+        span.appendChild(document.createTextNode(item.name));
+        return span;
     }
 
-    // Добавляем два набора для бесконечной прокрутки
-    selectedAI.forEach(name => {
-        track.appendChild(createAIItem(name));
-    });
-    // Второй набор (для зацикливания)
-    selectedAI.forEach(name => {
-        track.appendChild(createAIItem(name));
-    });
+    // Добавляем два набора для бесконечности
+    selectedAI.forEach(item => track.appendChild(createAIItem(item)));
+    selectedAI.forEach(item => track.appendChild(createAIItem(item)));
+
+    // === УБЕЖДАЕМСЯ, ЧТО АНИМАЦИЯ РАБОТАЕТ ===
+    // Принудительно перезапускаем анимацию через JS (для надёжности)
+    function restartAnimation() {
+        const container = document.querySelector('.scroll-container');
+        const track = document.getElementById('aiTrack');
+        if (track) {
+            track.style.animation = 'none';
+            track.offsetHeight; // триггер рефлоу
+            track.style.animation = 'scrollLeft 30s linear infinite';
+        }
+    }
+
+    // Запускаем после загрузки и при изменении размера окна
+    window.addEventListener('load', restartAnimation);
+    window.addEventListener('resize', restartAnimation);
 </script>
 </body>
 </html>
