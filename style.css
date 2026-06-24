@@ -677,4 +677,20 @@ body {
     .hero-socials .social-telegram { background: #0088cc; }
     .hero-socials .social-discord { background: #5865F2; }
     .hero-socials .social-tiktok { background: #000000; }
+    /* ═══ ТЕКСТ ОБ ОБНОВЛЕНИИ ГАЛЕРЕИ ═══ */
+.gallery-update-note {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    margin-top: 0.3rem;
+    font-style: italic;
+    opacity: 0.7;
+    letter-spacing: 0.02em;
+}
+
+@media (max-width: 768px) {
+    .gallery-update-note {
+        font-size: 0.85rem;
+    }
+}
 }
