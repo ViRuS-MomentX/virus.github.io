@@ -655,7 +655,17 @@ body::before {
     right: 0;
     background: linear-gradient(to left, #121212, transparent);
 }
+.ai-title {
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-secondary);
 
+    margin-bottom: 1rem;
+
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
 .ai-track {
     display: flex;
     align-items: center;
