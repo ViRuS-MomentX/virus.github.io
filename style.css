@@ -621,118 +621,85 @@ body::before {
 /* AI CREDITS */
 /* ═══════════════════════════════ */
 
+/* ═══════════════════════════════ */
+/* AI CREDITS */
+/* ═══════════════════════════════ */
+
 .ai-marquee {
-position: relative;
-overflow: hidden;
-
-```
-margin-top: 4rem;
-padding: 1.5rem 0;
-
-background: rgba(255,255,255,0.02);
-
-border-top: 1px solid var(--border-color);
-border-bottom: 1px solid var(--border-color);
-```
-
+    position: relative;
+    overflow: hidden;
+    margin-top: 4rem;
+    padding: 1.5rem 0;
+    background: rgba(255,255,255,0.02);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .ai-marquee::before,
 .ai-marquee::after {
-content: "";
-position: absolute;
-top: 0;
-width: 120px;
-height: 100%;
-z-index: 5;
-pointer-events: none;
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 120px;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
 }
 
 .ai-marquee::before {
-left: 0;
-background: linear-gradient(
-to right,
-#121212,
-transparent
-);
+    left: 0;
+    background: linear-gradient(to right, #121212, transparent);
 }
 
 .ai-marquee::after {
-right: 0;
-background: linear-gradient(
-to left,
-#121212,
-transparent
-);
+    right: 0;
+    background: linear-gradient(to left, #121212, transparent);
 }
 
 .ai-track {
-display: flex;
-align-items: center;
-gap: 1rem;
-
-```
-width: max-content;
-
-animation: aiScroll 25s linear infinite;
-```
-
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: max-content;
+    animation: aiScroll 25s linear infinite;
 }
 
 .ai-chip {
-display: flex;
-align-items: center;
-gap: .6rem;
-
-```
-padding: .85rem 1.25rem;
-
-border-radius: 999px;
-
-background: rgba(255,255,255,.04);
-
-border: 1px solid rgba(255,255,255,.08);
-
-color: var(--text-primary);
-
-white-space: nowrap;
-
-transition: all .25s ease;
-```
-
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .85rem 1.25rem;
+    border-radius: 999px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    color: var(--text-primary);
+    white-space: nowrap;
+    transition: all .25s ease;
 }
 
 .ai-chip:hover {
-transform: translateY(-2px);
-
-```
-border-color: var(--accent);
-
-background: rgba(88,101,242,.08);
-```
-
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    background: rgba(88,101,242,.08);
 }
 
 .ai-chip i {
-color: var(--accent);
-font-size: 1rem;
+    color: var(--accent);
+    font-size: 1rem;
 }
 
 @keyframes aiScroll {
-from {
-transform: translateX(0);
-}
+    from {
+        transform: translateX(0);
+    }
 
-```
-to {
-    transform: translateX(-50%);
-}
-```
-
+    to {
+        transform: translateX(-50%);
+    }
 }
 
 .ft {
-margin-top: 0;
+    margin-top: 0;
 }
 
 @keyframes scrollLeft {
