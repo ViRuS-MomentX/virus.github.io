@@ -362,6 +362,7 @@ body::before {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 0.6rem;
     margin: 1rem 0 0;
     padding: 0.8rem 1.2rem;
@@ -374,6 +375,7 @@ body::before {
 .search-box {
     width: 100%;
     max-width: 500px;
+    margin: 0 auto;  /* центрирование */
 }
 .search-box input {
     width: 100%;
@@ -386,7 +388,7 @@ body::before {
     font-family: inherit;
     outline: none;
     transition: border 0.2s;
-    text-align: center;
+    text-align: center;  /* текст внутри тоже по центру */
 }
 .search-box input:focus {
     border-color: var(--accent);
@@ -399,6 +401,7 @@ body::before {
     font-size: 0.9rem;
     color: var(--text-muted);
     font-weight: 300;
+    text-align: center;  /* выравнивание по центру */
 }
 
 /* ═══ LIGHTBOX (комментарий под фото) ═══ */
