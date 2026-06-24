@@ -64,6 +64,14 @@
     </div>
 </section>
 
+<!-- ═══ БЕГУЩАЯ СТРОКА С ИИ ═══ -->
+<div class="ai-scroll">
+    <p class="ai-scroll-title">В создании этой страницы за меня боролись:</p>
+    <div class="scroll-container">
+        <div class="scroll-track" id="aiTrack"></div>
+    </div>
+</div>
+
 <!-- ═══ FOOTER ═══ -->
 <footer class="ft">
     <div class="wrapper">
@@ -76,6 +84,44 @@
 
 <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // === ГЕНЕРАЦИЯ 50 ИИ ===
+    const aiList = [
+        'ChatGPT', 'Claude', 'Gemini', 'DeepSeek', 'YandexGPT', 'GigaChat',
+        'Midjourney', 'DALL-E', 'Stable Diffusion', 'Copilot', 'Codex', 'Bard',
+        'Perplexity', 'Kandinsky', 'Sora', 'Runway Gen-2', 'Pika', 'ElevenLabs',
+        'Suno', 'Mubert', 'Jasper', 'Writesonic', 'Copy.ai', 'Rytr', 'HyperWrite',
+        'Anthropic Claude', 'Mistral', 'Llama', 'Falcon', 'MosaicML', 'HuggingChat',
+        'Grok', 'Pi', 'Replika', 'Character.AI', 'SoulGen', 'DreamStudio', 'Lexica',
+        'Bing Image Creator', 'Leonardo.ai', 'Playground AI', 'NightCafe', 'DeepAI',
+        'AI Painter', 'Neuralis', 'Synthia', 'OmniMind', 'QuantumBrain', 'Aetheris',
+        'CogniSphere', 'EidosAI', 'Lumina', 'NexusAI', 'Synthetix', 'VirtuCore',
+        'Neuroflux', 'ExoMind', 'ZephyrAI', 'Apex Intelligence', 'Echo Neural'
+    ];
+
+    // Берём первые 50 (на всякий случай, если их больше)
+    const selectedAI = aiList.slice(0, 50);
+    const track = document.getElementById('aiTrack');
+
+    // Функция для создания элемента
+    function createAIItem(name) {
+        const item = document.createElement('span');
+        item.className = 'ai-item';
+        // Случайная иконка из набора
+        const icons = ['🤖', '🧠', '⚡', '🔮', '🌟', '💡', '🦾', '📡', '🎯', '🌀'];
+        const icon = icons[Math.floor(Math.random() * icons.length)];
+        item.innerHTML = `${icon} ${name}`;
+        return item;
+    }
+
+    // Добавляем два набора для бесконечной прокрутки
+    selectedAI.forEach(name => {
+        track.appendChild(createAIItem(name));
+    });
+    // Второй набор (для зацикливания)
+    selectedAI.forEach(name => {
+        track.appendChild(createAIItem(name));
+    });
 </script>
 </body>
 </html>
