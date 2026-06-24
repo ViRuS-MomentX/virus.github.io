@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Главная — Моя страничка</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <!-- FontAwesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ═══ TOP BAR ═══ -->
+<div class="topbar">
+    <div class="wrapper">
+        <nav class="topbar-nav">
+            <a href="index.html" class="on">главная</a>
+            <a href="gallery.html">галерея</a>
+            <a href="projects.html">проекты</a>
+        </nav>
+    </div>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+    <div class="wrapper">
+        <div class="hero-grid">
+            <div class="hero-avatar">
+                <img src="филя.png" alt="Аватар" />
+            </div>
+
+            <div class="hero-content">
+                <div class="hero-tag">Дарова</div>
+                <h1>
+                    Это страничка <em>Вируса</em>
+                </h1>
+                <p class="hero-sub">
+                    Живу в Москве, лежу, пью чай и играю в майн. А что
+                    мне ещё остаётся?
+                </p>
+
+                <!-- ═══ ИКОНКИ СОЦСЕТЕЙ (FontAwesome) ═══ -->
+                <div class="hero-socials">
+                    <a href="https://t.me/IAmVirus" target="_blank" class="social-icon social-telegram" aria-label="Telegram">
+                        <i class="fab fa-telegram-plane"></i>
+                    </a>
+                    <a href="https://discord.com/users/573196687481372675" target="_blank" class="social-icon social-discord" aria-label="Discord">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                    <a href="https://tiktok.com/@i...am_virus" target="_blank" class="social-icon social-tiktok" aria-label="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+
+                <div class="cta-row">
+                    <a href="gallery.html" class="cta p">Посмотреть галерею →</a>
+                    <a href="projects.html" class="cta s">Мои проекты</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="ft">
+    <div class="wrapper">
+        <div class="ft-l">
+            <div class="ft-d"></div> Моя страничка · <span id="year"></span>
+        </div>
+        <div class="ft-r">сделано с .html</div>
+    </div>
+</footer>
+
+<script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

@@ -1,0 +1,680 @@
+/* ═══ RESET & BASE ═══ */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-primary: #121212;
+    --bg-secondary: #1e1e1e;
+    --bg-card: rgba(30, 30, 30, 0.7);
+    --border-color: #2a2a2a;
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --text-muted: #6e6e6e;
+    --accent: #5865F2;
+    --accent-hover: #4752C4;
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* ═══ TOP BAR ═══ */
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    background: rgba(18, 18, 18, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.topbar .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.topbar-nav {
+    display: flex;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+}
+
+.topbar-nav a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.5rem 1.2rem;
+    border-radius: 100px;
+    transition: all 0.25s ease;
+}
+
+.topbar-nav a:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.topbar-nav a.on {
+    color: #ffffff;
+    background: var(--accent);
+}
+
+/* ═══ HERO (Главная) ═══ */
+.hero {
+    padding: 4rem 0 3rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(88, 101, 242, 0.08), transparent 65%);
+    pointer-events: none;
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 3rem;
+    align-items: start;
+    animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes rise {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-avatar {
+    width: 200px;
+    height: 200px;
+    background: var(--bg-secondary);
+    border: 3px solid var(--accent);
+    border-radius: 0;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: var(--shadow);
+}
+
+.hero-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 500;
+}
+
+.hero-content h1 {
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    margin: 0;
+}
+
+/* --- ПЕРЕЛИВАНИЕ ДЛЯ ИМЕНИ НА ГЛАВНОЙ --- */
+.hero-content h1 em {
+    font-style: normal;
+    background: linear-gradient(270deg, #5865F2, #7b87f5, #a78bfa, #6c7af0, #3b48c4, #5865F2);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 1.2s linear infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+}
+
+/* --- ПЕРЕЛИВАНИЕ ДЛЯ ЛЮБОГО ТЕКСТА (например, "ШЕДЕВРЫ") --- */
+.shimmer-text {
+    font-style: normal;
+    background: linear-gradient(270deg, #5865F2, #7b87f5, #a78bfa, #6c7af0, #3b48c4, #5865F2);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 1.2s linear infinite;
+}
+
+.hero-sub {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 500px;
+    font-weight: 300;
+    line-height: 1.8;
+    margin: 0;
+}
+
+.hero-socials {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.hero-socials a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 100px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.hero-socials a:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(88, 101, 242, 0.3);
+}
+
+.cta-row {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+
+.cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.8rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: 100px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-decoration: none;
+}
+
+.cta.p {
+    background: var(--accent);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 4px 15px rgba(88, 101, 242, 0.3);
+}
+
+.cta.p:hover {
+    background: var(--accent-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(88, 101, 242, 0.4);
+}
+
+.cta.s {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.cta.s:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    transform: translateY(-3px);
+}
+
+/* ═══ GALLERY ═══ */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.8rem;
+    padding: 2rem 0;
+}
+
+.gallery-item {
+    background: var(--bg-card);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+    box-shadow: var(--shadow);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    background: var(--bg-primary);
+}
+
+.gallery-item .desc {
+    padding: 1.2rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+}
+
+/* --- КРУПНЫЙ ПОДЗАГОЛОВОК В ГАЛЕРЕЕ --- */
+.gallery-subtitle {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-top: 0.2rem;
+    color: var(--text-primary);
+}
+
+/* ═══ LIGHTBOX (новый – комментарий под фото) ═══ */
+#lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.92);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.3s ease;
+}
+
+#lightbox.active {
+    display: flex;
+}
+
+.lightbox-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 92%;
+    max-height: 92vh;
+    gap: 1rem;
+    cursor: default;
+}
+
+#lightbox img {
+    max-width: 100%;
+    max-height: calc(92vh - 6rem); /* оставляем место для комментария */
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
+    animation: zoomIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    flex-shrink: 1;
+}
+
+#lightbox .placeholder-text {
+    color: #fff;
+    font-size: 1.8rem;
+    font-weight: 300;
+    text-align: center;
+    padding: 2rem;
+    background: rgba(255,255,255,0.05);
+    border-radius: 16px;
+    animation: zoomIn 0.3s ease;
+    max-width: 100%;
+}
+
+/* КОММЕНТАРИЙ ТЕПЕРЬ ПОД ФОТО (без абсолютного позиционирования) */
+.lightbox-comment {
+    max-width: 80%;
+    color: #ffffff;
+    font-size: 2.8rem;
+    font-weight: 700;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.65);
+    padding: 1.2rem 2.5rem;
+    border-radius: 20px;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+    display: none; /* управляется JS */
+    animation: fadeIn 0.4s ease;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    line-height: 1.3;
+    white-space: normal;
+    word-wrap: break-word;
+    margin: 0 auto;
+    flex-shrink: 0;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+#lightbox .close-btn {
+    position: fixed; /* теперь fixed, чтобы не зависеть от .lightbox-content */
+    top: 25px;
+    right: 35px;
+    font-size: 42px;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 300;
+    transition: transform 0.2s ease;
+    z-index: 1001;
+    user-select: none;
+}
+
+#lightbox .close-btn:hover {
+    transform: scale(1.2) rotate(90deg);
+}
+
+/* ═══ PROJECTS ═══ */
+.projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 2rem 0;
+}
+
+.project-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.8rem;
+    transition: all 0.3s ease;
+}
+
+.project-card:hover {
+    border-color: var(--accent);
+    transform: translateX(8px);
+    box-shadow: var(--shadow);
+}
+
+.project-card h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+}
+
+.project-card p {
+    color: var(--text-secondary);
+    font-weight: 300;
+    line-height: 1.7;
+}
+
+.project-card .link {
+    display: inline-block;
+    margin-top: 0.8rem;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.project-card .link:hover {
+    color: var(--accent-hover);
+}
+
+/* ═══ PAGE TITLE ═══ */
+.page-title {
+    padding: 3rem 0 0;
+}
+
+.page-title h1 {
+    font-size: clamp(2.5rem, 5vw, 3.8rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+}
+
+.page-title p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+    font-weight: 300;
+}
+
+/* ═══ FOOTER ═══ */
+.ft {
+    padding: 2rem 0;
+    border-top: 1px solid var(--border-color);
+    margin-top: 2rem;
+}
+
+.ft .wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ft-l {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.ft-d {
+    width: 7px;
+    height: 7px;
+    background: var(--accent);
+    border-radius: 2px;
+    opacity: 0.6;
+}
+
+.ft-r {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    padding: 0.2rem 0.8rem;
+    background: var(--bg-secondary);
+    border-radius: 100px;
+    border: 1px solid var(--border-color);
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 768px) {
+    .topbar .wrapper {
+        justify-content: center;
+        padding: 0.8rem 1.5rem;
+    }
+
+    .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .hero-avatar {
+        width: 150px;
+        height: 150px;
+        margin: 0 auto;
+    }
+
+    .hero-content {
+        align-items: center;
+    }
+
+    .hero-sub {
+        max-width: 100%;
+    }
+
+    .hero-socials {
+        justify-content: center;
+    }
+
+    .cta-row {
+        justify-content: center;
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+
+    .wrapper {
+        padding: 0 1.25rem;
+    }
+
+    #lightbox .close-btn {
+        top: 15px;
+        right: 20px;
+        font-size: 32px;
+    }
+
+    .gallery-subtitle {
+        font-size: 2rem;
+    }
+
+    .lightbox-comment {
+        font-size: 1.8rem;
+        padding: 0.8rem 1.5rem;
+        max-width: 90%;
+        border-radius: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .lightbox-comment {
+        font-size: 1.4rem;
+        padding: 0.6rem 1.2rem;
+    }
+    /* ═══ КВАДРАТНЫЕ ИКОНКИ СОЦСЕТЕЙ ═══ */
+    .hero-socials {
+        display: flex;
+        gap: 1rem;
+        margin-top: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .hero-socials .social-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;  /* можно сделать 0, если нужны строгие квадраты */
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-socials .social-icon:hover {
+        transform: translateY(-4px) scale(1.03);
+        filter: brightness(1.15);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-socials .social-telegram { background: #0088cc; }
+    .hero-socials .social-discord { background: #5865F2; }
+    .hero-socials .social-tiktok { background: #000000; }
+
+    /* Если хотите квадратные без скругления, замените border-radius: 0; */
+    /* ═══ КВАДРАТНЫЕ ИКОНКИ СОЦСЕТЕЙ ═══ */
+    .hero-socials {
+        display: flex;
+        gap: 1rem;
+        margin-top: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .hero-socials .social-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;    /* можно сделать 0, если нужны строгие квадраты */
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-socials .social-icon:hover {
+        transform: translateY(-4px) scale(1.03);
+        filter: brightness(1.15);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-socials .social-telegram { background: #0088cc; }
+    .hero-socials .social-discord { background: #5865F2; }
+    .hero-socials .social-tiktok { background: #000000; }
+    .hero-socials .social-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        font-size: 28px;
+        color: white;
+    }
+    .hero-socials .social-icon:hover {
+        transform: translateY(-4px) scale(1.03);
+        filter: brightness(1.15);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    }
+    .hero-socials .social-telegram { background: #0088cc; }
+    .hero-socials .social-discord { background: #5865F2; }
+    .hero-socials .social-tiktok { background: #000000; }
+}

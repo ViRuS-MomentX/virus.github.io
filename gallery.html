@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Галерея — Моя страничка</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ═══ TOP BAR ═══ -->
+<div class="topbar">
+    <div class="wrapper">
+        <nav class="topbar-nav">
+            <a href="index.html">главная</a>
+            <a href="gallery.html" class="on">галерея</a>
+            <a href="projects.html">проекты</a>
+        </nav>
+    </div>
+</div>
+
+<!-- ═══ GALLERY ═══ -->
+<div class="wrapper page-title">
+    <h1>Галерея</h1>
+    <p class="gallery-subtitle">Мои <span class="shimmer-text">ШЕДЕВРЫ</span></p>
+</div>
+
+<div class="wrapper">
+    <div class="gallery-grid" id="galleryGrid"></div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="ft">
+    <div class="wrapper">
+        <div class="ft-l">
+            <div class="ft-d"></div> Моя страничка · <span id="year"></span>
+        </div>
+        <div class="ft-r">сделано с .html</div>
+    </div>
+</footer>
+
+<!-- ═══ LIGHTBOX (скрыт по умолчанию) ═══ -->
+<div id="lightbox">
+    <span class="close-btn">&times;</span>
+    <div class="lightbox-content">
+        <img src="" alt="Увеличенное фото" id="lightboxImg" style="display: none;" />
+        <div class="placeholder-text" id="lightboxPlaceholder" style="display: none;">Фото отсутствует</div>
+        <div class="lightbox-comment" id="lightboxComment"></div>
+    </div>
+</div>
+
+<script>
+    // === ГОД В ФУТЕРЕ ===
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // === МАССИВ КОММЕНТАРИЕВ ===
+    const comments = [
+        'От судьбы не убежишь',
+        'Обиделся, видимо',
+        'Только не в дырку',
+        'Так быстро пластинку я ещё никогда не нёс',
+        'Страшно',
+        'Рыбалка зашла слишком далеко',
+        'Ножом в спину',
+        '10 МИЛЛИОНОВ ГРАВИЯ ДОСТАВКОЙ В АД!',
+        'Китаец делал этот спуск',
+        'Лучший мой портал',
+        'А так хотелось',
+        '3Д-арт',
+        'Проверка античита',
+        'Сквад-ворлд. Золотые времена',
+        'Куда идём мы с пятачком',
+        'Я каменщик',
+        'Чёртов английский',
+        'Арабская мольба о помощи',
+        'Извращённый взгляд Рафаэля',
+        'Вирус - реально вирус',
+        'Опомнился',
+        'Мой подарок мейнеру паука на НГ',
+        'Тайлера здесь нет',
+        'Следующие часы будут незабываемыми',
+        'Второе присшествие Христа',
+        'Куда таким составом',
+        'Орешник coming to you',
+        'Похоронил мученика'
+    ];
+
+    const totalSlots = 28;
+    const grid = document.getElementById('galleryGrid');
+
+    // === МАССИВ С ИМЕНАМИ ФАЙЛОВ ===
+    const imageNames = [
+        'фух.jpg', 'фармилка.jpg', 'только не в жопу.jpg', 'таракан.jpg', 'сушка.jpg', 'рыбка.jpg', 'предательство.jpg', 'пинг.jpg',
+        'китаец.jpg', 'джефф.jpg', 'бамбук.jpg', 'арт.jpg', 'античит.jpg', 'смотрящий.jpg', 'зима.jpg', 'шахта.jpg', 'англия.jpg',
+        'араб.jpg', 'извращенец.jpg', 'нагрузка.jpg', 'опомнился.jpg', 'паук.jpg', 'тайлер.jpg', 'лост.jpg', 'христос.png',
+        'состав.png', 'крипер.png', 'касперский.png'
+    ];
+
+    // === ГЕНЕРАЦИЯ КАРТОЧЕК С data-атрибутом comment ===
+    for (let i = 1; i <= totalSlots; i++) {
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
+
+        const comment = comments[i-1] || `Комментарий к фото ${i}`;
+        item.dataset.comment = comment;
+
+        const thumb = document.createElement('div');
+        thumb.style.width = '100%';
+        thumb.style.height = '200px';
+        thumb.style.backgroundColor = '#2a2a2a';
+        thumb.style.display = 'flex';
+        thumb.style.alignItems = 'center';
+        thumb.style.justifyContent = 'center';
+        thumb.style.color = '#666';
+        thumb.style.fontSize = '1rem';
+        thumb.style.fontWeight = '500';
+
+        if (imageNames[i-1]) {
+            const img = document.createElement('img');
+            img.src = imageNames[i-1];
+            img.alt = `Фото ${i}`;
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'cover';
+            img.style.display = 'block';
+            thumb.appendChild(img);
+        } else {
+            thumb.textContent = `Фото ${i}`;
+        }
+
+        const desc = document.createElement('div');
+        desc.className = 'desc';
+        desc.textContent = comment;
+
+        item.appendChild(thumb);
+        item.appendChild(desc);
+        grid.appendChild(item);
+    }
+
+    // === LIGHTBOX ===
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxPlaceholder = document.getElementById('lightboxPlaceholder');
+    const lightboxComment = document.getElementById('lightboxComment');
+    const closeBtn = document.querySelector('.close-btn');
+
+    function openLightbox(src, comment) {
+        if (src) {
+            lightboxImg.src = src;
+            lightboxImg.style.display = 'block';
+            lightboxPlaceholder.style.display = 'none';
+        } else {
+            lightboxImg.style.display = 'none';
+            lightboxPlaceholder.style.display = 'block';
+        }
+
+        if (comment) {
+            lightboxComment.textContent = comment;
+            lightboxComment.style.display = 'block';
+        } else {
+            lightboxComment.style.display = 'none';
+        }
+
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+        lightboxComment.textContent = '';
+    }
+
+    grid.addEventListener('click', (e) => {
+        const card = e.target.closest('.gallery-item');
+        if (!card) return;
+        const img = card.querySelector('img');
+        const comment = card.dataset.comment || '';
+        if (img) {
+            openLightbox(img.src, comment);
+        } else {
+            openLightbox(null, comment);
+        }
+    });
+
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeLightbox();
+    });
+
+    closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+            closeLightbox();
+        }
+    });
+
+    lightboxImg.addEventListener('click', (e) => e.stopPropagation());
+    lightboxPlaceholder.addEventListener('click', (e) => e.stopPropagation());
+    lightboxComment.addEventListener('click', (e) => e.stopPropagation());
+</script>
+</body>
+</html>
