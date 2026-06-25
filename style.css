@@ -833,47 +833,57 @@ body::before {
     display:flex;
     justify-content:center;
     flex-wrap:wrap;
-    gap:12px;
-    width:100%;
-    margin-bottom:20px;
+    gap:14px;
+    margin-bottom:24px;
 }
 
 .game-filter{
-    background:rgba(255,255,255,.04);
+    width:64px;
+    height:64px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:rgba(255,255,255,.03);
     border:1px solid rgba(255,255,255,.08);
 
-    color:var(--text-primary);
+    border-radius:18px;
 
-    padding:10px 18px;
-
-    border-radius:999px;
+    backdrop-filter:blur(10px);
 
     cursor:pointer;
 
-    font-size:.95rem;
-    font-weight:500;
+    transition:.25s ease;
+}
+
+.game-filter img{
+    width:38px;
+    height:38px;
+    object-fit:contain;
 
     transition:.25s ease;
-
-    backdrop-filter:blur(8px);
 }
 
 .game-filter:hover{
-    transform:translateY(-2px);
+    transform:translateY(-4px);
 
     border-color:var(--accent);
 
-    background:rgba(88,101,242,.12);
+    background:rgba(88,101,242,.08);
+}
+
+.game-filter:hover img{
+    transform:scale(1.08);
 }
 
 .game-filter.active{
-    background:var(--accent);
-
-    color:#fff;
-
     border-color:var(--accent);
 
-    box-shadow:0 0 20px rgba(88,101,242,.35);
+    background:rgba(88,101,242,.15);
+
+    box-shadow:
+        0 0 25px rgba(88,101,242,.35);
 }
 
 .search-box {
