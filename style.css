@@ -856,6 +856,23 @@ body::before {
 
     transition:.25s ease;
 }
+    .game-filter.irl{
+    width:auto;
+    min-width:80px;
+    padding:0 20px;
+
+    font-family:'Geist', sans-serif;
+    font-size:1rem;
+    font-weight:700;
+
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+
+    color:white;
+
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.08);
+}
 
 .game-filter img{
     width:38px;
