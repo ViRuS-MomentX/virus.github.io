@@ -32,37 +32,51 @@
 <!-- ═══ ПОИСК (по центру) ═══ -->
 <div class="wrapper gallery-controls">
 
-    <button class="game-filter active" data-game="">
-        <img src="all.png" alt="Все">
-    </button>
+    <div class="game-filters">
 
-    <button class="game-filter" data-game="minecraft">
-        <img src="minecraft.svg" alt="Minecraft">
-    </button>
-    
-    <button class="game-filter" data-game="roblox">
-        <img src="roblox.png" alt="Roblox">
-    </button>
+        <button class="game-filter active" data-game="">
+            <img src="all.png" alt="Все">
+        </button>
 
-    <button class="game-filter" data-game="phasmo">
-        <img src="phasmo.ico" alt="Phasmophobia">
-    </button>
+        <button class="game-filter" data-game="minecraft">
+            <img src="minecraft.svg" alt="Minecraft">
+        </button>
 
-    <button class="game-filter" data-game="rivals">
-        <img src="marvel.png" alt="Marvel Rivals">
-    </button>
+        <button class="game-filter" data-game="roblox">
+            <img src="roblox.png" alt="Roblox">
+        </button>
 
-    <button class="game-filter" data-game="dbd">
-        <img src="dbd.png" alt="Dead by Daylight">
-    </button>
+        <button class="game-filter" data-game="phasmo">
+            <img src="phasmo.ico" alt="Phasmophobia">
+        </button>
 
-    <button class="game-filter irl" data-game="irl">
-        IRL
-    </button>
+        <button class="game-filter" data-game="rivals">
+            <img src="marvel.png" alt="Marvel Rivals">
+        </button>
 
-</div>
+        <button class="game-filter" data-game="dbd">
+            <img src="dbd.png" alt="Dead by Daylight">
+        </button>
+
+        <button class="game-filter irl" data-game="irl">
+            IRL
+        </button>
+
+    </div>
 
     <div class="search-box">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="🔍 Искать по комментарию..."
+        />
+    </div>
+
+    <div class="photo-counter" id="photoCounter">
+        Показано: 0 / 0
+    </div>
+
+</div>
         <input
             type="text"
             id="searchInput"
