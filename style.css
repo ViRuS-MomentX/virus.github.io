@@ -806,14 +806,17 @@ body::before {
         font-size: 1.4rem;
         padding: 0.6rem 1.2rem;
     }
+
     .social-github {
-    background: rgba(255,255,255,0.05);
+        background: rgba(255,255,255,0.05);
+    }
+
+    .social-github:hover {
+        background: #24292e;
+        color: white;
+    }
 }
 
-.social-github:hover {
-    background: #24292e;
-    color: white;
-}
 /* ═══════════════════════════════ */
 /* GALLERY FILTERS */
 /* ═══════════════════════════════ */
@@ -936,12 +939,28 @@ body::before {
     .game-filters img,
 .game-filter img,
 .gallery-controls img,
-.filter-icon {
-    width: 28px !important;
-    height: 28px !important;
-    max-width: 28px !important;
-    max-height: 28px !important;
+.game-filter img {
+    width: 30px !important;
+    height: 30px !important;
+    max-width: 30px !important;
+    max-height: 30px !important;
     object-fit: contain !important;
-    flex-shrink: 0 !important;
+    display: block !important;
+}
+/* Жёсткое ограничение размеров иконок */
+.game-filter img,
+.game-filters img,
+.filter-icon {
+    width: 30px !important;
+    height: 30px !important;
+    max-width: 30px !important;
+    max-height: 30px !important;
+    object-fit: contain !important;
+}
+
+.game-filter {
+    width: 58px !important;
+    height: 58px !important;
+    overflow: hidden !important;
 }
 }
