@@ -814,7 +814,7 @@ body::before {
     background: #24292e;
     color: white;
 }
-    /* ═══════════════════════════════ */
+/* ═══════════════════════════════ */
 /* GALLERY FILTERS */
 /* ═══════════════════════════════ */
 
@@ -823,82 +823,69 @@ body::before {
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-
     margin-bottom: 2rem;
 }
 
 /* ===== ФИЛЬТРЫ ИГР ===== */
-
-.game-filters{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:14px;
-    margin-bottom:24px;
+.game-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 24px;
 }
 
-.game-filter{
-    width:56px;
-    height:56px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:16px;
-
-    background:rgba(255,255,255,.03);
-    border:1px solid rgba(255,255,255,.08);
-
-    cursor:pointer;
-    transition:.25s;
-}
-    .game-filter.irl{
-    width:auto;
-    min-width:80px;
-    padding:0 20px;
-
-    font-family:'Geist', sans-serif;
-    font-size:1rem;
-    font-weight:700;
-
-    letter-spacing:0.25em;
-    text-transform:uppercase;
-
-    color:white;
-
-    background:rgba(255,255,255,.03);
-    border:1px solid rgba(255,255,255,.08);
+.game-filter {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, .03);
+    border: 1px solid rgba(255, 255, 255, .08);
+    cursor: pointer;
+    transition: .25s;
 }
 
-.game-filter img{
-    width:28px;
-    height:28px;
-    max-width:28px;
-    max-height:28px;
-    object-fit:contain;
-    display:block;
+/* ── ИКОНКИ В ФИЛЬТРАХ ── */
+.game-filter img {
+    width: 28px !important;
+    height: 28px !important;
+    max-width: 28px !important;
+    max-height: 28px !important;
+    object-fit: contain;
+    display: block;
 }
 
-.game-filter:hover{
-    transform:translateY(-4px);
-
-    border-color:var(--accent);
-
-    background:rgba(88,101,242,.08);
+.game-filter.irl {
+    width: auto;
+    min-width: 80px;
+    padding: 0 20px;
+    font-family: 'Geist', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: white;
+    background: rgba(255, 255, 255, .03);
+    border: 1px solid rgba(255, 255, 255, .08);
 }
 
-.game-filter:hover img{
-    transform:scale(1.08);
+.game-filter:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    background: rgba(88, 101, 242, .08);
 }
 
-.game-filter.active{
-    border-color:var(--accent);
+.game-filter:hover img {
+    transform: scale(1.08);
+}
 
-    background:rgba(88,101,242,.15);
-
-    box-shadow:
-        0 0 25px rgba(88,101,242,.35);
+.game-filter.active {
+    border-color: var(--accent);
+    background: rgba(88, 101, 242, .15);
+    box-shadow: 0 0 25px rgba(88, 101, 242, .35);
 }
 
 .search-box {
@@ -908,24 +895,42 @@ body::before {
 
 .search-box input {
     width: 100%;
+    padding: 0.6rem 1.4rem;
+    border-radius: 50px;
+    border: 1px solid var(--border-color);
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-family: inherit;
+    outline: none;
+    transition: border 0.2s;
+    text-align: center;
 }
 
-.gallery-item {
-    transition:
-        transform .25s ease,
-        box-shadow .25s ease;
+.search-box input:focus {
+    border-color: var(--accent);
 }
 
-.gallery-item:hover {
-    transform: translateY(-6px);
-
-    box-shadow:
-        0 15px 35px rgba(0,0,0,.35);
+.search-box input::placeholder {
+    color: var(--text-muted);
 }
-    .game-filters img{
-    width:28px !important;
-    height:28px !important;
-    max-width:28px !important;
-    max-height:28px !important;
+
+/* ── АДАПТИВ ДЛЯ МОБИЛЬНЫХ ── */
+@media (max-width: 768px) {
+    .game-filter {
+        width: 48px;
+        height: 48px;
+    }
+    .game-filter img {
+        width: 24px !important;
+        height: 24px !important;
+        max-width: 24px !important;
+        max-height: 24px !important;
+    }
+    .game-filter.irl {
+        min-width: 60px;
+        padding: 0 14px;
+        font-size: 0.8rem;
+    }
 }
 }
