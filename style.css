@@ -933,4 +933,15 @@ body::before {
         font-size: 0.8rem;
     }
 }
+    .game-filters img,
+.game-filter img,
+.gallery-controls img,
+.filter-icon {
+    width: 28px !important;
+    height: 28px !important;
+    max-width: 28px !important;
+    max-height: 28px !important;
+    object-fit: contain !important;
+    flex-shrink: 0 !important;
+}
 }
