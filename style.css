@@ -902,32 +902,6 @@ body::before {
     box-shadow: 0 0 25px rgba(88, 101, 242, .35);
 }
 
-.search-box {
-    width: 100%;
-    max-width: 550px;
-}
-
-.search-box input {
-    width: 100%;
-    padding: 0.6rem 1.4rem;
-    border-radius: 50px;
-    border: 1px solid var(--border-color);
-    background: rgba(0, 0, 0, 0.3);
-    color: var(--text-primary);
-    font-size: 1rem;
-    font-family: inherit;
-    outline: none;
-    transition: border 0.2s;
-    text-align: center;
-}
-
-.search-box input:focus {
-    border-color: var(--accent);
-}
-
-.search-box input::placeholder {
-    color: var(--text-muted);
-}
 
 /* ── АДАПТИВ ДЛЯ МОБИЛЬНЫХ ── */
 @media (max-width: 768px) {
