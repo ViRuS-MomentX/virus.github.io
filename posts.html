@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Интерактив — Моя страничка</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ═══ TOP BAR ═══ -->
+<div class="topbar">
+    <div class="wrapper">
+        <nav class="topbar-nav">
+            <a href="index.html">главная</a>
+            <a href="gallery.html">галерея</a>
+            <a href="projects.html">проекты</a>
+            <a href="posts.html" class="on">интерактив</a>
+        </nav>
+    </div>
+</div>
+
+<!-- ═══ POSTS HEADER ═══ -->
+<div class="wrapper page-title">
+    <h1>Интерактив</h1>
+    <p>Мысли, новости и всякое такое</p>
+</div>
+
+<!-- ═══ ЛЕНТА ПОСТОВ ═══ -->
+<div class="wrapper">
+    <div class="posts-list" id="postsList"></div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="ft">
+    <div class="wrapper">
+        <div class="ft-l">
+            <div class="ft-d"></div> Моя страничка · <span id="year"></span>
+        </div>
+        <div class="ft-r">сделано с .html</div>
+    </div>
+</footer>
+
+<!-- посты лежат в отдельном файле posts.js — туда и добавляешь новые -->
+<script src="posts.js"></script>
+<script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const postsList = document.getElementById('postsList');
+
+    // "2026-06-28" -> "28.06.2026"
+    function formatDate(dateStr) {
+        const [y, m, d] = dateStr.split('-');
+        return `${d}.${m}.${y}`;
+    }
+
+    function renderPosts() {
+        postsList.innerHTML = '';
+
+        if (!Array.isArray(posts) || posts.length === 0) {
+            postsList.innerHTML = '<p style="color:var(--text-muted); text-align:center; padding:2rem 0;">Постов пока нет</p>';
+            return;
+        }
+
+        // новые посты — сверху
+        const sorted = [...posts].sort((a, b) => {
+            const da = new Date(`${a.date}T${a.time}`);
+            const db = new Date(`${b.date}T${b.time}`);
+            return db - da;
+        });
+
+        sorted.forEach(post => {
+            const card = document.createElement('div');
+            card.className = 'post-card';
+
+            const title = document.createElement('h3');
+            title.className = 'post-title';
+            title.textContent = post.title;
+            card.appendChild(title);
+
+            if (post.image) {
+                const img = document.createElement('img');
+                img.src = post.image;
+                img.alt = post.title;
+                img.className = 'post-image';
+                card.appendChild(img);
+            }
+
+            if (post.text) {
+                const body = document.createElement('p');
+                body.className = 'post-body';
+                body.textContent = post.text;
+                card.appendChild(body);
+            }
+
+            const meta = document.createElement('div');
+            meta.className = 'post-meta';
+
+            const dt = document.createElement('span');
+            dt.className = 'post-date-time';
+            dt.textContent = `${formatDate(post.date)} · ${post.time}`;
+            meta.appendChild(dt);
+
+            card.appendChild(meta);
+            postsList.appendChild(card);
+        });
+    }
+
+    renderPosts();
+</script>
+</body>
+</html>
