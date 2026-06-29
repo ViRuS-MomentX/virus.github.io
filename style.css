@@ -660,6 +660,70 @@ body::before {
   color: var(--accent-hover);
 }
 
+/* ═══ POSTS (Интерактив) ═══ */
+.posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem 0;
+}
+
+.post-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.8rem;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-card:hover {
+  border-color: var(--accent);
+  transform: translateX(8px);
+  box-shadow: var(--shadow);
+}
+
+.post-card .post-title {
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.post-card .post-image {
+  width: 100%;
+  max-height: 380px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.post-card .post-body {
+  color: var(--text-secondary);
+  font-weight: 300;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.post-card .post-meta {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 1.2rem;
+}
+
+.post-date-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.3rem 0.9rem;
+  border-radius: 100px;
+  border: 1px solid var(--border-color);
+}
+
 /* ═══ БЕГУЩАЯ СТРОКА С ИИ ═══ */
 .ai-marquee {
   position: relative;
@@ -787,6 +851,13 @@ body::before {
   .topbar .wrapper {
     justify-content: center;
     padding: 0.8rem 1.5rem;
+   .post-card {
+    padding: 1.3rem;
+  }
+
+  .post-card .post-title {
+    font-size: 1.1rem;
+  }
   }
 
   .hero-grid {
