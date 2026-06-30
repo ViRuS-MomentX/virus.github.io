@@ -664,66 +664,135 @@ body::before {
 .posts-list {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  padding: 2rem 0;
+  gap: 1.8rem;
+  padding: 1rem 0 60px;
 }
-
+ 
 .post-card {
+  position: relative;
   background: var(--bg-card);
   backdrop-filter: blur(8px);
   border: 1px solid var(--border-color);
-  border-radius: 16px;
-  padding: 1.8rem;
-  transition: all 0.3s ease;
-  display: flex;
-  flex-direction: column;
+  border-radius: 18px;
+  padding: 2rem;
+  overflow: hidden;
+  opacity: 0;
+  animation: postFadeIn 0.5s ease forwards;
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
-
+ 
+@keyframes postFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+ 
+/* акцентная полоска сверху карточки */
+.post-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.6;
+}
+ 
 .post-card:hover {
   border-color: var(--accent);
-  transform: translateX(8px);
+  transform: translateY(-4px);
   box-shadow: var(--shadow);
 }
-
+ 
 .post-card .post-title {
   text-align: center;
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.3rem;
+  color: var(--text-primary);
 }
-
+ 
+/* ── картинка поста + лупа при наведении ── */
+.post-image-wrap {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 1.3rem;
+  cursor: pointer;
+  background: var(--bg-primary);
+}
+ 
 .post-card .post-image {
   width: 100%;
-  max-height: 380px;
+  max-height: 420px;
   object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 1rem;
   display: block;
+  transition: transform 0.4s ease, filter 0.4s ease;
 }
-
+ 
+.post-image-wrap:hover .post-image {
+  transform: scale(1.04);
+  filter: brightness(0.75);
+}
+ 
+.post-zoom-hint {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+ 
+.post-image-wrap:hover .post-zoom-hint {
+  opacity: 1;
+}
+ 
 .post-card .post-body {
   color: var(--text-secondary);
   font-weight: 300;
-  line-height: 1.7;
+  line-height: 1.8;
   white-space: pre-wrap;
+  font-size: 0.98rem;
 }
-
+ 
 .post-card .post-meta {
   display: flex;
   justify-content: flex-start;
-  margin-top: 1.2rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
 }
-
+ 
 .post-date-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
   color: var(--text-muted);
-  background: rgba(255, 255, 255, 0.04);
-  padding: 0.3rem 0.9rem;
+  background: rgba(124, 92, 252, 0.07);
+  padding: 0.4rem 1rem;
   border-radius: 100px;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(124, 92, 252, 0.15);
 }
-
+ 
+.post-date-time i {
+  color: var(--accent);
+  font-size: 0.7rem;
+}
 /* ═══ БЕГУЩАЯ СТРОКА С ИИ ═══ */
 .ai-marquee {
   position: relative;
@@ -854,9 +923,13 @@ body::before {
    .post-card {
     padding: 1.3rem;
   }
-
+ 
   .post-card .post-title {
     font-size: 1.1rem;
+  }
+ 
+  .post-card .post-image {
+    max-height: 260px;
   }
   }
 
@@ -957,3 +1030,4 @@ body::before {
     padding: 0.6rem 1.2rem;
   }
 }
+
