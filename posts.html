@@ -4,13 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Интерактив</title>
-
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-
 <body>
-
 <!-- TOPBAR -->
 <div class="topbar">
   <div class="wrapper">
@@ -22,26 +19,33 @@
     </nav>
   </div>
 </div>
-
 <!-- HEADER -->
 <div class="wrapper page-title">
   <h1>Интерактив</h1>
   <p>Новости, мысли, чэнджлоги...</p>
 </div>
-
 <!-- SEARCH -->
 <div class="posts-search-wrap">
   <input id="searchInput" type="text"
          placeholder="🔍 Искать по комментариям..."
          autocomplete="off"/>
 </div>
-
 <div class="posts-count" id="postsCount"></div>
 <div id="postsFeed"></div>
 
+<!-- FOOTER -->
+<div class="ft">
+  <div class="wrapper">
+    <div class="ft-l">
+      <span class="ft-d"></span>
+      Моя страничка
+    </div>
+    <div class="ft-r">сделано с .html</div>
+  </div>
+</div>
+
 <!-- POSTS DATA -->
 <script src="posts.js"></script>
-
 <script>
 const searchInput = document.getElementById("searchInput");
 const feed = document.getElementById("postsFeed");
@@ -58,15 +62,36 @@ function norm(str){
   return (str || "").toLowerCase().trim();
 }
 
-function render(){
-  const query = norm(searchInput.value);
+// экранирование HTML, чтобы текст постов не ломал разметку
+function escapeHtml(str){
+  return (str || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
 
+// экранирование спецсимволов для регулярки
+function escapeRegExp(str){
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+// подсветка совпадений (как в Telegram)
+function highlight(text, query){
+  const safe = escapeHtml(text);
+  if(!query) return safe;
+  const re = new RegExp(escapeRegExp(query), "gi");
+  return safe.replace(re, (match) => `<mark>${match}</mark>`);
+}
+
+function render(){
+  const rawQuery = searchInput.value.trim();
+  const query = norm(rawQuery);
   let list = [...posts];
 
   // сортировка (новые сверху)
   list.sort((a,b)=> new Date(b.date+"T"+b.time) - new Date(a.date+"T"+a.time));
 
-  // фильтр поиска (ВАЖНО: по text + title)
+  // фильтр поиска (по title + text)
   if(query){
     list = list.filter(p =>
       norm(p.title).includes(query) ||
@@ -83,19 +108,17 @@ function render(){
 
   feed.innerHTML = list.map(p => `
     <div class="post-card">
-      ${p.tag ? `<div class="post-tag">${p.tag}</div>` : ""}
-      <h3>${p.title}</h3>
+      ${p.tag ? `<div class="post-tag">${highlight(p.tag, rawQuery)}</div>` : ""}
+      <h3 class="post-title">${highlight(p.title, rawQuery)}</h3>
       <div class="post-meta">${formatDate(p.date,p.time)}</div>
-      ${p.image ? `<img class="post-image" src="${p.image}">` : ""}
-      <div class="post-body">${p.text || ""}</div>
+      ${p.image ? `<div class="post-image-wrap"><img class="post-image" src="${p.image}"></div>` : ""}
+      <div class="post-body">${highlight(p.text || "", rawQuery)}</div>
     </div>
   `).join("");
 }
 
 searchInput.addEventListener("input", render);
-
 render();
 </script>
-
 </body>
 </html>
