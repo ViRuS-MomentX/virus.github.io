@@ -1139,5 +1139,55 @@ mark{
   padding:0 3px;
   border-radius:4px;
 }
+   /* ===== FIX LAYOUT ===== */
+.wrapper{
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* ===== SEARCH BAR FIX ===== */
+.posts-search-wrap{
+  max-width: 640px;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+}
+
+#searchInput{
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid #2a2a2a;
+  background: #161616;
+  color: white;
+  outline: none;
+}
+
+/* ===== POSTS FIX ===== */
+.post-card{
+  max-width: 640px;
+  margin: 0 auto 18px;
+  padding: 16px;
+  background: #161616;
+  border: 1px solid #2a2a2a;
+  border-radius: 14px;
+}
+
+/* ===== IMAGE FIX (ВАЖНО) ===== */
+.post-image{
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+/* ===== TEXT FIX ===== */
+.post-body{
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
 }
 
