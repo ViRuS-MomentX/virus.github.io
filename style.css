@@ -1029,5 +1029,44 @@ body::before {
     font-size: 1.4rem;
     padding: 0.6rem 1.2rem;
   }
+   /* ===== SEARCH BAR ===== */
+.posts-search{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  max-width:640px;
+  margin:16px auto;
+  padding:10px 14px;
+  border-radius:14px;
+  background:#161616;
+  border:1px solid #2a2a2a;
+  transition:.2s;
+}
+
+.posts-search:focus-within{
+  border-color:#4a4af0;
+  box-shadow:0 0 0 2px rgba(74,74,240,0.2);
+}
+
+.posts-search i{
+  color:#777;
+}
+
+.posts-search input{
+  width:100%;
+  background:transparent;
+  border:none;
+  outline:none;
+  color:#fff;
+  font-size:14px;
+}
+
+/* ===== HIGHLIGHT SEARCH TEXT ===== */
+mark{
+  background:#4a4af0;
+  color:white;
+  padding:0 2px;
+  border-radius:3px;
+}
 }
 
