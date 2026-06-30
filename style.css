@@ -415,10 +415,12 @@ body::before {
   width: 72px;
 }
 
-/* ── Поисковая строка ── */
+/* ── Поисковая строка (общая, гэллерея + посты) ── */
 #searchInput {
+  display: block;
   width: 100%;
   max-width: 560px;
+  margin: 0 auto;
   padding: 14px 20px 14px 48px;
   border-radius: 50px;
   border: 1.5px solid rgba(255, 255, 255, 0.08);
@@ -441,6 +443,48 @@ body::before {
 #searchInput:focus {
   border-color: rgba(124, 92, 252, 0.5);
   background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Обёртка строки поиска на странице "Интерактив" — центрирует инпут */
+.posts-search-wrap {
+  width: 100%;
+  max-width: 640px;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+}
+
+/* Альтернативный вариант поисковой строки (с иконкой-лупой внутри блока) */
+.posts-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 640px;
+  margin: 16px auto;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: #161616;
+  border: 1px solid #2a2a2a;
+  transition: .2s;
+}
+
+.posts-search:focus-within {
+  border-color: #4a4af0;
+  box-shadow: 0 0 0 2px rgba(74, 74, 240, 0.2);
+}
+
+.posts-search i {
+  color: #777;
+}
+
+.posts-search input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 14px;
 }
 
 /* ── Счётчик фото ── */
@@ -667,20 +711,23 @@ body::before {
   gap: 1.8rem;
   padding: 1rem 0 60px;
 }
- 
+
 .post-card {
   position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
   background: var(--bg-card);
   backdrop-filter: blur(8px);
   border: 1px solid var(--border-color);
   border-radius: 18px;
-  padding: 2rem;
+  padding: 1.6rem;
   overflow: hidden;
   opacity: 0;
   animation: postFadeIn 0.5s ease forwards;
   transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
- 
+
 @keyframes postFadeIn {
   from {
     opacity: 0;
@@ -691,7 +738,7 @@ body::before {
     transform: translateY(0);
   }
 }
- 
+
 /* акцентная полоска сверху карточки */
 .post-card::before {
   content: '';
@@ -703,45 +750,59 @@ body::before {
   background: linear-gradient(90deg, transparent, var(--accent), transparent);
   opacity: 0.6;
 }
- 
+
 .post-card:hover {
   border-color: var(--accent);
   transform: translateY(-4px);
   box-shadow: var(--shadow);
 }
- 
+
 .post-card .post-title {
   text-align: center;
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   font-weight: 700;
   letter-spacing: -0.01em;
-  margin-bottom: 1.3rem;
+  margin-bottom: 1.1rem;
   color: var(--text-primary);
 }
- 
+
+.post-tag {
+  display: inline-block;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: #2b2b40;
+  color: #9fa8ff;
+  margin-bottom: 8px;
+}
+
 /* ── картинка поста + лупа при наведении ── */
 .post-image-wrap {
   position: relative;
   border-radius: 14px;
   overflow: hidden;
-  margin-bottom: 1.3rem;
+  margin-bottom: 1.1rem;
   cursor: pointer;
   background: var(--bg-primary);
 }
- 
-.post-card .post-image {
+
+.post-card .post-image,
+.post-image {
   width: 100%;
-  max-height: 420px;
+  max-width: 100%;
+  max-height: 280px;
+  height: auto;
   object-fit: cover;
   display: block;
+  border-radius: 10px;
   transition: transform 0.4s ease, filter 0.4s ease;
 }
- 
+
 .post-image-wrap:hover .post-image {
   transform: scale(1.04);
   filter: brightness(0.75);
 }
- 
+
 .post-zoom-hint {
   position: absolute;
   inset: 0;
@@ -755,27 +816,31 @@ body::before {
   pointer-events: none;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
 }
- 
+
 .post-image-wrap:hover .post-zoom-hint {
   opacity: 1;
 }
- 
-.post-card .post-body {
+
+.post-card .post-body,
+.post-body {
   color: var(--text-secondary);
   font-weight: 300;
-  line-height: 1.8;
+  line-height: 1.7;
   white-space: pre-wrap;
-  font-size: 0.98rem;
+  font-size: 0.92rem;
 }
- 
-.post-card .post-meta {
+
+.post-card .post-meta,
+.post-meta {
   display: flex;
   justify-content: flex-start;
-  margin-top: 1.5rem;
-  padding-top: 1rem;
+  margin-top: 1.3rem;
+  padding-top: 0.9rem;
   border-top: 1px solid var(--border-color);
+  font-size: 12px;
+  opacity: .85;
 }
- 
+
 .post-date-time {
   display: inline-flex;
   align-items: center;
@@ -788,11 +853,20 @@ body::before {
   border-radius: 100px;
   border: 1px solid rgba(124, 92, 252, 0.15);
 }
- 
+
 .post-date-time i {
   color: var(--accent);
   font-size: 0.7rem;
 }
+
+/* ── Подсветка результатов поиска ── */
+mark {
+  background: #4a4af0;
+  color: white;
+  padding: 0 3px;
+  border-radius: 4px;
+}
+
 /* ═══ БЕГУЩАЯ СТРОКА С ИИ ═══ */
 .ai-marquee {
   position: relative;
@@ -920,17 +994,19 @@ body::before {
   .topbar .wrapper {
     justify-content: center;
     padding: 0.8rem 1.5rem;
-   .post-card {
+  }
+
+  .post-card {
     padding: 1.3rem;
   }
- 
+
   .post-card .post-title {
     font-size: 1.1rem;
   }
- 
-  .post-card .post-image {
-    max-height: 260px;
-  }
+
+  .post-card .post-image,
+  .post-image {
+    max-height: 220px;
   }
 
   .hero-grid {
@@ -1029,165 +1105,13 @@ body::before {
     font-size: 1.4rem;
     padding: 0.6rem 1.2rem;
   }
-   /* ===== SEARCH BAR ===== */
-.posts-search{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  max-width:640px;
-  margin:16px auto;
-  padding:10px 14px;
-  border-radius:14px;
-  background:#161616;
-  border:1px solid #2a2a2a;
-  transition:.2s;
-}
 
-.posts-search:focus-within{
-  border-color:#4a4af0;
-  box-shadow:0 0 0 2px rgba(74,74,240,0.2);
-}
+  .post-card {
+    padding: 1.1rem;
+  }
 
-.posts-search i{
-  color:#777;
+  .post-card .post-image,
+  .post-image {
+    max-height: 200px;
+  }
 }
-
-.posts-search input{
-  width:100%;
-  background:transparent;
-  border:none;
-  outline:none;
-  color:#fff;
-  font-size:14px;
-}
-
-/* ===== HIGHLIGHT SEARCH TEXT ===== */
-mark{
-  background:#4a4af0;
-  color:white;
-  padding:0 2px;
-  border-radius:3px;
-}
-   /* ===== SEARCH ===== */
-.posts-search{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  max-width:640px;
-  margin:16px auto;
-  padding:10px 14px;
-  border-radius:14px;
-  background:#161616;
-  border:1px solid #2a2a2a;
-  transition:.2s;
-}
-
-.posts-search:focus-within{
-  border-color:#4a4af0;
-  box-shadow:0 0 0 2px rgba(74,74,240,0.2);
-}
-
-.posts-search i{
-  color:#777;
-}
-
-.posts-search input{
-  width:100%;
-  background:transparent;
-  border:none;
-  outline:none;
-  color:#fff;
-  font-size:14px;
-}
-
-/* ===== POST CARD ===== */
-.post-card{
-  max-width:640px;
-  margin:0 auto 18px;
-  padding:16px;
-  background:#161616;
-  border:1px solid #2a2a2a;
-  border-radius:14px;
-}
-
-.post-tag{
-  display:inline-block;
-  font-size:11px;
-  padding:2px 8px;
-  border-radius:10px;
-  background:#2b2b40;
-  color:#9fa8ff;
-  margin-bottom:8px;
-}
-
-.post-meta{
-  font-size:12px;
-  opacity:.6;
-  margin-bottom:10px;
-}
-
-.post-image{
-  width:100%;
-  border-radius:10px;
-  margin-top:10px;
-}
-
-/* ===== SEARCH HIGHLIGHT ===== */
-mark{
-  background:#4a4af0;
-  color:white;
-  padding:0 3px;
-  border-radius:4px;
-}
-   /* ===== FIX LAYOUT ===== */
-.wrapper{
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 16px;
-}
-
-/* ===== SEARCH BAR FIX ===== */
-.posts-search-wrap{
-  max-width: 640px;
-  margin: 20px auto;
-  display: flex;
-  justify-content: center;
-}
-
-#searchInput{
-  width: 100%;
-  padding: 10px 14px;
-  border-radius: 12px;
-  border: 1px solid #2a2a2a;
-  background: #161616;
-  color: white;
-  outline: none;
-}
-
-/* ===== POSTS FIX ===== */
-.post-card{
-  max-width: 640px;
-  margin: 0 auto 18px;
-  padding: 16px;
-  background: #161616;
-  border: 1px solid #2a2a2a;
-  border-radius: 14px;
-}
-
-/* ===== IMAGE FIX (ВАЖНО) ===== */
-.post-image{
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 10px;
-  margin-top: 10px;
-}
-
-/* ===== TEXT FIX ===== */
-.post-body{
-  white-space: pre-wrap;
-  line-height: 1.5;
-}
-}
-
