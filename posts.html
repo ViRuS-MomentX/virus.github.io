@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -26,7 +28,12 @@
 <!-- ═══ POSTS HEADER ═══ -->
 <div class="wrapper page-title">
     <h1>Интерактив</h1>
-    <p>Новости, мысли, чэнджлоги</p>
+    <p class="gallery-subtitle">Мои <span class="shimmer-text">МЫСЛИ</span></p>
+    <p class="gallery-update-note">📝 Пишу когда есть настроение (бывает редко)</p>
+</div>
+
+<div class="wrapper">
+    <div class="photo-counter" id="postsCounter">Постов: 0</div>
 </div>
 
 <!-- ═══ ЛЕНТА ПОСТОВ ═══ -->
@@ -38,11 +45,21 @@
 <footer class="ft">
     <div class="wrapper">
         <div class="ft-l">
-            <div class="ft-d"></div> Моратко, привет · <span id="year"></span>
+            <div class="ft-d"></div> Моя страничка · <span id="year"></span>
         </div>
         <div class="ft-r">сделано с .html</div>
     </div>
 </footer>
+
+<!-- ═══ LIGHTBOX (как в галерее) ═══ -->
+<div id="lightbox">
+    <span class="close-btn">&times;</span>
+    <div class="lightbox-content">
+        <img src="" alt="Увеличенное фото" id="lightboxImg" style="display: none;" />
+        <div class="placeholder-text" id="lightboxPlaceholder" style="display: none;">Фото отсутствует</div>
+        <div class="lightbox-comment" id="lightboxComment"></div>
+    </div>
+</div>
 
 <!-- посты лежат в отдельном файле posts.js — туда и добавляешь новые -->
 <script src="posts.js"></script>
@@ -50,6 +67,7 @@
     document.getElementById('year').textContent = new Date().getFullYear();
 
     const postsList = document.getElementById('postsList');
+    const postsCounter = document.getElementById('postsCounter');
 
     // "2026-06-28" -> "28.06.2026"
     function formatDate(dateStr) {
@@ -61,7 +79,8 @@
         postsList.innerHTML = '';
 
         if (!Array.isArray(posts) || posts.length === 0) {
-            postsList.innerHTML = '<p style="color:var(--text-muted); text-align:center; padding:2rem 0;">Постов пока нет</p>';
+            postsList.innerHTML = '<p style="color:var(--text-muted); text-align:center; padding:3rem 0;">Постов пока нет — загляни попозже 👀</p>';
+            postsCounter.textContent = 'Постов: 0';
             return;
         }
 
@@ -72,9 +91,12 @@
             return db - da;
         });
 
-        sorted.forEach(post => {
+        postsCounter.textContent = `Постов: ${sorted.length}`;
+
+        sorted.forEach((post, i) => {
             const card = document.createElement('div');
             card.className = 'post-card';
+            card.style.animationDelay = `${i * 0.06}s`;
 
             const title = document.createElement('h3');
             title.className = 'post-title';
@@ -82,11 +104,26 @@
             card.appendChild(title);
 
             if (post.image) {
+                const imgWrap = document.createElement('div');
+                imgWrap.className = 'post-image-wrap';
+
                 const img = document.createElement('img');
                 img.src = post.image;
                 img.alt = post.title;
                 img.className = 'post-image';
-                card.appendChild(img);
+                img.loading = 'lazy';
+                imgWrap.appendChild(img);
+
+                const zoomHint = document.createElement('div');
+                zoomHint.className = 'post-zoom-hint';
+                zoomHint.innerHTML = '<i class="fas fa-expand"></i>';
+                imgWrap.appendChild(zoomHint);
+
+                imgWrap.addEventListener('click', () => {
+                    openLightbox(img.src, post.title);
+                });
+
+                card.appendChild(imgWrap);
             }
 
             if (post.text) {
@@ -101,7 +138,7 @@
 
             const dt = document.createElement('span');
             dt.className = 'post-date-time';
-            dt.textContent = `${formatDate(post.date)} · ${post.time}`;
+            dt.innerHTML = `<i class="far fa-clock"></i> ${formatDate(post.date)} · ${post.time}`;
             meta.appendChild(dt);
 
             card.appendChild(meta);
@@ -110,6 +147,59 @@
     }
 
     renderPosts();
+
+    // ═══ LIGHTBOX (та же логика, что и в галерее) ═══
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxPlaceholder = document.getElementById('lightboxPlaceholder');
+    const lightboxComment = document.getElementById('lightboxComment');
+    const closeBtn = document.querySelector('.close-btn');
+
+    function openLightbox(src, comment) {
+        if (src) {
+            lightboxImg.src = src;
+            lightboxImg.style.display = 'block';
+            lightboxPlaceholder.style.display = 'none';
+        } else {
+            lightboxImg.style.display = 'none';
+            lightboxPlaceholder.style.display = 'block';
+        }
+
+        if (comment) {
+            lightboxComment.textContent = comment;
+            lightboxComment.style.display = 'block';
+        } else {
+            lightboxComment.style.display = 'none';
+        }
+
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+        lightboxComment.textContent = '';
+    }
+
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeLightbox();
+    });
+
+    closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+            closeLightbox();
+        }
+    });
+
+    lightboxImg.addEventListener('click', (e) => e.stopPropagation());
+    lightboxPlaceholder.addEventListener('click', (e) => e.stopPropagation());
+    lightboxComment.addEventListener('click', (e) => e.stopPropagation());
 </script>
 </body>
 </html>
