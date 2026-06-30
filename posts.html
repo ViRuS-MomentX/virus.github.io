@@ -1,191 +1,205 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Интерактив — Моя страничка</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Интерактив — Моя страничка</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
 
-<!-- TOP -->
+<!-- ═══ TOP BAR ═══ -->
 <div class="topbar">
-  <div class="wrapper">
-    <nav class="topbar-nav">
-      <a href="index.html">главная</a>
-      <a href="gallery.html">галерея</a>
-      <a href="projects.html">проекты</a>
-      <a href="posts.html" class="on">интерактив</a>
-    </nav>
-  </div>
-</div>
-
-<!-- HEADER -->
-<div class="wrapper page-title">
-  <h1>Интерактив</h1>
-  <p class="gallery-subtitle">Оно <span class="shimmer-text">РАБОТАЕТ</span></p>
-  <p class="gallery-update-note">Новости, мысли, чэнджлоги...</p>
-</div>
-
-<!-- POSTS UI -->
-<div class="posts-toolbar" id="postsToolbar"></div>
-<div class="posts-count" id="postsCount"></div>
-<div id="postsFeed"></div>
-
-<!-- FOOTER -->
-<footer class="ft">
-  <div class="wrapper">
-    <div class="ft-l">
-      Передаю привет Маратко · <span id="year"></span>
+    <div class="wrapper">
+        <nav class="topbar-nav">
+            <a href="index.html">главная</a>
+            <a href="gallery.html">галерея</a>
+            <a href="projects.html">проекты</a>
+            <a href="posts.html" class="on">интерактив</a>
+        </nav>
     </div>
-    <div class="ft-r">сделано с .html</div>
-  </div>
+</div>
+
+<!-- ═══ POSTS HEADER ═══ -->
+<div class="wrapper page-title">
+    <h1>Интерактив</h1>
+    <p class="gallery-subtitle"> Оно <span class="shimmer-text">РАБОТАЕТ</span></p>
+    <p class="gallery-update-note">Новости, мысли, чэнджлоги...</p>
+</div>
+
+<div class="wrapper">
+    <div class="photo-counter" id="postsCounter">Постов: 0</div>
+</div>
+
+<!-- ═══ ЛЕНТА ПОСТОВ ═══ -->
+<div class="wrapper">
+    <div class="posts-list" id="postsList"></div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="ft">
+    <div class="wrapper">
+        <div class="ft-l">
+            <div class="ft-d"></div> Передаю привет Маратко · <span id="year"></span>
+        </div>
+        <div class="ft-r">сделано с .html</div>
+    </div>
 </footer>
 
-<script src="posts.js"></script>
-
-<style>
-.posts-toolbar{
-  display:flex;
-  gap:8px;
-  justify-content:center;
-  flex-wrap:wrap;
-  margin:16px 0;
-}
-
-.posts-toolbar button{
-  background:#1c1c1c;
-  border:1px solid #333;
-  color:#ddd;
-  padding:6px 14px;
-  border-radius:20px;
-  cursor:pointer;
-}
-
-.posts-toolbar button.active{
-  background:#4a4af0;
-  border-color:#4a4af0;
-  color:white;
-}
-
-.posts-count{
-  text-align:center;
-  opacity:.7;
-  margin-bottom:10px;
-}
-
-.post-card{
-  max-width:640px;
-  margin:0 auto 18px;
-  padding:16px;
-  background:#161616;
-  border:1px solid #2a2a2a;
-  border-radius:14px;
-}
-
-.post-tag{
-  display:inline-block;
-  font-size:11px;
-  padding:2px 8px;
-  border-radius:10px;
-  background:#2b2b40;
-  color:#9fa8ff;
-  margin-bottom:8px;
-}
-
-.post-meta{
-  font-size:12px;
-  opacity:.6;
-  margin-bottom:10px;
-}
-
-.post-image{
-  width:100%;
-  border-radius:10px;
-  margin-top:10px;
-}
-
-.post-body{
-  white-space:pre-wrap;
-}
-</style>
-
-<script>
-let activeTag = "все";
-
-document.getElementById("year").textContent = new Date().getFullYear();
-
-function formatDate(date, time){
-  return new Date(date + "T" + time).toLocaleDateString("ru-RU", {
-    day:"2-digit",
-    month:"long",
-    year:"numeric"
-  }) + " · " + time;
-}
-
-function getTags(){
-  return ["все", ...new Set(posts.map(p => p.tag).filter(Boolean))];
-}
-
-function renderToolbar(){
-  const el = document.getElementById("postsToolbar");
-  el.innerHTML = "";
-
-  getTags().forEach(tag => {
-    const btn = document.createElement("button");
-    btn.textContent = tag;
-
-    if(tag === activeTag) btn.classList.add("active");
-
-    btn.onclick = () => {
-      activeTag = tag;
-      render();
-    };
-
-    el.appendChild(btn);
-  });
-}
-
-function render(){
-  renderToolbar();
-
-  const list = activeTag === "все"
-    ? posts
-    : posts.filter(p => p.tag === activeTag);
-
-  document.getElementById("postsCount").textContent =
-    `Постов: ${list.length}`;
-
-  const feed = document.getElementById("postsFeed");
-
-  if(!list.length){
-    feed.innerHTML = "<div style='text-align:center;opacity:.6'>Пусто</div>";
-    return;
-  }
-
-  const sorted = [...list].sort((a,b) =>
-    (b.date + b.time).localeCompare(a.date + a.time)
-  );
-
-  feed.innerHTML = sorted.map(p => `
-    <div class="post-card">
-      ${p.tag ? `<div class="post-tag">${p.tag}</div>` : ""}
-      <h3>${p.title}</h3>
-      <div class="post-meta">${formatDate(p.date, p.time)}</div>
-      ${p.image ? `<img class="post-image" src="${p.image}">` : ""}
-      <div class="post-body">${p.text || ""}</div>
+<!-- ═══ LIGHTBOX (как в галерее) ═══ -->
+<div id="lightbox">
+    <span class="close-btn">&times;</span>
+    <div class="lightbox-content">
+        <img src="" alt="Увеличенное фото" id="lightboxImg" style="display: none;" />
+        <div class="placeholder-text" id="lightboxPlaceholder" style="display: none;">Фото отсутствует</div>
+        <div class="lightbox-comment" id="lightboxComment"></div>
     </div>
-  `).join("");
-}
+</div>
 
-render();
+<!-- посты лежат в отдельном файле posts.js — туда и добавляешь новые -->
+<script src="posts.js"></script>
+<script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const postsList = document.getElementById('postsList');
+    const postsCounter = document.getElementById('postsCounter');
+
+    // "2026-06-28" -> "28.06.2026"
+    function formatDate(dateStr) {
+        const [y, m, d] = dateStr.split('-');
+        return `${d}.${m}.${y}`;
+    }
+
+    function renderPosts() {
+        postsList.innerHTML = '';
+
+        if (!Array.isArray(posts) || posts.length === 0) {
+            postsList.innerHTML = '<p style="color:var(--text-muted); text-align:center; padding:3rem 0;">Постов пока нет — загляни попозже 👀</p>';
+            postsCounter.textContent = 'Постов: 0';
+            return;
+        }
+
+        // новые посты — сверху
+        const sorted = [...posts].sort((a, b) => {
+            const da = new Date(`${a.date}T${a.time}`);
+            const db = new Date(`${b.date}T${b.time}`);
+            return db - da;
+        });
+
+        postsCounter.textContent = `Постов: ${sorted.length}`;
+
+        sorted.forEach((post, i) => {
+            const card = document.createElement('div');
+            card.className = 'post-card';
+            card.style.animationDelay = `${i * 0.06}s`;
+
+            const title = document.createElement('h3');
+            title.className = 'post-title';
+            title.textContent = post.title;
+            card.appendChild(title);
+
+            if (post.image) {
+                const imgWrap = document.createElement('div');
+                imgWrap.className = 'post-image-wrap';
+
+                const img = document.createElement('img');
+                img.src = post.image;
+                img.alt = post.title;
+                img.className = 'post-image';
+                img.loading = 'lazy';
+                imgWrap.appendChild(img);
+
+                const zoomHint = document.createElement('div');
+                zoomHint.className = 'post-zoom-hint';
+                zoomHint.innerHTML = '<i class="fas fa-expand"></i>';
+                imgWrap.appendChild(zoomHint);
+
+                imgWrap.addEventListener('click', () => {
+                    openLightbox(img.src, post.title);
+                });
+
+                card.appendChild(imgWrap);
+            }
+
+            if (post.text) {
+                const body = document.createElement('p');
+                body.className = 'post-body';
+                body.textContent = post.text;
+                card.appendChild(body);
+            }
+
+            const meta = document.createElement('div');
+            meta.className = 'post-meta';
+
+            const dt = document.createElement('span');
+            dt.className = 'post-date-time';
+            dt.innerHTML = `<i class="far fa-clock"></i> ${formatDate(post.date)} · ${post.time}`;
+            meta.appendChild(dt);
+
+            card.appendChild(meta);
+            postsList.appendChild(card);
+        });
+    }
+
+    renderPosts();
+
+    // ═══ LIGHTBOX (та же логика, что и в галерее) ═══
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxPlaceholder = document.getElementById('lightboxPlaceholder');
+    const lightboxComment = document.getElementById('lightboxComment');
+    const closeBtn = document.querySelector('.close-btn');
+
+    function openLightbox(src, comment) {
+        if (src) {
+            lightboxImg.src = src;
+            lightboxImg.style.display = 'block';
+            lightboxPlaceholder.style.display = 'none';
+        } else {
+            lightboxImg.style.display = 'none';
+            lightboxPlaceholder.style.display = 'block';
+        }
+
+        if (comment) {
+            lightboxComment.textContent = comment;
+            lightboxComment.style.display = 'block';
+        } else {
+            lightboxComment.style.display = 'none';
+        }
+
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+        lightboxComment.textContent = '';
+    }
+
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeLightbox();
+    });
+
+    closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+            closeLightbox();
+        }
+    });
+
+    lightboxImg.addEventListener('click', (e) => e.stopPropagation());
+    lightboxPlaceholder.addEventListener('click', (e) => e.stopPropagation());
+    lightboxComment.addEventListener('click', (e) => e.stopPropagation());
 </script>
-
 </body>
 </html>
