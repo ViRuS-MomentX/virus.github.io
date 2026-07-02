@@ -99,6 +99,44 @@ function render(){
     );
   }
 
+  <script>
+// === LIGHTBOX ДЛЯ ФОТО В ПОСТАХ ===
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const lightboxPlaceholder = document.getElementById('lightboxPlaceholder');
+const closeBtn = document.querySelector('.close-btn');
+
+function openLightbox(src) {
+  if (src) {
+    lightboxImg.src = src;
+    lightboxImg.style.display = 'block';
+    lightboxPlaceholder.style.display = 'none';
+  } else {
+    lightboxImg.style.display = 'none';
+    lightboxPlaceholder.style.display = 'block';
+  }
+  lightbox.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// Делегирование клика на весь контейнер с постами
+// ЗАМЕНИ '.posts-container' на реальный класс/id обёртки постов
+document.querySelector('.posts-container')?.addEventListener('click', (e) => {
+  const img = e.target.closest('img.post-photo'); // замени селектор под свой класс фото
+  if (!img) return;
+  openLightbox(img.src);
+});
+
+lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeLightbox(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+
   count.textContent = `Постов: ${list.length}`;
 
   if(list.length === 0){
