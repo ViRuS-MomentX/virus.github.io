@@ -36,27 +36,27 @@
     <div class="game-filters">
 
         <button class="game-filter active" data-game="">
-            <img src="all.png" alt="Все">
+            <img src="images/all.png" alt="Все">
         </button>
 
         <button class="game-filter" data-game="minecraft">
-            <img src="minecraft.png" alt="Minecraft">
+            <img src="images/minecraft.png" alt="Minecraft">
         </button>
 
         <button class="game-filter" data-game="roblox">
-            <img src="roblox.png" alt="Roblox">
+            <img src="images/roblox.png" alt="Roblox">
         </button>
 
         <button class="game-filter" data-game="phasmo">
-            <img src="phasmo.ico" alt="Phasmophobia">
+            <img src="images/phasmo.ico" alt="Phasmophobia">
         </button>
 
         <button class="game-filter" data-game="rivals">
-            <img src="marvel.png" alt="Marvel Rivals">
+            <img src="images/marvel.png" alt="Marvel Rivals">
         </button>
 
         <button class="game-filter" data-game="dbd">
-            <img src="dbd.jpg" alt="Dead by Daylight">
+            <img src="images/dbd.jpg" alt="Dead by Daylight">
         </button>
 
         <button class="game-filter irl" data-game="irl">
@@ -107,91 +107,89 @@
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // === ДАННЫЕ ГАЛЕРЕИ (каждое фото — объект) ===
-    // Здесь вы сами будете добавлять теги в поле tags, если хотите фильтровать,
-    // но кнопки фильтров я убрал. Если хотите их вернуть — допишем отдельно.
     const galleryData = [
-    { name: 'фух.jpg', comment: 'От судьбы не убежишь', game: 'minecraft' },
-    { name: 'фармилка.jpg', comment: 'Обиделся, видимо', game: 'minecraft' },
-    { name: 'только не в жопу.jpg', comment: 'Только не в дырку', game: 'rivals' },
-    { name: 'таракан.jpg', comment: 'Так быстро пластинку я ещё никогда не нёс', game: 'minecraft' },
-    { name: 'сушка.jpg', comment: 'Нам мало что известно о связях Марата', game: 'minecraft' },
-    { name: 'рыбка.jpg', comment: 'Водолаз венокс вышел на прогулку', game: 'minecraft' },
-    { name: 'предательство.jpg', comment: 'Ножом в спину', game: 'minecraft' },
-    { name: 'пинг.jpg', comment: 'Эта травма навсегда останется на компе Зораха', game: 'minecraft' },
-    { name: 'китаец.jpg', comment: 'Китаец делал этот спуск', game: 'minecraft' },
-    { name: 'джефф.jpg', comment: 'Лучший мой портал', game: 'rivals' },
-    { name: 'бамбук.jpg', comment: 'Нелегальнвй бизнес', game: 'minecraft' },
-    { name: 'арт.jpg', comment: 'Не надо было пить то зелье...', game: 'minecraft' },
-    { name: 'античит.jpg', comment: 'Проверка античита', game: 'minecraft' },
-    { name: 'смотрящий.jpg', comment: 'Сквад-ворлд. Золотые времена', game: 'minecraft' },
-    { name: 'зима.jpg', comment: 'Куда идём мы с пятачком', game: 'minecraft' },
-    { name: 'шахта.jpg', comment: 'Копаем', game: 'minecraft' },
-    { name: 'англия.jpg', comment: 'Чёртов английский', game: 'minecraft' },
-    { name: 'араб.jpg', comment: 'Новый план Аль-Каиды', game: 'minecraft' },
-    { name: 'извращенец.jpg', comment: 'Извращённый взгляд Рафаэля заприметил новую жертву', game: 'minecraft' },
-    { name: 'нагрузка.jpg', comment: 'Вирус - реально вирус', game: 'minecraft' },
-    { name: 'опомнился.jpg', comment: 'Опомнился', game: 'minecraft' },
-    { name: 'паук.jpg', comment: 'Мой подарок мейнеру паука на НГ', game: 'irl' },
-    { name: 'тайлер.jpg', comment: 'Тайлера здесь нет', game: 'minecraft' },
-    { name: 'лост.jpg', comment: 'Следующие часы будут незабываемыми', game: 'minecraft' },
-    { name: 'христос.png', comment: 'Второе пришествие Христа', game: 'minecraft' },
-    { name: 'состав.png', comment: 'Куда таким составом', game: 'minecraft' },
-    { name: 'крипер.png', comment: 'Так называемый Укротитель цыган', game: 'minecraft' },
-    { name: 'касперский.png', comment: 'Похоронил мученика', game: 'minecraft' },
-    { name: 'вардены.jpg', comment: 'Нюхачи расплодились', game: 'minecraft' },
-    { name: 'внедра.jpg', comment: 'Воздушный дайвер', game: 'minecraft' },
-    { name: 'алкоголь убивает.jpg', comment: 'Алкоголь убивает', game: 'roblox' },
-    { name: 'смысл жизни познаёт.jpg', comment: 'Смысл жизни познаёт', game: 'irl' },
-    { name: 'вылизывается.jpg', comment: 'Даже он моется', game: 'irl' },
-    { name: 'недоволльное лицо.jpg', comment: 'Как я, грязный и вонючий, посмел прикоснуться к такому чистому, как он', game: 'irl' },
-    { name: 'mrvl.jpg', comment: 'Горе горённое', game: 'rivals' },
-    { name: 'тоска.jpg', comment: 'Щас бы в марвел, а не вот это вот всё', game: 'roblox' },
-    { name: 'друг.jpg', comment: 'Да что тут думать', game: 'roblox' },
-    { name: 'удав.jpg', comment: 'Оседлали удава Павлика', game: 'roblox' },
-    { name: 'лег.jpg', comment: 'С чего бы начать', game: 'roblox' },
-    { name: 'винтер.jpg', comment: 'Диего Vinter: Ганг-Уор', game: 'roblox' },
-    { name: 'диего.jpg', comment: 'Диего Vinter раскрыл нас', game: 'roblox' },
-    { name: 'блондинка.jpg', comment: 'Кто её посадил за руль', game: 'roblox' },
-    { name: 'иврей.jpg', comment: 'Шоу у Вируса иврея', game: 'roblox' },
-    { name: 'обнимашки.jpg', comment: 'Обнимашки', game: 'roblox' },
-    { name: 'подкатывает.jpg', comment: 'Подкатывает', game: 'roblox' },
-    { name: 'плакать.jpg', comment: 'И сразу плакать', game: 'roblox' },
-    { name: 'шахматы2.jpg', comment: 'Его ждёт мат на 73 ходу', game: 'roblox' },
-    { name: 'яйца.jpg', comment: 'Потерялись', game: 'roblox' },
-    { name: 'завидует.jpg', comment: 'Завидовать плохо', game: 'roblox' },
-    { name: 'двое.jpg', comment: 'Мы отправили сильнейших', game: 'roblox' },
-    { name: 'расплата.jpg', comment: 'Вендетта', game: 'roblox' },
-    { name: 'жаль.jpg', comment: 'Я тут что-то нажал', game: 'roblox' },
-    { name: 'покакал.jpg', comment: 'Я покакал', game: 'roblox' },
-    { name: 'сосед.jpg', comment: 'Едем на мальдивы', game: 'roblox' },
-    { name: 'дед.jpg', comment: 'Тяжёлый случай', game: 'roblox' },
-    { name: 'айс.jpg', comment: '5к в час берёт', game: 'roblox' },
-    { name: 'дарова.jpg', comment: 'Не туда зашёл', game: 'roblox' },
-    { name: 'годжо.jpg', comment: 'Запечатали', game: 'roblox' },
-    { name: 'бывает.jpg', comment: 'Талисман', game: 'roblox' },
-    { name: 'лев.jpg', comment: 'Лев', game: 'minecraft' },
-    { name: 'гига.jpg', comment: 'Та самая компания друзей', game: 'minecraft' },
-    { name: 'кровать.jpg', comment: 'Кроватный монстр', game: 'minecraft' },
-    { name: 'маратко.jpg', comment: 'Назад дороги нет', game: 'minecraft' },
+    { name: 'images/фух.jpg', comment: 'От судьбы не убежишь', game: 'minecraft' },
+    { name: 'images/фармилка.jpg', comment: 'Обиделся, видимо', game: 'minecraft' },
+    { name: 'images/только не в жопу.jpg', comment: 'Только не в дырку', game: 'rivals' },
+    { name: 'images/таракан.jpg', comment: 'Так быстро пластинку я ещё никогда не нёс', game: 'minecraft' },
+    { name: 'images/сушка.jpg', comment: 'Нам мало что известно о связях Марата', game: 'minecraft' },
+    { name: 'images/рыбка.jpg', comment: 'Водолаз венокс вышел на прогулку', game: 'minecraft' },
+    { name: 'images/предательство.jpg', comment: 'Ножом в спину', game: 'minecraft' },
+    { name: 'images/пинг.jpg', comment: 'Эта травма навсегда останется на компе Зораха', game: 'minecraft' },
+    { name: 'images/китаец.jpg', comment: 'Китаец делал этот спуск', game: 'minecraft' },
+    { name: 'images/джефф.jpg', comment: 'Лучший мой портал', game: 'rivals' },
+    { name: 'images/бамбук.jpg', comment: 'Нелегальнвй бизнес', game: 'minecraft' },
+    { name: 'images/арт.jpg', comment: 'Не надо было пить то зелье...', game: 'minecraft' },
+    { name: 'images/античит.jpg', comment: 'Проверка античита', game: 'minecraft' },
+    { name: 'images/смотрящий.jpg', comment: 'Сквад-ворлд. Золотые времена', game: 'minecraft' },
+    { name: 'images/зима.jpg', comment: 'Куда идём мы с пятачком', game: 'minecraft' },
+    { name: 'images/шахта.jpg', comment: 'Копаем', game: 'minecraft' },
+    { name: 'images/англия.jpg', comment: 'Чёртов английский', game: 'minecraft' },
+    { name: 'images/араб.jpg', comment: 'Новый план Аль-Каиды', game: 'minecraft' },
+    { name: 'images/извращенец.jpg', comment: 'Извращённый взгляд Рафаэля заприметил новую жертву', game: 'minecraft' },
+    { name: 'images/нагрузка.jpg', comment: 'Вирус - реально вирус', game: 'minecraft' },
+    { name: 'images/опомнился.jpg', comment: 'Опомнился', game: 'minecraft' },
+    { name: 'images/паук.jpg', comment: 'Мой подарок мейнеру паука на НГ', game: 'irl' },
+    { name: 'images/тайлер.jpg', comment: 'Тайлера здесь нет', game: 'minecraft' },
+    { name: 'images/лост.jpg', comment: 'Следующие часы будут незабываемыми', game: 'minecraft' },
+    { name: 'images/христос.png', comment: 'Второе пришествие Христа', game: 'minecraft' },
+    { name: 'images/состав.png', comment: 'Куда таким составом', game: 'minecraft' },
+    { name: 'images/крипер.png', comment: 'Так называемый Укротитель цыган', game: 'minecraft' },
+    { name: 'images/касперский.png', comment: 'Похоронил мученика', game: 'minecraft' },
+    { name: 'images/вардены.jpg', comment: 'Нюхачи расплодились', game: 'minecraft' },
+    { name: 'images/внедра.jpg', comment: 'Воздушный дайвер', game: 'minecraft' },
+    { name: 'images/алкоголь убивает.jpg', comment: 'Алкоголь убивает', game: 'roblox' },
+    { name: 'images/смысл жизни познаёт.jpg', comment: 'Смысл жизни познаёт', game: 'irl' },
+    { name: 'images/вылизывается.jpg', comment: 'Даже он моется', game: 'irl' },
+    { name: 'images/недоволльное лицо.jpg', comment: 'Как я, грязный и вонючий, посмел прикоснуться к такому чистому, как он', game: 'irl' },
+    { name: 'images/mrvl.jpg', comment: 'Горе горённое', game: 'rivals' },
+    { name: 'images/тоска.jpg', comment: 'Щас бы в марвел, а не вот это вот всё', game: 'roblox' },
+    { name: 'images/друг.jpg', comment: 'Да что тут думать', game: 'roblox' },
+    { name: 'images/удав.jpg', comment: 'Оседлали удава Павлика', game: 'roblox' },
+    { name: 'images/лег.jpg', comment: 'С чего бы начать', game: 'roblox' },
+    { name: 'images/винтер.jpg', comment: 'Диего Vinter: Ганг-Уор', game: 'roblox' },
+    { name: 'images/диего.jpg', comment: 'Диего Vinter раскрыл нас', game: 'roblox' },
+    { name: 'images/блондинка.jpg', comment: 'Кто её посадил за руль', game: 'roblox' },
+    { name: 'images/иврей.jpg', comment: 'Шоу у Вируса иврея', game: 'roblox' },
+    { name: 'images/обнимашки.jpg', comment: 'Обнимашки', game: 'roblox' },
+    { name: 'images/подкатывает.jpg', comment: 'Подкатывает', game: 'roblox' },
+    { name: 'images/плакать.jpg', comment: 'И сразу плакать', game: 'roblox' },
+    { name: 'images/шахматы2.jpg', comment: 'Его ждёт мат на 73 ходу', game: 'roblox' },
+    { name: 'images/яйца.jpg', comment: 'Потерялись', game: 'roblox' },
+    { name: 'images/завидует.jpg', comment: 'Завидовать плохо', game: 'roblox' },
+    { name: 'images/двое.jpg', comment: 'Мы отправили сильнейших', game: 'roblox' },
+    { name: 'images/расплата.jpg', comment: 'Вендетта', game: 'roblox' },
+    { name: 'images/жаль.jpg', comment: 'Я тут что-то нажал', game: 'roblox' },
+    { name: 'images/покакал.jpg', comment: 'Я покакал', game: 'roblox' },
+    { name: 'images/сосед.jpg', comment: 'Едем на мальдивы', game: 'roblox' },
+    { name: 'images/дед.jpg', comment: 'Тяжёлый случай', game: 'roblox' },
+    { name: 'images/айс.jpg', comment: '5к в час берёт', game: 'roblox' },
+    { name: 'images/дарова.jpg', comment: 'Не туда зашёл', game: 'roblox' },
+    { name: 'images/годжо.jpg', comment: 'Запечатали', game: 'roblox' },
+    { name: 'images/бывает.jpg', comment: 'Талисман', game: 'roblox' },
+    { name: 'images/лев.jpg', comment: 'Лев', game: 'minecraft' },
+    { name: 'images/гига.jpg', comment: 'Та самая компания друзей', game: 'minecraft' },
+    { name: 'images/кровать.jpg', comment: 'Кроватный монстр', game: 'minecraft' },
+    { name: 'images/маратко.jpg', comment: 'Назад дороги нет', game: 'minecraft' },
     
-    { name: 'самолёт.jpg', comment: 'От-вин-та', game: 'minecraft' },
+    { name: 'images/самолёт.jpg', comment: 'От-вин-та', game: 'minecraft' },
 
-    { name: 'катаклизм.jpg', comment: 'И поспешил царь в Шамаханское царство', game: 'minecraft' },
-    { name: 'дино.jpg', comment: 'Все динозавары боялись т-рекса', game: 'phasmo' },
-    { name: 'охота.jpg', comment: 'Двое лучших гостхантеров вышли на охоту', game: 'phasmo' },
-    { name: 'рука.png', comment: 'Полтергейст оторвал ему ноги', game: 'phasmo' },
-    { name: 'машина.png', comment: 'Полтергейст задавил моего друга', game: 'phasmo' },
-    { name: 'лысый.png', comment: 'Гоняем лысого', game: 'phasmo' },
-    { name: 'зарядка.png', comment: 'Полтергейст свернул ему ноги', game: 'phasmo' },
+    { name: 'images/катаклизм.jpg', comment: 'И поспешил царь в Шамаханское царство', game: 'minecraft' },
+    { name: 'images/дино.jpg', comment: 'Все динозавары боялись т-рекса', game: 'phasmo' },
+    { name: 'images/охота.jpg', comment: 'Двое лучших гостхантеров вышли на охоту', game: 'phasmo' },
+    { name: 'images/рука.png', comment: 'Полтергейст оторвал ему ноги', game: 'phasmo' },
+    { name: 'images/машина.png', comment: 'Полтергейст задавил моего друга', game: 'phasmo' },
+    { name: 'images/лысый.png', comment: 'Гоняем лысого', game: 'phasmo' },
+    { name: 'images/зарядка.png', comment: 'Полтергейст свернул ему ноги', game: 'phasmo' },
 
-    { name: 'мокрый.jpg', comment: 'Всё норм, это он малину хавал', game: 'irl' },
-    { name: 'жопа.jpg', comment: 'Жопу моет, а этот подглядывает', game: 'irl' },
-    { name: 'помылся.jpg', comment: 'Теперь чистюля', game: 'irl' },
-    { name: 'помылся2.jpg', comment: 'Мокрая курица', game: 'irl' },
+    { name: 'images/мокрый.jpg', comment: 'Всё норм, это он малину хавал', game: 'irl' },
+    { name: 'images/жопа.jpg', comment: 'Жопу моет, а этот подглядывает', game: 'irl' },
+    { name: 'images/помылся.jpg', comment: 'Теперь чистюля', game: 'irl' },
+    { name: 'images/помылся2.jpg', comment: 'Мокрая курица', game: 'irl' },
 
-    { name: 'IMG_20260624_140422_709.jpg', comment: 'Только зашëл в хардкорный мир, а тут уже встречают', game: 'minecraft' },
-    { name: 'IMG_20260624_142151_960.jpg', comment: 'Первый день работы админом коту под хвост', game: 'minecraft' },
-    { name: 'IMG_20260624_142055_177.jpg', comment: 'Поганец вирус опять ломает сервер', game: 'minecraft' }
+    { name: 'images/IMG_20260624_140422_709.jpg', comment: 'Только зашëл в хардкорный мир, а тут уже встречают', game: 'minecraft' },
+    { name: 'images/IMG_20260624_142151_960.jpg', comment: 'Первый день работы админом коту под хвост', game: 'minecraft' },
+    { name: 'images/IMG_20260624_142055_177.jpg', comment: 'Поганец вирус опять ломает сервер', game: 'minecraft' }
 ];
 
     const totalSlots = galleryData.length;
