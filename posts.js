@@ -34,4 +34,5 @@ const posts = [
     text: "Happy independence day",
     image: "images/сша.jpg"
   },
+  
 ];
