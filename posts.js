@@ -34,5 +34,11 @@ const posts = [
     text: "Happy independence day",
     image: "images/сша.jpg"
   },
-  
+      {
+    title: "Squad World",
+    date: "2026-07-04",
+    time: "20:49",
+    text: "Добавлен новый проект - Squad World",
+    image: "images/squadworld.png"
+  },
 ];
