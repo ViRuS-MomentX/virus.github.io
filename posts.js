@@ -27,4 +27,11 @@ const posts = [
     text: "Сделал масштабную «уборку» в репозитории, теперь не стыдно оставлять ссылку на гитхаб",
     image: "images/гитхаб.png"
   },
+      {
+    title: "День Независимости",
+    date: "2026-07-04",
+    time: "18:16",
+    text: "Happy independence day",
+    image: "images/сша.jpg"
+  },
 ];
