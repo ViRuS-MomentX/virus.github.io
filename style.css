@@ -1,436 +1,1240 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
-    <link rel="manifest" href="icons/site.webmanifest">
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Галерея — Моя страничка</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
-</head>
-<body class="gallery-page">
- 
-<!-- ═══ TOP BAR ═══ -->
-<div class="topbar">
-    <div class="wrapper">
-        <nav class="topbar-nav">
-            <a href="index.html">главная</a>
-            <a href="gallery.html" class="on">галерея</a>
-            <a href="projects.html">проекты</a>
-            <a href="posts.html">интерактив</a>
-        </nav>
-    </div>
-</div>
+/* ═══════════════════════════════════════════
+   style.css — Моя страничка
+   ═══════════════════════════════════════════ */
 
-<!-- ═══ GALLERY HEADER ═══ -->
-<div class="wrapper page-title">
-    <h1>Галерея</h1>
-    <p class="gallery-subtitle">Мои <span class="shimmer-text">ШЕДЕВРЫ</span></p>
-    <p class="gallery-update-note">📸 Фото пополняются каждый день (если не лень)</p>
-</div>
-
-<!-- ═══ СТАТИСТИКА ГАЛЕРЕИ ═══ -->
-<div class="wrapper">
-    <div class="gallery-stats" id="galleryStats"></div>
-</div>
-
-<!-- ═══ ПОИСК (по центру) ═══ -->
-<div class="wrapper gallery-controls">
-
-    <div class="game-filters">
-
-        <button class="game-filter active" data-game="">
-            <img src="images/all.png" alt="Все">
-        </button>
-
-        <button class="game-filter" data-game="minecraft">
-            <img src="images/minecraft.png" alt="Minecraft">
-        </button>
-
-        <button class="game-filter" data-game="roblox">
-            <img src="images/roblox.png" alt="Roblox">
-        </button>
-
-        <button class="game-filter" data-game="phasmo">
-            <img src="images/phasmo.ico" alt="Phasmophobia">
-        </button>
-
-        <button class="game-filter" data-game="rivals">
-            <img src="images/marvel.png" alt="Marvel Rivals">
-        </button>
-
-        <button class="game-filter" data-game="dbd">
-            <img src="images/dbd.jpg" alt="Dead by Daylight">
-        </button>
-
-        <button class="game-filter irl" data-game="irl">
-            IRL
-        </button>
-
-</div>
-
-    <div class="search-row">
-        <input
-            type="text"
-            id="searchInput"
-            placeholder="🔍 Искать по комментарию..."
-        />
-        <button id="randomBtn" class="random-btn" title="Показать случайное фото">🎲 Случайное фото</button>
-    </div>
-
-    <div class="photo-counter" id="photoCounter">
-        Показано: 0 / 0
-    </div>
-
-</div>
-
-<!-- ═══ СЕТКА ГАЛЕРЕИ ═══ -->
-<div class="wrapper">
-    <div class="gallery-grid" id="galleryGrid"></div>
-</div>
-
-<!-- ═══ FOOTER ═══ -->
-<footer class="ft">
-    <div class="wrapper">
-        <div class="ft-l">
-            <div class="ft-d"></div> Моя страничка · <span id="year"></span>
-        </div>
-        <div class="ft-r">сделано с .html</div>
-    </div>
-</footer>
-
-<!-- ═══ LIGHTBOX ═══ -->
-<div id="lightbox">
-    <span class="close-btn">&times;</span>
-    <div class="lightbox-content">
-        <img src="" alt="Увеличенное фото" id="lightboxImg" style="display: none;" />
-        <div class="placeholder-text" id="lightboxPlaceholder" style="display: none;">Фото отсутствует</div>
-        <div class="lightbox-comment" id="lightboxComment"></div>
-    </div>
-</div>
-
-<script>
-    // === ГОД В ФУТЕРЕ ===
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // === ДАННЫЕ ГАЛЕРЕИ (каждое фото — объект) ===
-    const galleryData = [
-    { name: 'images/фух.jpg', comment: 'От судьбы не убежишь', game: 'minecraft' },
-    { name: 'images/фармилка.jpg', comment: 'Обиделся, видимо', game: 'minecraft' },
-    { name: 'images/только не в жопу.jpg', comment: 'Только не в дырку', game: 'rivals' },
-    { name: 'images/таракан.jpg', comment: 'Так быстро пластинку я ещё никогда не нёс', game: 'minecraft' },
-    { name: 'images/сушка.jpg', comment: 'Нам мало что известно о связях Марата', game: 'minecraft' },
-    { name: 'images/рыбка.jpg', comment: 'Водолаз венокс вышел на прогулку', game: 'minecraft' },
-    { name: 'images/предательство.jpg', comment: 'Ножом в спину', game: 'minecraft' },
-    { name: 'images/пинг.jpg', comment: 'Эта травма навсегда останется на компе Зораха', game: 'minecraft' },
-    { name: 'images/китаец.jpg', comment: 'Китаец делал этот спуск', game: 'minecraft' },
-    { name: 'images/джефф.jpg', comment: 'Лучший мой портал', game: 'rivals' },
-    { name: 'images/бамбук.jpg', comment: 'Нелегальнвй бизнес', game: 'minecraft' },
-    { name: 'images/арт.jpg', comment: 'Не надо было пить то зелье...', game: 'minecraft' },
-    { name: 'images/античит.jpg', comment: 'Проверка античита', game: 'minecraft' },
-    { name: 'images/смотрящий.jpg', comment: 'Сквад-ворлд. Золотые времена', game: 'minecraft' },
-    { name: 'images/зима.jpg', comment: 'Куда идём мы с пятачком', game: 'minecraft' },
-    { name: 'images/шахта.jpg', comment: 'Копаем', game: 'minecraft' },
-    { name: 'images/англия.jpg', comment: 'Чёртов английский', game: 'minecraft' },
-    { name: 'images/араб.jpg', comment: 'Новый план Аль-Каиды', game: 'minecraft' },
-    { name: 'images/извращенец.jpg', comment: 'Извращённый взгляд Рафаэля заприметил новую жертву', game: 'minecraft' },
-    { name: 'images/нагрузка.jpg', comment: 'Вирус - реально вирус', game: 'minecraft' },
-    { name: 'images/опомнился.jpg', comment: 'Опомнился', game: 'minecraft' },
-    { name: 'images/паук.jpg', comment: 'Мой подарок мейнеру паука на НГ', game: 'irl' },
-    { name: 'images/тайлер.jpg', comment: 'Тайлера здесь нет', game: 'minecraft' },
-    { name: 'images/лост.jpg', comment: 'Следующие часы будут незабываемыми', game: 'minecraft' },
-    { name: 'images/христос.png', comment: 'Второе пришествие Христа', game: 'minecraft' },
-    { name: 'images/состав.jpg', comment: 'Куда таким составом', game: 'minecraft' },
-    { name: 'images/крипер.png', comment: 'Так называемый Укротитель цыган', game: 'minecraft' },
-    { name: 'images/касперский.jpg', comment: 'Похоронил мученика', game: 'minecraft' },
-    { name: 'images/вардены.jpg', comment: 'Нюхачи расплодились', game: 'minecraft' },
-    { name: 'images/внедра.jpg', comment: 'Воздушный дайвер', game: 'minecraft' },
-    { name: 'images/алкоголь убивает.jpg', comment: 'Алкоголь убивает', game: 'roblox' },
-    { name: 'images/смысл жизни познаёт.jpg', comment: 'Смысл жизни познаёт', game: 'irl' },
-    { name: 'images/вылизывается.jpg', comment: 'Даже он моется', game: 'irl' },
-    { name: 'images/недоволльное лицо.jpg', comment: 'Как я, грязный и вонючий, посмел прикоснуться к такому чистому, как он', game: 'irl' },
-    { name: 'images/mrvl.jpg', comment: 'Горе горённое', game: 'rivals' },
-    { name: 'images/тоска.jpg', comment: 'Щас бы в марвел, а не вот это вот всё', game: 'roblox' },
-    { name: 'images/друг.jpg', comment: 'Да что тут думать', game: 'roblox' },
-    { name: 'images/удав.jpg', comment: 'Оседлали удава Павлика', game: 'roblox' },
-    { name: 'images/лег.jpg', comment: 'С чего бы начать', game: 'roblox' },
-    { name: 'images/винтер.jpg', comment: 'Диего Vinter: Ганг-Уор', game: 'roblox' },
-    { name: 'images/диего.jpg', comment: 'Диего Vinter раскрыл нас', game: 'roblox' },
-    { name: 'images/блондинка.jpg', comment: 'Кто её посадил за руль', game: 'roblox' },
-    { name: 'images/иврей.jpg', comment: 'Шоу у Вируса иврея', game: 'roblox' },
-    { name: 'images/обнимашки.jpg', comment: 'Обнимашки', game: 'roblox' },
-    { name: 'images/подкатывает.jpg', comment: 'Подкатывает', game: 'roblox' },
-    { name: 'images/плакать.jpg', comment: 'И сразу плакать', game: 'roblox' },
-    { name: 'images/шахматы2.jpg', comment: 'Его ждёт мат на 73 ходу', game: 'roblox' },
-    { name: 'images/яйца.jpg', comment: 'Потерялись', game: 'roblox' },
-    { name: 'images/завидует.jpg', comment: 'Завидовать плохо', game: 'roblox' },
-    { name: 'images/двое.jpg', comment: 'Мы отправили сильнейших', game: 'roblox' },
-    { name: 'images/расплата.jpg', comment: 'Вендетта', game: 'roblox' },
-    { name: 'images/жаль.jpg', comment: 'Я тут что-то нажал', game: 'roblox' },
-    { name: 'images/покакал.jpg', comment: 'Я покакал', game: 'roblox' },
-    { name: 'images/сосед.jpg', comment: 'Едем на мальдивы', game: 'roblox' },
-    { name: 'images/дед.jpg', comment: 'Тяжёлый случай', game: 'roblox' },
-    { name: 'images/айс.jpg', comment: '5к в час берёт', game: 'roblox' },
-    { name: 'images/дарова.jpg', comment: 'Не туда зашёл', game: 'roblox' },
-    { name: 'images/годжо.jpg', comment: 'Запечатали', game: 'roblox' },
-    { name: 'images/бывает.jpg', comment: 'Талисман', game: 'roblox' },
-    { name: 'images/лев.jpg', comment: 'Лев', game: 'minecraft' },
-    { name: 'images/гига.jpg', comment: 'Та самая компания друзей', game: 'minecraft' },
-    { name: 'images/кровать.jpg', comment: 'Кроватный монстр', game: 'minecraft' },
-    { name: 'images/маратко.jpg', comment: 'Назад дороги нет', game: 'minecraft' },
-    
-    { name: 'images/самолёт.jpg', comment: 'От-вин-та', game: 'minecraft' },
-
-    { name: 'images/катаклизм.jpg', comment: 'И поспешил царь в Шамаханское царство', game: 'minecraft' },
-    { name: 'images/дино.jpg', comment: 'Все динозавары боялись т-рекса', game: 'phasmo' },
-    { name: 'images/охота.jpg', comment: 'Двое лучших гостхантеров вышли на охоту', game: 'phasmo' },
-    { name: 'images/полтер.jpg', comment: 'Полтергейст оторвал ему ноги', game: 'phasmo' },
-    { name: 'images/машина.png', comment: 'Полтергейст задавил моего друга', game: 'phasmo' },
-    { name: 'images/лысый.png', comment: 'Гоняем лысого', game: 'phasmo' },
-    { name: 'images/зарядка.png', comment: 'Полтергейст свернул ему ноги', game: 'phasmo' },
-    { name: 'images/ресница.jpg', comment: 'Смотрите какие ресницы сделал', game: 'phasmo' },
-    { name: 'images/фото.png', comment: 'Фотоотчёт', game: 'phasmo' },
-    { name: 'images/иллюзия.jpg', comment: 'Иллюзия безопасности', game: 'phasmo' },
-    { name: 'images/активность.png', comment: 'У него происходит так называемый гост ивент', game: 'phasmo' },
-
-    { name: 'images/мокрый.jpg', comment: 'Всё норм, это он малину хавал', game: 'irl' },
-    { name: 'images/жопа.jpg', comment: 'Жопу моет, а этот подглядывает', game: 'irl' },
-    { name: 'images/помылся.jpg', comment: 'Теперь чистюля', game: 'irl' },
-    { name: 'images/помылся2.jpg', comment: 'Мокрая курица', game: 'irl' },
-
-    { name: 'images/встреча.jpg', comment: 'Только зашëл в хардкорный мир, а тут уже встречают', game: 'minecraft' },
-    { name: 'images/тру.jpg', comment: 'Первый день работы админом коту под хвост', game: 'minecraft' },
-    { name: 'images/поганец.jpg', comment: 'Поганец вирус опять ломает сервер', game: 'minecraft' },
-    { name: 'images/зорах.jpg', comment: 'Это одиночный мир. Но кто же виновник? Конечно Вирус!', game: 'minecraft' },
-    { name: 'images/хиперион.jpg', comment: 'Некогда это был лишь клинок Некрона, но наполненный запретными свитками, он обрел волю крушить саму ткань пространства...', game: 'minecraft' },
-];
- 
-    const totalSlots = galleryData.length;
-    const grid = document.getElementById('galleryGrid');
-    let activeGame = '';
-
-    // === НАЗВАНИЯ ИГР ДЛЯ СТАТИСТИКИ ===
-    const gameLabels = {
-        minecraft: 'Minecraft',
-        roblox: 'Roblox',
-        phasmo: 'Phasmophobia',
-        rivals: 'Marvel Rivals',
-        dbd: 'Dead by Daylight',
-        irl: 'IRL'
-    };
-
-    // === СТАТИСТИКА ГАЛЕРЕИ ===
-    function renderStats() {
-        const counts = {};
-        galleryData.forEach(item => {
-            counts[item.game] = (counts[item.game] || 0) + 1;
-        });
-
-        const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
-        const topGame = sorted.length ? (gameLabels[sorted[0][0]] || sorted[0][0]) : '—';
-        const categoriesCount = Object.keys(counts).length;
-
-        const statsEl = document.getElementById('galleryStats');
-        statsEl.innerHTML = `
-            <div class="stat-chip">
-                <span class="stat-num">${totalSlots}</span>
-                <span class="stat-label">фото всего</span>
-            </div>
-            <div class="stat-chip">
-                <span class="stat-num">${categoriesCount}</span>
-                <span class="stat-label">категорий</span>
-            </div>
-            <div class="stat-chip">
-                <span class="stat-num">${topGame}</span>
-                <span class="stat-label">чаще всего в кадре</span>
-            </div>
-        `;
-    }
-
-    // === ФУНКЦИЯ ГЕНЕРАЦИИ КАРТОЧЕК С УЧЁТОМ ПОИСКА ===
-    function renderGallery(searchText = '') {
-        grid.innerHTML = '';
-        let visibleCount = 0;
-
-        galleryData.forEach((item, index) => {
-            const comment = item.comment;
-            const imageName = item.name;
-            if (
-    activeGame &&
-    item.game !== activeGame
-) {
-    return;
+/* ── Reset & Base ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-            // Поиск по комментарию (без учёта регистра)
-            if (searchText.trim() !== '' && !comment.toLowerCase().includes(searchText.toLowerCase())) return;
+:root {
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --bg-card: rgba(30, 30, 30, 0.7);
+  --border-color: #2a2a2a;
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --text-muted: #6e6e6e;
+  --accent: #7c5cfc;
+  --accent-hover: #6d4fe0;
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
 
-            visibleCount++;
+html {
+  scroll-behavior: smooth;
+}
 
-            const card = document.createElement('div');
-            card.className = 'gallery-item';
-            card.dataset.comment = comment;
-            card.style.animationDelay = `${Math.min(visibleCount * 0.02, 0.6)}s`;
+body {
+  font-family: 'Inter', 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: radial-gradient(ellipse at 20% 30%, #1a1a2e, #121212 70%);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+}
 
-            const thumb = document.createElement('div');
-            thumb.style.width = '100%';
-            thumb.style.height = '200px';
-            thumb.style.backgroundColor = '#2a2a2a';
-            thumb.style.display = 'flex';
-            thumb.style.alignItems = 'center';
-            thumb.style.justifyContent = 'center';
-            thumb.style.color = '#666';
-            thumb.style.fontSize = '1rem';
-            thumb.style.fontWeight = '500';
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
 
-            if (imageName) {
-                const img = document.createElement('img');
-                img.src = imageName;
-                img.alt = `Фото ${index+1}`;
-                img.style.width = '100%';
-                img.style.height = '100%';
-                img.style.objectFit = 'cover';
-                img.style.display = 'block';
-                thumb.appendChild(img);
-            } else {
-                thumb.textContent = `Фото ${index+1}`;
-            }
+.wrapper,
+.topbar,
+.ft {
+  position: relative;
+  z-index: 1;
+}
 
-            const desc = document.createElement('div');
-            desc.className = 'desc';
-            desc.textContent = comment;
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
 
-            card.appendChild(thumb);
-            card.appendChild(desc);
-            grid.appendChild(card);
-        });
+/* ═══ TOP BAR ═══ */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  background: rgba(18, 18, 18, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+}
 
-        // Обновляем счётчик
-        document.getElementById('photoCounter').textContent = `Показано: ${visibleCount} / ${totalSlots}`;
-    }
+.topbar .wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 2rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
 
-    // === ПОИСК ===
-    document.getElementById('searchInput').addEventListener('input', function() {
-        renderGallery(this.value);
-    });
+.topbar-nav {
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
 
-    // === СЛУЧАЙНОЕ ФОТО ===
-    document.getElementById('randomBtn').addEventListener('click', () => {
-        const pool = activeGame ? galleryData.filter(item => item.game === activeGame) : galleryData;
-        if (!pool.length) return;
-        const pick = pool[Math.floor(Math.random() * pool.length)];
-        openLightbox(pick.name, pick.comment);
-    });
+.topbar-nav a {
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.5rem 1.2rem;
+  border-radius: 100px;
+  transition: all 0.25s ease;
+}
 
-    // === ИНИЦИАЛИЗАЦИЯ ===
-    document
-.querySelectorAll('.game-filter')
-.forEach(button => {
+.topbar-nav a:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
 
-    button.addEventListener('click', () => {
+.topbar-nav a.on {
+  color: #ffffff;
+  background: var(--accent);
+}
 
-        const game = button.dataset.game;
+/* ═══ HERO (Главная) ═══ */
+.hero {
+  padding: 4rem 0 3rem;
+  position: relative;
+  overflow: hidden;
+}
 
-        if (activeGame === game) {
-            activeGame = '';
-        } else {
-            activeGame = game;
-        }
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(124, 92, 252, 0.08), transparent 65%);
+  pointer-events: none;
+}
 
-        document
-        .querySelectorAll('.game-filter')
-        .forEach(btn =>
-            btn.classList.remove('active')
-        );
+.hero-grid {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 3rem;
+  align-items: start;
+  animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
 
-        if (activeGame) {
-            button.classList.add('active');
-        } else {
-            document
-            .querySelector('[data-game=""]')
-            .classList.add('active');
-        }
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-        renderGallery(
-            document.getElementById('searchInput').value
-        );
+.hero-avatar {
+  width: 200px;
+  height: 200px;
+  background: var(--bg-secondary);
+  border: 3px solid var(--accent);
+  border-radius: 0;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: var(--shadow);
+}
 
-    });
+.hero-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
-});
-    renderStats();
-    renderGallery('');
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
 
-    // === LIGHTBOX ===
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightboxImg');
-    const lightboxPlaceholder = document.getElementById('lightboxPlaceholder');
-    const lightboxComment = document.getElementById('lightboxComment');
-    const closeBtn = document.querySelector('.close-btn');
+.hero-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 500;
+}
 
-    function openLightbox(src, comment) {
-        if (src) {
-            lightboxImg.src = src;
-            lightboxImg.style.display = 'block';
-            lightboxPlaceholder.style.display = 'none';
-        } else {
-            lightboxImg.style.display = 'none';
-            lightboxPlaceholder.style.display = 'block';
-        }
+.hero-content h1 {
+  font-size: clamp(2.8rem, 6vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
 
-        if (comment) {
-            lightboxComment.textContent = comment;
-            lightboxComment.style.display = 'block';
-        } else {
-            lightboxComment.style.display = 'none';
-        }
+.hero-content h1 em {
+  font-style: normal;
+  background: linear-gradient(270deg, #5865F2, #7b87f5, #a78bfa, #6c7af0, #3b48c4, #5865F2);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 1.2s linear infinite;
+}
 
-        lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 300% 50%;
+  }
+}
 
-    function closeLightbox() {
-        lightbox.classList.remove('active');
-        document.body.style.overflow = '';
-        lightboxComment.textContent = '';
-    }
+.shimmer-text {
+  font-style: normal;
+  background: linear-gradient(270deg, #5865F2, #7b87f5, #a78bfa, #6c7af0, #3b48c4, #5865F2);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 1.2s linear infinite;
+}
 
-    grid.addEventListener('click', (e) => {
-        const card = e.target.closest('.gallery-item');
-        if (!card) return;
-        const img = card.querySelector('img');
-        const comment = card.dataset.comment || '';
-        if (img) {
-            openLightbox(img.src, comment);
-        } else {
-            openLightbox(null, comment);
-        }
-    });
+.hero-sub {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 500px;
+  font-weight: 300;
+  line-height: 1.8;
+  margin: 0;
+}
 
-    lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) closeLightbox();
-    });
+/* ═══ СОЦСЕТИ (квадратные иконки) ═══ */
+.hero-socials {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
 
-    closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        closeLightbox();
-    });
+.hero-socials .social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  font-size: 28px;
+  color: white;
+}
 
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-            closeLightbox();
-        }
-    });
+.hero-socials .social-icon:hover {
+  transform: translateY(-4px) scale(1.03);
+  filter: brightness(1.15);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
 
-    lightboxImg.addEventListener('click', (e) => e.stopPropagation());
-    lightboxPlaceholder.addEventListener('click', (e) => e.stopPropagation());
-    lightboxComment.addEventListener('click', (e) => e.stopPropagation());
-</script>
-</body>
-</html>
+.hero-socials .social-telegram {
+  background: #0088cc;
+}
+.hero-socials .social-discord {
+  background: #5865F2;
+}
+.hero-socials .social-tiktok {
+  background: #000000;
+}
+
+.cta-row {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.8rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 100px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-decoration: none;
+}
+
+.cta.p {
+  background: var(--accent);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 15px rgba(124, 92, 252, 0.3);
+}
+
+.cta.p:hover {
+  background: var(--accent-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(124, 92, 252, 0.4);
+}
+
+.cta.s {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.cta.s:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  transform: translateY(-3px);
+}
+
+/* ═══ GALLERY (общие стили) ═══ */
+.page-title {
+  padding: 3rem 0 0;
+  text-align: center;
+}
+
+.page-title h1 {
+  font-size: clamp(2.5rem, 5vw, 3.8rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.page-title p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  font-weight: 300;
+}
+
+.gallery-subtitle {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-top: 0.2rem;
+  color: var(--text-primary);
+}
+
+.gallery-update-note {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+  margin-top: 0.3rem;
+  font-style: italic;
+  opacity: 0.7;
+  letter-spacing: 0.02em;
+}
+
+/* ═══ GALLERY CONTROLS (фильтры + поиск) ═══ */
+.gallery-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  margin: 28px auto 0;
+}
+
+/* ── Ряд кнопок-игр ── */
+.game-filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.game-filter {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  border: 2px solid transparent;
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  padding: 0;
+  position: relative;
+}
+
+.game-filter img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.game-filter:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.game-filter.active {
+  border-color: #7c5cfc;
+  background: rgba(124, 92, 252, 0.15);
+  box-shadow: 0 0 0 2px rgba(124, 92, 252, 0.3),
+              0 2px 18px rgba(124, 92, 252, 0.25);
+}
+
+/* Нижняя полоска у активного фильтра */
+.game-filter.active::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 3px;
+  border-radius: 2px;
+  background: #7c5cfc;
+}
+
+/* IRL — текстовая кнопка */
+.game-filter.irl {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ccc;
+  letter-spacing: 0.05em;
+  width: 72px;
+}
+
+/* ── Поисковая строка (общая, гэллерея + посты) ── */
+#searchInput {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 14px 20px 14px 48px;
+  border-radius: 50px;
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  color: #e0e0e0;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%238b5cf6' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 16px center;
+  box-sizing: border-box;
+}
+
+#searchInput::placeholder {
+  color: rgba(180, 180, 200, 0.5);
+}
+
+#searchInput:focus {
+  border-color: rgba(124, 92, 252, 0.5);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Обёртка строки поиска на странице "Интерактив" — центрирует инпут */
+.posts-search-wrap {
+  width: 100%;
+  max-width: 640px;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+}
+
+/* Альтернативный вариант поисковой строки (с иконкой-лупой внутри блока) */
+.posts-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 640px;
+  margin: 16px auto;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: #161616;
+  border: 1px solid #2a2a2a;
+  transition: .2s;
+}
+
+.posts-search:focus-within {
+  border-color: #4a4af0;
+  box-shadow: 0 0 0 2px rgba(74, 74, 240, 0.2);
+}
+
+.posts-search i {
+  color: #777;
+}
+
+.posts-search input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 14px;
+}
+
+/* ── Счётчик фото ── */
+.photo-counter {
+  text-align: center;
+  color: rgba(180, 180, 200, 0.55);
+  font-size: 0.85rem;
+  margin-top: 8px;
+  margin-bottom: 28px;
+}
+
+/* ── Счётчик постов (страница "Интерактив") ── */
+.posts-count {
+  text-align: center;
+  color: rgba(180, 180, 200, 0.55);
+  font-size: 0.85rem;
+  margin-top: 8px;
+  margin-bottom: 28px;
+}
+
+/* ═══ GALLERY GRID ═══ */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.8rem;
+  padding: 2rem 0 60px;
+}
+
+.gallery-item {
+  background: var(--bg-card);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  opacity: 0;
+  animation: cardFadeIn 0.4s ease forwards;
+}
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.gallery-item:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent);
+  box-shadow: var(--shadow);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  background: var(--bg-primary);
+}
+
+.gallery-item .desc {
+  padding: 1.2rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+  white-space: pre-wrap;
+}
+
+/* ═══ LIGHTBOX ═══ */
+#lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 20px;
+}
+
+#lightbox.active {
+  display: flex;
+}
+
+.lightbox-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 92%;
+  max-height: 92vh;
+  gap: 1rem;
+  cursor: default;
+}
+
+#lightbox img {
+  max-width: 100%;
+  max-height: calc(92vh - 6rem);
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
+  animation: zoomIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#lightbox .placeholder-text {
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 300;
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+}
+
+.lightbox-comment {
+  max-width: 80%;
+  color: #ffffff;
+  font-size: 2.8rem;
+  font-weight: 700;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.65);
+  padding: 1.2rem 2.5rem;
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+  display: none;
+  animation: fadeIn 0.4s ease;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  line-height: 1.3;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin: 0 auto;
+  flex-shrink: 0;
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+#lightbox .close-btn {
+  position: fixed;
+  top: 25px;
+  right: 35px;
+  font-size: 42px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 300;
+  transition: transform 0.2s ease;
+  z-index: 1001;
+  user-select: none;
+}
+
+#lightbox .close-btn:hover {
+  transform: scale(1.2) rotate(90deg);
+}
+
+/* ═══ PROJECTS ═══ */
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem 0;
+}
+
+.project-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.8rem;
+  transition: all 0.3s ease;
+}
+
+.project-card:hover {
+  border-color: var(--accent);
+  transform: translateX(8px);
+  box-shadow: var(--shadow);
+}
+
+.project-card h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.project-card p {
+  color: var(--text-secondary);
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.project-card .link {
+  display: inline-block;
+  margin-top: 0.8rem;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.project-card .link:hover {
+  color: var(--accent-hover);
+}
+
+/* ═══ POSTS (Интерактив) ═══ */
+.posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  padding: 1rem 0 60px;
+}
+
+.post-card {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--bg-card);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  padding: 1.6rem;
+  overflow: hidden;
+  opacity: 0;
+  animation: postFadeIn 0.5s ease forwards;
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@keyframes postFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* акцентная полоска сверху карточки */
+.post-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.6;
+}
+
+.post-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+
+.post-card .post-title {
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.1rem;
+  color: var(--text-primary);
+}
+
+.post-tag {
+  display: inline-block;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: #2b2b40;
+  color: #9fa8ff;
+  margin-bottom: 8px;
+}
+
+/* ── картинка поста + лупа при наведении ── */
+.post-image-wrap {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 1.1rem;
+  cursor: pointer;
+  background: var(--bg-primary);
+}
+
+.post-card .post-image,
+.post-image {
+  width: 100%;
+  max-width: 100%;
+  max-height: 280px;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  border-radius: 10px;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.post-image-wrap:hover .post-image {
+  transform: scale(1.04);
+  filter: brightness(0.75);
+}
+
+.post-zoom-hint {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+.post-image-wrap:hover .post-zoom-hint {
+  opacity: 1;
+}
+
+.post-card .post-body,
+.post-body {
+  color: var(--text-secondary);
+  font-weight: 300;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  font-size: 0.92rem;
+}
+
+.post-card .post-meta,
+.post-meta {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 1.3rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--border-color);
+  font-size: 12px;
+  opacity: .85;
+}
+
+.post-date-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(124, 92, 252, 0.07);
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  border: 1px solid rgba(124, 92, 252, 0.15);
+}
+
+.post-date-time i {
+  color: var(--accent);
+  font-size: 0.7rem;
+}
+
+/* ── Подсветка результатов поиска ── */
+mark {
+  background: #4a4af0;
+  color: white;
+  padding: 0 3px;
+  border-radius: 4px;
+}
+
+/* ═══ БЕГУЩАЯ СТРОКА С ИИ ═══ */
+.ai-marquee {
+  position: relative;
+  overflow: hidden;
+  margin-top: 3rem;
+  padding: 1.5rem 0;
+  background: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.ai-marquee::before,
+.ai-marquee::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 120px;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.ai-marquee::before {
+  left: 0;
+  background: linear-gradient(to right, #121212, transparent);
+}
+
+.ai-marquee::after {
+  right: 0;
+  background: linear-gradient(to left, #121212, transparent);
+}
+
+.ai-title {
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.ai-track {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: max-content;
+  animation: aiScroll 25s linear infinite;
+}
+
+.ai-chip {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .85rem 1.25rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid rgba(255, 255, 255, .08);
+  color: var(--text-primary);
+  white-space: nowrap;
+  transition: all .25s ease;
+}
+
+.ai-chip:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  background: rgba(124, 92, 252, 0.08);
+}
+
+.ai-chip i {
+  color: var(--accent);
+  font-size: 1rem;
+}
+
+@keyframes aiScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ═══ FOOTER ═══ */
+.ft {
+  padding: 2rem 0;
+  border-top: 1px solid var(--border-color);
+  margin-top: 2rem;
+}
+
+.ft .wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ft-l {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.ft-d {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  border-radius: 2px;
+  opacity: 0.6;
+}
+
+.ft-r {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  padding: 0.2rem 0.8rem;
+  background: var(--bg-secondary);
+  border-radius: 100px;
+  border: 1px solid var(--border-color);
+}
+
+/* ═══════════════════════════════════════════
+   ДОПОЛНЕНИЯ ДЛЯ СТРАНИЦЫ ГАЛЕРЕИ
+   — расширяем контент и заполняем пустые поля
+   ═══════════════════════════════════════════ */
+
+/* Декоративные пятна света по бокам, чтобы страница
+   не выглядела пустой на широких экранах */
+body.gallery-page::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 4% 20%, rgba(124, 92, 252, 0.14), transparent 30%),
+    radial-gradient(circle at 96% 15%, rgba(88, 101, 242, 0.12), transparent 32%),
+    radial-gradient(circle at 8% 80%, rgba(167, 139, 250, 0.10), transparent 28%),
+    radial-gradient(circle at 94% 75%, rgba(124, 92, 252, 0.10), transparent 30%);
+}
+
+/* Расширяем контейнер на странице галереи, чтобы
+   задействовать боковые поля на больших мониторах */
+body.gallery-page .wrapper {
+  max-width: 1560px;
+}
+
+/* ── Статистика галереи (авточисла из данных) ── */
+.gallery-stats {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.8rem;
+}
+
+.stat-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  min-width: 150px;
+  padding: 1rem 1.6rem;
+  background: var(--bg-card);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.stat-chip:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+
+.stat-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  background: linear-gradient(270deg, #5865F2, #a78bfa, #5865F2);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── Сетка галереи: 5 колонок на широких экранах ── */
+body.gallery-page .gallery-grid {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+@media (max-width: 1500px) {
+  body.gallery-page .gallery-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 1180px) {
+  body.gallery-page .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  body.gallery-page .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  body.gallery-page .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 768px) {
+  .topbar .wrapper {
+    justify-content: center;
+    padding: 0.8rem 1.5rem;
+  }
+
+  .post-card {
+    padding: 1.3rem;
+  }
+
+  .post-card .post-title {
+    font-size: 1.1rem;
+  }
+
+  .post-card .post-image,
+  .post-image {
+    max-height: 220px;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .hero-avatar {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+  }
+
+  .hero-content {
+    align-items: center;
+  }
+
+  .hero-sub {
+    max-width: 100%;
+  }
+
+  .hero-socials {
+    justify-content: center;
+  }
+
+  .cta-row {
+    justify-content: center;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+
+  .gallery-item img {
+    height: 150px;
+  }
+
+  .wrapper {
+    padding: 0 1.25rem;
+  }
+
+  #lightbox .close-btn {
+    top: 15px;
+    right: 20px;
+    font-size: 32px;
+  }
+
+  .gallery-subtitle {
+    font-size: 2rem;
+  }
+
+  .gallery-update-note {
+    font-size: 0.85rem;
+  }
+
+  .lightbox-comment {
+    font-size: 1.8rem;
+    padding: 0.8rem 1.5rem;
+    max-width: 90%;
+    border-radius: 14px;
+  }
+
+  .game-filter {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .game-filter img {
+    width: 24px !important;
+    height: 24px !important;
+    max-width: 24px !important;
+    max-height: 24px !important;
+  }
+
+  .game-filter.irl {
+    min-width: 60px;
+    padding: 0 14px;
+    font-size: 0.8rem;
+  }
+
+  .ai-chip {
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .search-box input {
+    height: 48px;
+    font-size: 0.9rem;
+  }
+
+  .stat-chip {
+    min-width: 110px;
+    padding: 0.8rem 1.1rem;
+  }
+
+  .stat-num {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .lightbox-comment {
+    font-size: 1.4rem;
+    padding: 0.6rem 1.2rem;
+  }
+
+  .post-card {
+    padding: 1.1rem;
+  }
+
+  .post-card .post-image,
+  .post-image {
+    max-height: 200px;
+  }
+}
