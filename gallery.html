@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="gallery-page">
  
 <!-- ═══ TOP BAR ═══ -->
 <div class="topbar">
@@ -33,6 +33,11 @@
     <h1>Галерея</h1>
     <p class="gallery-subtitle">Мои <span class="shimmer-text">ШЕДЕВРЫ</span></p>
     <p class="gallery-update-note">📸 Фото пополняются каждый день (если не лень)</p>
+</div>
+
+<!-- ═══ СТАТИСТИКА ГАЛЕРЕИ ═══ -->
+<div class="wrapper">
+    <div class="gallery-stats" id="galleryStats"></div>
 </div>
 
 <!-- ═══ ПОИСК (по центру) ═══ -->
@@ -69,11 +74,14 @@
         </button>
 
 </div>
+
+    <div class="search-row">
         <input
             type="text"
             id="searchInput"
             placeholder="🔍 Искать по комментарию..."
         />
+        <button id="randomBtn" class="random-btn" title="Показать случайное фото">🎲 Случайное фото</button>
     </div>
 
     <div class="photo-counter" id="photoCounter">
@@ -207,6 +215,44 @@
     const grid = document.getElementById('galleryGrid');
     let activeGame = '';
 
+    // === НАЗВАНИЯ ИГР ДЛЯ СТАТИСТИКИ ===
+    const gameLabels = {
+        minecraft: 'Minecraft',
+        roblox: 'Roblox',
+        phasmo: 'Phasmophobia',
+        rivals: 'Marvel Rivals',
+        dbd: 'Dead by Daylight',
+        irl: 'IRL'
+    };
+
+    // === СТАТИСТИКА ГАЛЕРЕИ ===
+    function renderStats() {
+        const counts = {};
+        galleryData.forEach(item => {
+            counts[item.game] = (counts[item.game] || 0) + 1;
+        });
+
+        const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+        const topGame = sorted.length ? (gameLabels[sorted[0][0]] || sorted[0][0]) : '—';
+        const categoriesCount = Object.keys(counts).length;
+
+        const statsEl = document.getElementById('galleryStats');
+        statsEl.innerHTML = `
+            <div class="stat-chip">
+                <span class="stat-num">${totalSlots}</span>
+                <span class="stat-label">фото всего</span>
+            </div>
+            <div class="stat-chip">
+                <span class="stat-num">${categoriesCount}</span>
+                <span class="stat-label">категорий</span>
+            </div>
+            <div class="stat-chip">
+                <span class="stat-num">${topGame}</span>
+                <span class="stat-label">чаще всего в кадре</span>
+            </div>
+        `;
+    }
+
     // === ФУНКЦИЯ ГЕНЕРАЦИИ КАРТОЧЕК С УЧЁТОМ ПОИСКА ===
     function renderGallery(searchText = '') {
         grid.innerHTML = '';
@@ -230,6 +276,7 @@
             const card = document.createElement('div');
             card.className = 'gallery-item';
             card.dataset.comment = comment;
+            card.style.animationDelay = `${Math.min(visibleCount * 0.02, 0.6)}s`;
 
             const thumb = document.createElement('div');
             thumb.style.width = '100%';
@@ -273,6 +320,14 @@
         renderGallery(this.value);
     });
 
+    // === СЛУЧАЙНОЕ ФОТО ===
+    document.getElementById('randomBtn').addEventListener('click', () => {
+        const pool = activeGame ? galleryData.filter(item => item.game === activeGame) : galleryData;
+        if (!pool.length) return;
+        const pick = pool[Math.floor(Math.random() * pool.length)];
+        openLightbox(pick.name, pick.comment);
+    });
+
     // === ИНИЦИАЛИЗАЦИЯ ===
     document
 .querySelectorAll('.game-filter')
@@ -309,6 +364,7 @@
     });
 
 });
+    renderStats();
     renderGallery('');
 
     // === LIGHTBOX ===
