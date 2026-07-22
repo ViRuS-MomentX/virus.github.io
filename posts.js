@@ -55,4 +55,11 @@ const posts = [
     text: "Ну имба же",
     image: "images/voice.jpg"
   },
+          {
+    title: "",
+    date: "2026-07-22",
+    time: "18:30",
+    text: "На кристаликсе больше не играем",
+    image: "images/троян.jpg"
+  },
 ];
