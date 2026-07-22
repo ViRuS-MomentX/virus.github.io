@@ -56,7 +56,7 @@ const posts = [
     image: "images/voice.jpg"
   },
           {
-    title: "",
+    title: " ",
     date: "2026-07-22",
     time: "18:30",
     text: "На кристаликсе больше не играем",
