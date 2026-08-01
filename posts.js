@@ -79,4 +79,11 @@ const posts = [
     image: "images/фонтан.jpg",
     category: "personal"
   },
+    {
+    title: "Обнова",
+    date: "2026-08-01",
+    time: "22:55",
+    text: "Обновил дизайн сайта, добавил кнопку «Перемешать», ещё что-то и на этом всё)",
+    image: "images/дагестан.jpg"
+  },
 ];
