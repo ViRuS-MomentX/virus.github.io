@@ -79,7 +79,7 @@
             id="searchInput"
             placeholder="🔍 Искать по комментарию..."
         />
-
+        <button class="shuffle-button" id="shuffleButton" type="button">перемешать</button>
     </div>
 
     <div class="photo-counter" id="photoCounter">
@@ -118,7 +118,7 @@
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // === ДАННЫЕ ГАЛЕРЕИ (каждое фото — объект) ===
-    const galleryData = [
+    let galleryData = [
     { name: 'images/фух.jpg', comment: 'От судьбы не убежишь', game: 'minecraft' },
     { name: 'images/фармилка.jpg', comment: 'Обиделся, видимо', game: 'minecraft' },
     { name: 'images/только не в жопу.jpg', comment: 'Только не в дырку', game: 'rivals' },
@@ -132,7 +132,6 @@
     { name: 'images/бамбук.jpg', comment: 'Нелегальнвй бизнес', game: 'minecraft' },
     { name: 'images/арт.jpg', comment: 'Не надо было пить то зелье...', game: 'minecraft' },
     { name: 'images/античит.jpg', comment: 'Проверка античита', game: 'minecraft' },
-    { name: 'images/смотрящий.jpg', comment: 'Сквад-ворлд. Золотые времена', game: 'minecraft' },
     { name: 'images/зима.jpg', comment: 'Куда идём мы с пятачком', game: 'minecraft' },
     { name: 'images/шахта.jpg', comment: 'Копаем', game: 'minecraft' },
     { name: 'images/англия.jpg', comment: 'Чёртов английский', game: 'minecraft' },
@@ -242,6 +241,33 @@
     const grid = document.getElementById('galleryGrid');
     let activeGame = '';
 
+    function shuffleArray(items) {
+        const copy = [...items];
+        for (let i = copy.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+        return copy;
+    }
+
+    function escapeHtml(str) {
+        return (str || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    }
+
+    function escapeRegExp(str) {
+        return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    function highlight(text, query) {
+        const safe = escapeHtml(text);
+        if (!query) return safe;
+        const re = new RegExp(escapeRegExp(query), 'gi');
+        return safe.replace(re, (match) => `<mark>${match}</mark>`);
+    }
+
     // === НАЗВАНИЯ ИГР ДЛЯ СТАТИСТИКИ ===
     const gameLabels = {
         minecraft: 'Minecraft',
@@ -281,6 +307,15 @@
     }
 
     // === ФУНКЦИЯ ГЕНЕРАЦИИ КАРТОЧЕК С УЧЁТОМ ПОИСКА ===
+    function shuffleArray(items) {
+        const copy = [...items];
+        for (let i = copy.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+        return copy;
+    }
+
     function renderGallery(searchText = '') {
         grid.innerHTML = '';
         let visibleCount = 0;
@@ -288,14 +323,10 @@
         galleryData.forEach((item, index) => {
             const comment = item.comment;
             const imageName = item.name;
-            if (
-    activeGame &&
-    item.game !== activeGame
-) {
-    return;
-}
+            if (activeGame && item.game !== activeGame) {
+                return;
+            }
 
-            // Поиск по комментарию (без учёта регистра)
             if (searchText.trim() !== '' && !comment.toLowerCase().includes(searchText.toLowerCase())) return;
 
             visibleCount++;
@@ -303,42 +334,34 @@
             const card = document.createElement('div');
             card.className = 'gallery-item';
             card.dataset.comment = comment;
+            card.dataset.game = item.game;
             card.style.animationDelay = `${Math.min(visibleCount * 0.02, 0.6)}s`;
+            const variantClass = (index % 5 === 0) ? 'is-wide' : (index % 3 === 0 ? 'is-tall' : 'is-default');
+            card.classList.add(variantClass);
+            card.classList.add('shuffle-in');
 
             const thumb = document.createElement('div');
-            thumb.style.width = '100%';
-            thumb.style.height = '200px';
+            thumb.className = 'gallery-thumb';
             thumb.style.backgroundColor = '#2a2a2a';
-            thumb.style.display = 'flex';
-            thumb.style.alignItems = 'center';
-            thumb.style.justifyContent = 'center';
-            thumb.style.color = '#666';
-            thumb.style.fontSize = '1rem';
-            thumb.style.fontWeight = '500';
 
             if (imageName) {
                 const img = document.createElement('img');
                 img.src = imageName;
-                img.alt = `Фото ${index+1}`;
-                img.style.width = '100%';
-                img.style.height = '100%';
-                img.style.objectFit = 'cover';
-                img.style.display = 'block';
+                img.alt = `Фото ${index + 1}`;
                 thumb.appendChild(img);
             } else {
-                thumb.textContent = `Фото ${index+1}`;
+                thumb.textContent = `Фото ${index + 1}`;
             }
 
             const desc = document.createElement('div');
             desc.className = 'desc';
-            desc.textContent = comment;
+            desc.innerHTML = `<span class="card-tag">${gameLabels[item.game] || item.game}</span><span>${highlight(comment, searchText)}</span>`;
 
             card.appendChild(thumb);
             card.appendChild(desc);
             grid.appendChild(card);
         });
 
-        // Обновляем счётчик
         document.getElementById('photoCounter').textContent = `Показано: ${visibleCount} / ${totalSlots}`;
     }
 
@@ -347,7 +370,10 @@
         renderGallery(this.value);
     });
 
-
+    document.getElementById('shuffleButton').addEventListener('click', () => {
+        galleryData = shuffleArray(galleryData);
+        renderGallery(document.getElementById('searchInput').value);
+    });
 
     // === ИНИЦИАЛИЗАЦИЯ ===
     document
