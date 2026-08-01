@@ -30,13 +30,15 @@
   <p>Новости, мысли, чэнджлоги...</p>
 </div>
 <!-- SEARCH -->
-<div class="posts-search-wrap">
-  <input id="searchInput" type="text"
-         placeholder="🔍 Искать по комментариям..."
-         autocomplete="off"/>
+<div class="posts-shell">
+  <div class="posts-search-wrap">
+    <input id="searchInput" type="text"
+           placeholder="🔍 Искать по комментариям..."
+           autocomplete="off"/>
+  </div>
+  <div class="posts-count" id="postsCount"></div>
+  <div id="postsFeed"></div>
 </div>
-<div class="posts-count" id="postsCount"></div>
-<div id="postsFeed"></div>
 <!-- FOOTER -->
 <div class="ft">
   <div class="wrapper">
@@ -133,6 +135,7 @@ function render(){
 }
 
 searchInput.addEventListener("input", render);
+
 render();
 
 // === LIGHTBOX ДЛЯ ФОТО В ПОСТАХ ===
