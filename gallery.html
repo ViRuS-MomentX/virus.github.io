@@ -316,26 +316,35 @@
         return copy;
     }
 
-    function renderGallery(searchText = '') {
-        grid.innerHTML = '';
-        let visibleCount = 0;
+    function getVisibleItems(searchText = '') {
+        const query = (searchText || '').trim().toLowerCase();
 
-        galleryData.forEach((item, index) => {
-            const comment = item.comment;
-            const imageName = item.name;
+        return galleryData.filter((item) => {
             if (activeGame && item.game !== activeGame) {
-                return;
+                return false;
             }
 
-            if (searchText.trim() !== '' && !comment.toLowerCase().includes(searchText.toLowerCase())) return;
+            if (query && !item.comment.toLowerCase().includes(query)) {
+                return false;
+            }
 
-            visibleCount++;
+            return true;
+        });
+    }
 
+    function renderGallery(searchText = '') {
+        const visibleItems = getVisibleItems(searchText);
+        grid.innerHTML = '';
+
+        visibleItems.forEach((item, index) => {
+            const comment = item.comment;
+            const imageName = item.name;
             const card = document.createElement('div');
             card.className = 'gallery-item';
             card.dataset.comment = comment;
             card.dataset.game = item.game;
-            card.style.animationDelay = `${Math.min(visibleCount * 0.02, 0.6)}s`;
+            card.dataset.name = imageName;
+            card.style.animationDelay = `${Math.min(index * 0.02, 0.6)}s`;
             const variantClass = (index % 5 === 0) ? 'is-wide' : (index % 3 === 0 ? 'is-tall' : 'is-default');
             card.classList.add(variantClass);
             card.classList.add('shuffle-in');
@@ -362,7 +371,7 @@
             grid.appendChild(card);
         });
 
-        document.getElementById('photoCounter').textContent = `Показано: ${visibleCount} / ${totalSlots}`;
+        document.getElementById('photoCounter').textContent = `Показано: ${visibleItems.length} / ${totalSlots}`;
     }
 
     // === ПОИСК ===
@@ -371,8 +380,59 @@
     });
 
     document.getElementById('shuffleButton').addEventListener('click', () => {
+        const searchText = document.getElementById('searchInput').value;
+        const visibleCards = Array.from(grid.children);
+
+        const oldPositions = new Map();
+        visibleCards.forEach((card) => {
+            const rect = card.getBoundingClientRect();
+            oldPositions.set(card.dataset.name, {
+                left: rect.left,
+                top: rect.top
+            });
+        });
+
         galleryData = shuffleArray(galleryData);
-        renderGallery(document.getElementById('searchInput').value);
+
+        const visibleItems = getVisibleItems(searchText);
+        const nextOrder = visibleItems.map(item => item.name);
+        const cardMap = new Map();
+
+        visibleCards.forEach((card) => {
+            cardMap.set(card.dataset.name, card);
+        });
+
+        nextOrder.forEach((imageName) => {
+            const card = cardMap.get(imageName);
+            if (card) {
+                grid.appendChild(card);
+            }
+        });
+
+        visibleCards.forEach((card) => {
+            const oldPosition = oldPositions.get(card.dataset.name);
+            if (!oldPosition) return;
+
+            const rect = card.getBoundingClientRect();
+            const dx = oldPosition.left - rect.left;
+            const dy = oldPosition.top - rect.top;
+
+            card.animate([
+                { transform: `translate3d(${dx}px, ${dy}px, 0)` },
+                { transform: 'translate3d(0px, 0px, 0)' }
+            ], {
+                duration: 620,
+                easing: 'cubic-bezier(.22, 1, .36, 1)'
+            });
+        });
+
+        grid.classList.remove('is-shuffling');
+        void grid.offsetWidth;
+        grid.classList.add('is-shuffling');
+
+        window.setTimeout(() => {
+            grid.classList.remove('is-shuffling');
+        }, 760);
     });
 
     // === ИНИЦИАЛИЗАЦИЯ ===
