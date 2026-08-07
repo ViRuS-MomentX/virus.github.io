@@ -835,6 +835,18 @@ img {
   align-items: start;
 }
 
+.gallery-grid.is-shuffling {
+  animation: galleryShuffle 700ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.gallery-grid.is-shuffling .gallery-item {
+  animation: cardShuffle 700ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.gallery-grid.is-shuffling img {
+  animation: imageMix 700ms ease;
+}
+
 .gallery-item {
   background: linear-gradient(180deg, rgba(17, 17, 30, 0.94), rgba(12, 12, 20, 0.94));
   backdrop-filter: blur(10px);
@@ -931,6 +943,40 @@ mark {
   color: #ffffff;
   padding: 0 0.16em;
   border-radius: 0.24em;
+}
+
+@keyframes galleryShuffle {
+  15% {
+    transform: perspective(560px) rotateY(-2deg) rotateX(1deg) scale(1.012);
+  }
+  55% {
+    transform: perspective(560px) rotateY(2deg) rotateX(-1deg) scale(1.018);
+    filter: blur(1px) saturate(1.2) brightness(1.04);
+  }
+  100% {
+    transform: perspective(560px) rotateY(0deg) rotateX(0deg) scale(1);
+    filter: blur(0) saturate(1) brightness(1);
+  }
+}
+
+@keyframes cardShuffle {
+  30% {
+    transform: translateY(-5px) scale(0.985) rotate(-1deg);
+  }
+  80% {
+    transform: translateY(2px) scale(1.006) rotate(1deg);
+  }
+}
+
+@keyframes imageMix {
+  35% {
+    transform: scale(1.08);
+    filter: blur(1.5px) brightness(1.15) saturate(1.2);
+  }
+  100% {
+    transform: scale(1);
+    filter: blur(0) brightness(1) saturate(1);
+  }
 }
 
 @keyframes shuffleIn {
