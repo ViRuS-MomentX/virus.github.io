@@ -1,456 +1,484 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Галерея — Моя страничка</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css" />
-
-<!-- ═══ СТИЛИ ДЛЯ ГЕРО-БЛОКА ГАЛЕРЕИ (фон + статистика + фильтры) ═══ -->
-<style>
-  .gallery-hero{
-    position: relative;
-    background-image: linear-gradient(180deg, rgba(10,8,20,.35) 0%, rgba(10,8,20,.55) 55%, rgba(10,8,20,1) 100%),
-                       url("images/gallery-bg.png");
-    background-size: cover;
-    background-position: center;
-    padding: 56px 20px 40px;
-    text-align: center;
-    color: #fff;
-  }
-
-  .gallery-hero .page-title{ margin: 0 0 28px; }
-  .gallery-hero h1{
-    font-size: 2.4rem;
-    font-weight: 700;
-    margin: 0 0 6px;
-    text-shadow: 0 2px 12px rgba(0,0,0,.5);
-  }
-
-  /* ── статистика ── */
-  .stats-row{
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin: 0 0 22px;
-  }
-  .stat-card{
-    background: rgba(30, 24, 48, .65);
-    border: 1px solid rgba(255,255,255,.08);
-    backdrop-filter: blur(8px);
-    border-radius: 14px;
-    padding: 14px 26px;
-    min-width: 130px;
-  }
-  .stat-card .stat-value{
-    display: block;
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #a78bfa;
-    font-family: 'JetBrains Mono', monospace;
-  }
-  .stat-card .stat-label{
-    display: block;
-    font-size: .7rem;
-    letter-spacing: .04em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,.55);
-    margin-top: 2px;
-  }
-
-  /* ── фильтры по играм ── */
-  .filter-row{
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 0 0 18px;
-  }
-  .filter-btn{
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,.12);
-    background: rgba(30, 24, 48, .65);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
-    padding: 0;
-  }
-  .filter-btn img{
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-    border-radius: 4px;
-  }
-  .filter-btn.irl{
-    font-size: .75rem;
-    font-weight: 600;
-    color: #fff;
-    letter-spacing: .03em;
-  }
-  .filter-btn:hover{ transform: translateY(-2px); }
-  .filter-btn.active{
-    border-color: #8b5cf6;
-    box-shadow: 0 0 0 3px rgba(139,92,246,.35);
-  }
-
-  /* ── поиск ── */
-  #searchInput{
-    display: block;
-    width: 100%;
-    max-width: 560px;
-    margin: 0 auto 18px;
-    padding: 12px 18px;
-    border-radius: 999px;
-    border: 1px solid rgba(255,255,255,.12);
-    background: rgba(30, 24, 48, .65);
-    color: #fff;
-    font-size: .95rem;
-    outline: none;
-  }
-  #searchInput::placeholder{ color: rgba(255,255,255,.45); }
-  #searchInput:focus{ border-color: #8b5cf6; }
-
-  /* ── кнопка перемешать ── */
-  .shuffle-btn{
-    display: block;
-    width: 100%;
-    max-width: 560px;
-    margin: 0 auto 14px;
-    padding: 13px 18px;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(90deg, #7c5cff, #a78bfa);
-    color: #fff;
-    font-weight: 600;
-    font-size: .95rem;
-    cursor: pointer;
-    transition: filter .15s ease, transform .15s ease;
-  }
-  .shuffle-btn:hover{ filter: brightness(1.08); transform: translateY(-1px); }
-
-  #photoCounter{
-    font-size: .85rem;
-    color: rgba(255,255,255,.6);
-  }
-</style>
+    <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+    <link rel="manifest" href="icons/site.webmanifest">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Галерея — Моя страничка</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-
+<body class="gallery-page">
+ 
 <!-- ═══ TOP BAR ═══ -->
 <div class="topbar">
-  <div class="wrapper">
-    <nav class="topbar-nav">
-      <a href="index.html">главная</a>
-      <a href="gallery.html" class="on">галерея</a>
-      <a href="projects.html">проекты</a>
-      <a href="posts.html">интерактив</a>
-    </nav>
-  </div>
+    <div class="wrapper">
+        <nav class="topbar-nav">
+            <a href="index.html">главная</a>
+            <a href="gallery.html" class="on">галерея</a>
+            <a href="projects.html">проекты</a>
+            <a href="posts.html">интерактив</a>
+        </nav>
+    </div>
 </div>
 
-<!-- ═══ ГЕРО: ФОН + ЗАГОЛОВОК + СТАТИСТИКА + ФИЛЬТРЫ + ПОИСК ═══ -->
-<div class="gallery-hero">
-  <div class="wrapper page-title">
+<!-- ═══ GALLERY HEADER ═══ -->
+<div class="wrapper page-title">
     <h1>Галерея</h1>
-  </div>
+</div>
 
-  <div class="stats-row">
-    <div class="stat-card">
-      <span class="stat-value" id="statTotal">0</span>
-      <span class="stat-label">Фото всего</span>
+<!-- ═══ СТАТИСТИКА ГАЛЕРЕИ ═══ -->
+<div class="wrapper">
+    <div class="gallery-stats" id="galleryStats"></div> 
+</div>
+
+<!-- ═══ ПОИСК (по центру) ═══ -->
+<div class="wrapper gallery-controls">
+
+    <div class="game-filters">
+
+        <button class="game-filter active" data-game="">
+            <img src="images/all.png" alt="Все">
+        </button>
+
+        <button class="game-filter" data-game="minecraft">
+            <img src="images/minecraft.png" alt="Minecraft">
+        </button>
+
+        <button class="game-filter" data-game="roblox">
+            <img src="images/roblox.png" alt="Roblox">
+        </button>
+
+        <button class="game-filter" data-game="phasmo">
+            <img src="images/phasmo.ico" alt="Phasmophobia">
+        </button>
+
+        <button class="game-filter" data-game="rivals">
+            <img src="images/marvel.png" alt="Marvel Rivals">
+        </button>
+
+        <button class="game-filter" data-game="dbd">
+            <img src="images/dbd.jpg" alt="Dead by Daylight">
+        </button>
+
+        <button class="game-filter irl" data-game="irl">
+            IRL
+        </button>
+
+</div>
+
+    <div class="search-row">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="🔍 Искать по комментарию..."
+        />
+        <button class="shuffle-button" id="shuffleButton" type="button">перемешать</button>
     </div>
-    <div class="stat-card">
-      <span class="stat-value" id="statCategories">0</span>
-      <span class="stat-label">Категорий</span>
+
+    <div class="photo-counter" id="photoCounter">
+        Показано: 0 / 0
     </div>
-    <div class="stat-card">
-      <span class="stat-value" id="statTopGame">—</span>
-      <span class="stat-label">Чаще всего в кадре</span>
-    </div>
-  </div>
 
-  <div class="filter-row" id="filterRow">
-    <button class="filter-btn active" data-game="">
-      <img src="all.png" alt="Все">
-    </button>
-    <button class="filter-btn" data-game="minecraft">
-      <img src="minecraft.svg" alt="Minecraft">
-    </button>
-    <button class="filter-btn" data-game="roblox">
-      <img src="roblox.png" alt="Roblox">
-    </button>
-    <button class="filter-btn" data-game="phasmo">
-      <img src="phasmo.ico" alt="Phasmophobia">
-    </button>
-    <button class="filter-btn" data-game="rivals">
-      <img src="marvel.png" alt="Marvel Rivals">
-    </button>
-    <button class="filter-btn" data-game="dbd">
-      <img src="dbd.png" alt="Dead by Daylight">
-    </button>
-    <button class="filter-btn irl" data-game="irl">IRL</button>
-  </div>
-
-  <input type="text" id="searchInput" placeholder="🔍 Искать по комментарию..." />
-
-  <button class="shuffle-btn" id="shuffleBtn">перемешать</button>
-
-  <div class="photo-counter" id="photoCounter">Показано: 0 / 0</div>
 </div>
 
 <!-- ═══ СЕТКА ГАЛЕРЕИ ═══ -->
 <div class="wrapper">
-  <div class="gallery-grid" id="galleryGrid"></div>
+    <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
 <!-- ═══ FOOTER ═══ -->
 <footer class="ft">
-  <div class="wrapper">
-    <div class="ft-l"><div class="ft-d"></div> Моя страничка · <span id="year"></span></div>
-    <div class="ft-r">сделано с .html</div>
-  </div>
+    <div class="wrapper">
+        <div class="ft-l">
+            <div class="ft-d"></div> Моя страничка · <span id="year"></span>
+        </div>
+        <div class="ft-r">сделано с .html</div>
+    </div>
 </footer>
 
 <!-- ═══ LIGHTBOX ═══ -->
 <div id="lightbox">
-  <span class="close-btn">&times;</span>
-  <div class="lightbox-content">
-    <img src="" alt="Увеличенное фото" id="lightboxImg" style="display: none;" />
-    <div class="placeholder-text" id="lightboxPlaceholder" style="display: none;">Фото отсутствует</div>
-    <div class="lightbox-comment" id="lightboxComment"></div>
-  </div>
+    <span class="close-btn">&times;</span>
+    <div class="lightbox-content">
+        <img src="" alt="Увеличенное фото" id="lightboxImg" style="display: none;" />
+        <div class="placeholder-text" id="lightboxPlaceholder" style="display: none;">Фото отсутствует</div>
+        <div class="lightbox-comment" id="lightboxComment"></div>
+    </div>
 </div>
 
 <script>
-document.getElementById('year').textContent = new Date().getFullYear();
+    // === ГОД В ФУТЕРЕ ===
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-// === ДАННЫЕ ГАЛЕРЕИ ===
-const galleryData = [
-  { name: 'фух.jpg', comment: 'От судьбы не убежишь', game: 'minecraft' },
-  { name: 'фармилка.jpg', comment: 'Обиделся, видимо', game: 'minecraft' },
-  { name: 'только не в жопу.jpg', comment: 'Только не в дырку', game: 'rivals' },
-  { name: 'таракан.jpg', comment: 'Так быстро пластинку я ещё никогда не нёс', game: 'minecraft' },
-  { name: 'сушка.jpg', comment: 'Нам мало что известно о связях Марата', game: 'minecraft' },
-  { name: 'рыбка.jpg', comment: 'Водолаз венокс вышел на прогулку', game: 'minecraft' },
-  { name: 'предательство.jpg', comment: 'Ножом в спину', game: 'minecraft' },
-  { name: 'пинг.jpg', comment: 'Эта травма навсегда останется на компе Зораха', game: 'minecraft' },
-  { name: 'китаец.jpg', comment: 'Китаец делал этот спуск', game: 'minecraft' },
-  { name: 'джефф.jpg', comment: 'Лучший мой портал', game: 'rivals' },
-  { name: 'бамбук.jpg', comment: 'Нелегальнвй бизнес', game: 'minecraft' },
-  { name: 'арт.jpg', comment: 'Не надо было пить то зелье...', game: 'minecraft' },
-  { name: 'античит.jpg', comment: 'Проверка античита', game: 'minecraft' },
-  { name: 'смотрящий.jpg', comment: 'Сквад-ворлд. Золотые времена', game: 'minecraft' },
-  { name: 'зима.jpg', comment: 'Куда идём мы с пятачком', game: 'minecraft' },
-  { name: 'шахта.jpg', comment: 'Копаем', game: 'minecraft' },
-  { name: 'англия.jpg', comment: 'Чёртов английский', game: 'minecraft' },
-  { name: 'араб.jpg', comment: 'Новый план Аль-Каиды', game: 'minecraft' },
-  { name: 'извращенец.jpg', comment: 'Извращённый взгляд Рафаэля заприметил новую жертву', game: 'minecraft' },
-  { name: 'нагрузка.jpg', comment: 'Вирус - реально вирус', game: 'minecraft' },
-  { name: 'опомнился.jpg', comment: 'Опомнился', game: 'minecraft' },
-  { name: 'паук.jpg', comment: 'Мой подарок мейнеру паука на НГ', game: 'irl' },
-  { name: 'тайлер.jpg', comment: 'Тайлера здесь нет', game: 'minecraft' },
-  { name: 'лост.jpg', comment: 'Следующие часы будут незабываемыми', game: 'minecraft' },
-  { name: 'христос.png', comment: 'Второе пришествие Христа', game: 'minecraft' },
-  { name: 'состав.png', comment: 'Куда таким составом', game: 'minecraft' },
-  { name: 'крипер.png', comment: 'Так называемый Укротитель цыган', game: 'minecraft' },
-  { name: 'касперский.png', comment: 'Похоронил мученика', game: 'minecraft' },
-  { name: 'вардены.jpg', comment: 'Нюхачи расплодились', game: 'minecraft' },
-  { name: 'внедра.jpg', comment: 'Воздушный дайвер', game: 'minecraft' },
-  { name: 'самолёт.jpg', comment: 'Кто мечтает быть пилотом...', game: 'minecraft' },
-  { name: 'катаклизм.jpg', comment: 'И поспешил царь в Шамаханское царство', game: 'phasmo' },
-  { name: 'дино.jpg', comment: 'Все динозавары боялись т-рекса', game: 'phasmo' },
-  { name: 'охота.jpg', comment: 'Двое лучших гостхантеров вышли на охоту', game: 'phasmo' },
-  { name: 'рука.png', comment: 'Полтергейст оторвал ему ноги', game: 'phasmo' },
-  { name: 'машина.png', comment: 'Полтергейст задавил моего друга', game: 'phasmo' },
-  { name: 'лысый.png', comment: 'Гоняем лысого', game: 'phasmo' },
-  { name: 'зарядка.png', comment: 'Полтергейст свернул ему ноги', game: 'phasmo' },
-  { name: 'IMG_20260624_140422_709.jpg', comment: 'Только зашëл в хардкорный мир, а тут уже встречают', game: 'minecraft' },
-  { name: 'IMG_20260624_142151_960.jpg', comment: 'Первый день работы админом коту под хвост', game: 'minecraft' },
-  { name: 'IMG_20260624_142055_177.jpg', comment: 'Поганец вирус опять ломает сервер', game: 'minecraft' }
+    // === ДАННЫЕ ГАЛЕРЕИ (каждое фото — объект) ===
+    let galleryData = [
+    { name: 'images/фух.jpg', comment: 'От судьбы не убежишь', game: 'minecraft' },
+    { name: 'images/фармилка.jpg', comment: 'Обиделся, видимо', game: 'minecraft' },
+    { name: 'images/только не в жопу.jpg', comment: 'Только не в дырку', game: 'rivals' },
+    { name: 'images/таракан.jpg', comment: 'Так быстро пластинку я ещё никогда не нёс', game: 'minecraft' },
+    { name: 'images/сушка.jpg', comment: 'Нам мало что известно о связях Марата', game: 'minecraft' },
+    { name: 'images/рыбка.jpg', comment: 'Водолаз венокс вышел на прогулку', game: 'minecraft' },
+    { name: 'images/предательство.jpg', comment: 'Ножом в спину', game: 'minecraft' },
+    { name: 'images/пинг.jpg', comment: 'Эта травма навсегда останется на компе Зораха', game: 'minecraft' },
+    { name: 'images/китаец.jpg', comment: 'Китаец делал этот спуск', game: 'minecraft' },
+    { name: 'images/джефф.jpg', comment: 'Лучший мой портал', game: 'rivals' },
+    { name: 'images/бамбук.jpg', comment: 'Нелегальнвй бизнес', game: 'minecraft' },
+    { name: 'images/арт.jpg', comment: 'Не надо было пить то зелье...', game: 'minecraft' },
+    { name: 'images/античит.jpg', comment: 'Проверка античита', game: 'minecraft' },
+    { name: 'images/смотрящий.jpg', comment: 'Сквад-ворлд. Золотые времена', game: 'minecraft' },
+    { name: 'images/зима.jpg', comment: 'Куда идём мы с пятачком', game: 'minecraft' },
+    { name: 'images/шахта.jpg', comment: 'Копаем', game: 'minecraft' },
+    { name: 'images/англия.jpg', comment: 'Чёртов английский', game: 'minecraft' },
+    { name: 'images/араб.jpg', comment: 'Новый план Аль-Каиды', game: 'minecraft' },
+    { name: 'images/извращенец.jpg', comment: 'Извращённый взгляд Рафаэля заприметил новую жертву', game: 'minecraft' },
+    { name: 'images/нагрузка.jpg', comment: 'Вирус - реально вирус', game: 'minecraft' },
+    { name: 'images/опомнился.jpg', comment: 'Опомнился', game: 'minecraft' },
+    { name: 'images/паук.jpg', comment: 'Мой подарок мейнеру паука на НГ', game: 'irl' },
+    { name: 'images/тайлер.jpg', comment: 'Тайлера здесь нет', game: 'minecraft' },
+    { name: 'images/лост.jpg', comment: 'Следующие часы будут незабываемыми', game: 'minecraft' },
+    { name: 'images/христос.png', comment: 'Второе пришествие Христа', game: 'minecraft' },
+    { name: 'images/состав.jpg', comment: 'Куда таким составом', game: 'minecraft' },
+    { name: 'images/крипер.png', comment: 'Так называемый Укротитель цыган', game: 'minecraft' },
+    { name: 'images/касперский.jpg', comment: 'Похоронил мученика', game: 'minecraft' },
+    { name: 'images/вардены.jpg', comment: 'Нюхачи расплодились', game: 'minecraft' },
+    { name: 'images/внедра.jpg', comment: 'Воздушный дайвер', game: 'minecraft' },
+    { name: 'images/алкоголь убивает.jpg', comment: 'Алкоголь убивает', game: 'roblox' },
+    { name: 'images/смысл жизни познаёт.jpg', comment: 'Смысл жизни познаёт', game: 'irl' },
+    { name: 'images/вылизывается.jpg', comment: 'Даже он моется', game: 'irl' },
+    { name: 'images/недоволльное лицо.jpg', comment: 'Как я, грязный и вонючий, посмел прикоснуться к такому чистому, как он', game: 'irl' },
+    { name: 'images/mrvl.jpg', comment: 'Горе горённое', game: 'rivals' },
+    { name: 'images/тоска.jpg', comment: 'Щас бы в марвел, а не вот это вот всё', game: 'roblox' },
+    { name: 'images/друг.jpg', comment: 'Да что тут думать', game: 'roblox' },
+    { name: 'images/удав.jpg', comment: 'Оседлали удава Павлика', game: 'roblox' },
+    { name: 'images/лег.jpg', comment: 'С чего бы начать', game: 'roblox' },
+    { name: 'images/винтер.jpg', comment: 'Диего Vinter: Ганг-Уор', game: 'roblox' },
+    { name: 'images/диего.jpg', comment: 'Диего Vinter раскрыл нас', game: 'roblox' },
+    { name: 'images/блондинка.jpg', comment: 'Кто её посадил за руль', game: 'roblox' },
+    { name: 'images/иврей.jpg', comment: 'Шоу у Вируса иврея', game: 'roblox' },
+    { name: 'images/обнимашки.jpg', comment: 'Обнимашки', game: 'roblox' },
+    { name: 'images/подкатывает.jpg', comment: 'Подкатывает', game: 'roblox' },
+    { name: 'images/плакать.jpg', comment: 'И сразу плакать', game: 'roblox' },
+    { name: 'images/шахматы2.jpg', comment: 'Его ждёт мат на 73 ходу', game: 'roblox' },
+    { name: 'images/яйца.jpg', comment: 'Потерялись', game: 'roblox' },
+    { name: 'images/завидует.jpg', comment: 'Завидовать плохо', game: 'roblox' },
+    { name: 'images/двое.jpg', comment: 'Мы отправили сильнейших', game: 'roblox' },
+    { name: 'images/расплата.jpg', comment: 'Вендетта', game: 'roblox' },
+    { name: 'images/жаль.jpg', comment: 'Я тут что-то нажал', game: 'roblox' },
+    { name: 'images/покакал.jpg', comment: 'Я покакал', game: 'roblox' },
+    { name: 'images/сосед.jpg', comment: 'Едем на мальдивы', game: 'roblox' },
+    { name: 'images/дед.jpg', comment: 'Тяжёлый случай', game: 'roblox' },
+    { name: 'images/айс.jpg', comment: '5к в час берёт', game: 'roblox' },
+    { name: 'images/дарова.jpg', comment: 'Не туда зашёл', game: 'roblox' },
+    { name: 'images/годжо.jpg', comment: 'Запечатали', game: 'roblox' },
+    { name: 'images/бывает.jpg', comment: 'Талисман', game: 'roblox' },
+    { name: 'images/машина.jpg', comment: 'Помянем', game: 'roblox' },
+    { name: 'images/смотрящий.jpg', comment: 'В прайме', game: 'roblox' },
+    { name: 'images/супермен.jpg', comment: 'Постельный монстр', game: 'roblox' },
+        
+    { name: 'images/лев.jpg', comment: 'Лев', game: 'minecraft' },
+    { name: 'images/гига.jpg', comment: 'Та самая компания друзей', game: 'minecraft' },
+    { name: 'images/кровать.jpg', comment: 'Кроватный монстр', game: 'minecraft' },
+    { name: 'images/маратко.jpg', comment: 'Назад дороги нет', game: 'minecraft' },
+    { name: 'images/борн.jpg', comment: 'Истина', game: 'minecraft' },
+    { name: 'images/неваляшка.jpg', comment: 'Неваляшка', game: 'minecraft' },
+    { name: 'images/верблюд.jpg', comment: 'Мод на физику удивляет', game: 'minecraft' },
+    
+    { name: 'images/самолёт.jpg', comment: 'От-вин-та', game: 'minecraft' },
+
+    { name: 'images/катаклизм.jpg', comment: 'И поспешил царь в Шамаханское царство', game: 'minecraft' },
+    { name: 'images/дино.jpg', comment: 'Все динозавары боялись т-рекса', game: 'phasmo' },
+    { name: 'images/охота.jpg', comment: 'Двое лучших гостхантеров вышли на охоту', game: 'phasmo' },
+    { name: 'images/полтер.jpg', comment: 'Полтергейст оторвал ему ноги', game: 'phasmo' },
+    { name: 'images/машина.png', comment: 'Полтергейст задавил моего друга', game: 'phasmo' },
+    { name: 'images/лысый.png', comment: 'Гоняем лысого', game: 'phasmo' },
+    { name: 'images/зарядка.png', comment: 'Полтергейст свернул ему ноги', game: 'phasmo' },
+    { name: 'images/ресница.jpg', comment: 'Смотрите какие ресницы сделал', game: 'phasmo' },
+    { name: 'images/фото.png', comment: 'Фотоотчёт', game: 'phasmo' },
+    { name: 'images/иллюзия.jpg', comment: 'Иллюзия безопасности', game: 'phasmo' },
+    { name: 'images/активность.png', comment: 'У него происходит так называемый гост ивент', game: 'phasmo' },
+    { name: 'images/стена.webp', comment: 'Спрятался от деогена', game: 'phasmo' },
+    { name: 'images/прятки.webp', comment: 'Второе пришествие мороя', game: 'phasmo' },
+    { name: 'images/пьянь.webp', comment: 'Мимик грешил над его телом', game: 'phasmo' },
+    { name: 'images/бездарь.webp', comment: 'Даже деоген не мог его найти', game: 'phasmo' },
+    { name: 'images/инвалид.webp', comment: 'Самый быстрый гостхантер среди нас двоих', game: 'phasmo' },
+    { name: 'images/марат.jpg', comment: 'Овощ копает овощи', game: 'phasmo' },
+    { name: 'images/уолтер.png', comment: 'Уолтер дуреет с этой прикормки', game: 'phasmo' },
+    { name: 'images/комод.png', comment: 'Мистер комод читает сказку', game: 'phasmo' },
+    { name: 'images/банши1.png', comment: 'Банши грешила над ним как могла', game: 'phasmo' },
+    { name: 'images/оператор.png', comment: 'Он был лучшим фотографом', game: 'phasmo' },
+    { name: 'images/рука.png', comment: 'Местная гадалка Маратко', game: 'phasmo' },
+   
+
+    { name: 'images/мокрый.jpg', comment: 'Всё норм, это он малину хавал', game: 'irl' },
+    { name: 'images/жопа.jpg', comment: 'Жопу моет, а этот подглядывает', game: 'irl' },
+    { name: 'images/помылся.jpg', comment: 'Теперь чистюля', game: 'irl' },
+    { name: 'images/помылся2.jpg', comment: 'Мокрая курица', game: 'irl' },
+    { name: 'images/чатджпт.png', comment: 'Чатджпт', game: 'irl' },
+    { name: 'images/павлик.jpg', comment: 'Чёрный день', game: 'irl' },
+    { name: 'images/филя.jpg', comment: 'Хозяин прибыл', game: 'irl' },
+    { name: 'images/недовольный.jpg', comment: 'Хозяин недоволен', game: 'irl' },
+    { name: 'images/сон.jpg', comment: 'Страшный сон', game: 'irl' },
+
+    { name: 'images/красота.png', comment: 'Ляпота', game: 'rivals' },
+    { name: 'images/эра.png', comment: 'Эра Альтрона начинается сейчас', game: 'rivals' },
+
+    { name: 'images/встреча.jpg', comment: 'Только зашëл в хардкорный мир, а тут уже встречают', game: 'minecraft' },
+    { name: 'images/тру.jpg', comment: 'Первый день работы админом коту под хвост', game: 'minecraft' },
+    { name: 'images/поганец.jpg', comment: 'Поганец вирус опять ломает сервер', game: 'minecraft' },
+    { name: 'images/зорах.jpg', comment: 'Это одиночный мир. Но кто же виновник? Конечно Вирус!', game: 'minecraft' },
+    { name: 'images/хиперион.jpg', comment: 'Некогда это был лишь клинок Некрона, но наполненный запретными свитками, он обрел волю крушить саму ткань пространства...', game: 'minecraft' },
+    { name: 'images/стратег.png', comment: 'Он чортов стратег', game: 'minecraft' },
+    { name: 'images/скин.png', comment: 'Это стратегия такая', game: 'minecraft' },
 ];
+ 
+    const totalSlots = galleryData.length;
+    const grid = document.getElementById('galleryGrid');
+    let activeGame = '';
 
-const totalSlots = galleryData.length;
-const grid = document.getElementById('galleryGrid');
-let activeGame = '';
-
-// === НАЗВАНИЯ ИГР ДЛЯ СТАТИСТИКИ ===
-const gameNames = {
-  minecraft: 'Minecraft',
-  roblox: 'Roblox',
-  phasmo: 'Phasmophobia',
-  rivals: 'Marvel Rivals',
-  dbd: 'Dead by Daylight',
-  irl: 'IRL'
-};
-
-function updateStats(){
-  document.getElementById('statTotal').textContent = totalSlots;
-
-  // категорий — по числу кнопок-фильтров игр (без "все" и без IRL)
-  const categoryCount = document.querySelectorAll('.filter-btn:not(.irl)').length - 1;
-  document.getElementById('statCategories').textContent = categoryCount;
-
-  // самая частая игра
-  const counts = {};
-  galleryData.forEach(item => {
-    counts[item.game] = (counts[item.game] || 0) + 1;
-  });
-  let topGame = '';
-  let topCount = -1;
-  Object.keys(counts).forEach(g => {
-    if (counts[g] > topCount) { topCount = counts[g]; topGame = g; }
-  });
-  document.getElementById('statTopGame').textContent = gameNames[topGame] || '—';
-}
-
-// === ГЕНЕРАЦИЯ КАРТОЧЕК С УЧЁТОМ ФИЛЬТРА И ПОИСКА ===
-function renderGallery(searchText = '') {
-  grid.innerHTML = '';
-  let visibleCount = 0;
-
-  galleryData.forEach((item, index) => {
-    const comment = item.comment;
-    const imageName = item.name;
-
-    if (activeGame && item.game !== activeGame) return;
-    if (searchText.trim() !== '' && !comment.toLowerCase().includes(searchText.toLowerCase())) return;
-
-    visibleCount++;
-
-    const card = document.createElement('div');
-    card.className = 'gallery-item';
-    card.dataset.comment = comment;
-
-    const thumb = document.createElement('div');
-    thumb.style.width = '100%';
-    thumb.style.height = '200px';
-    thumb.style.backgroundColor = '#2a2a2a';
-    thumb.style.display = 'flex';
-    thumb.style.alignItems = 'center';
-    thumb.style.justifyContent = 'center';
-    thumb.style.color = '#666';
-    thumb.style.fontSize = '1rem';
-    thumb.style.fontWeight = '500';
-
-    if (imageName) {
-      const img = document.createElement('img');
-      img.src = imageName;
-      img.alt = `Фото ${index + 1}`;
-      img.style.width = '100%';
-      img.style.height = '100%';
-      img.style.objectFit = 'cover';
-      img.style.display = 'block';
-      thumb.appendChild(img);
-    } else {
-      thumb.textContent = `Фото ${index + 1}`;
+    function shuffleArray(items) {
+        const copy = [...items];
+        for (let i = copy.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+        return copy;
     }
 
-    const desc = document.createElement('div');
-    desc.className = 'desc';
-    desc.textContent = comment;
-
-    card.appendChild(thumb);
-    card.appendChild(desc);
-    grid.appendChild(card);
-  });
-
-  document.getElementById('photoCounter').textContent = `Показано: ${visibleCount} / ${totalSlots}`;
-}
-
-// === ПОИСК ===
-document.getElementById('searchInput').addEventListener('input', function () {
-  renderGallery(this.value);
-});
-
-// === ФИЛЬТРЫ ПО ИГРАМ ===
-document.querySelectorAll('.filter-btn').forEach(button => {
-  button.addEventListener('click', () => {
-    const game = button.dataset.game;
-    activeGame = (activeGame === game) ? '' : game;
-
-    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-    if (activeGame) {
-      button.classList.add('active');
-    } else {
-      document.querySelector('[data-game=""]').classList.add('active');
+    function escapeHtml(str) {
+        return (str || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
     }
 
-    renderGallery(document.getElementById('searchInput').value);
-  });
+    function escapeRegExp(str) {
+        return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    function highlight(text, query) {
+        const safe = escapeHtml(text);
+        if (!query) return safe;
+        const re = new RegExp(escapeRegExp(query), 'gi');
+        return safe.replace(re, (match) => `<mark>${match}</mark>`);
+    }
+
+    // === НАЗВАНИЯ ИГР ДЛЯ СТАТИСТИКИ ===
+    const gameLabels = {
+        minecraft: 'Minecraft',
+        roblox: 'Roblox',
+        phasmo: 'Phasmophobia',
+        rivals: 'Marvel Rivals',
+        dbd: 'Dead by Daylight',
+        irl: 'IRL'
+    };
+
+    // === СТАТИСТИКА ГАЛЕРЕИ ===
+    function renderStats() {
+        const counts = {};
+        galleryData.forEach(item => {
+            counts[item.game] = (counts[item.game] || 0) + 1;
+        });
+
+        const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+        const topGame = sorted.length ? (gameLabels[sorted[0][0]] || sorted[0][0]) : '—';
+        const categoriesCount = Object.keys(counts).length;
+
+        const statsEl = document.getElementById('galleryStats');
+        statsEl.innerHTML = `
+            <div class="stat-chip">
+                <span class="stat-num">${totalSlots}</span>
+                <span class="stat-label">фото всего</span>
+            </div>
+            <div class="stat-chip">
+                <span class="stat-num">${categoriesCount}</span>
+                <span class="stat-label">категорий</span>
+            </div>
+            <div class="stat-chip">
+                <span class="stat-num">${topGame}</span>
+                <span class="stat-label">чаще всего в кадре</span>
+            </div>
+        `;
+    }
+
+    // === ФУНКЦИЯ ГЕНЕРАЦИИ КАРТОЧЕК С УЧЁТОМ ПОИСКА ===
+    function shuffleArray(items) {
+        const copy = [...items];
+        for (let i = copy.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+        return copy;
+    }
+
+    function renderGallery(searchText = '') {
+        grid.innerHTML = '';
+        let visibleCount = 0;
+
+        galleryData.forEach((item, index) => {
+            const comment = item.comment;
+            const imageName = item.name;
+            if (activeGame && item.game !== activeGame) {
+                return;
+            }
+
+            if (searchText.trim() !== '' && !comment.toLowerCase().includes(searchText.toLowerCase())) return;
+
+            visibleCount++;
+
+            const card = document.createElement('div');
+            card.className = 'gallery-item';
+            card.dataset.comment = comment;
+            card.dataset.game = item.game;
+            card.style.animationDelay = `${Math.min(visibleCount * 0.02, 0.6)}s`;
+            const variantClass = (index % 5 === 0) ? 'is-wide' : (index % 3 === 0 ? 'is-tall' : 'is-default');
+            card.classList.add(variantClass);
+            card.classList.add('shuffle-in');
+
+            const thumb = document.createElement('div');
+            thumb.className = 'gallery-thumb';
+            thumb.style.backgroundColor = '#2a2a2a';
+
+            if (imageName) {
+                const img = document.createElement('img');
+                img.src = imageName;
+                img.alt = `Фото ${index + 1}`;
+                thumb.appendChild(img);
+            } else {
+                thumb.textContent = `Фото ${index + 1}`;
+            }
+
+            const desc = document.createElement('div');
+            desc.className = 'desc';
+            desc.innerHTML = `<span class="card-tag">${gameLabels[item.game] || item.game}</span><span>${highlight(comment, searchText)}</span>`;
+
+            card.appendChild(thumb);
+            card.appendChild(desc);
+            grid.appendChild(card);
+        });
+
+        document.getElementById('photoCounter').textContent = `Показано: ${visibleCount} / ${totalSlots}`;
+    }
+
+    // === ПОИСК ===
+    document.getElementById('searchInput').addEventListener('input', function() {
+        renderGallery(this.value);
+    });
+
+    document.getElementById('shuffleButton').addEventListener('click', () => {
+        galleryData = shuffleArray(galleryData);
+        renderGallery(document.getElementById('searchInput').value);
+    });
+
+    // === ИНИЦИАЛИЗАЦИЯ ===
+    document
+.querySelectorAll('.game-filter')
+.forEach(button => {
+
+    button.addEventListener('click', () => {
+
+        const game = button.dataset.game;
+
+        if (activeGame === game) {
+            activeGame = '';
+        } else {
+            activeGame = game;
+        }
+
+        document
+        .querySelectorAll('.game-filter')
+        .forEach(btn =>
+            btn.classList.remove('active')
+        );
+
+        if (activeGame) {
+            button.classList.add('active');
+        } else {
+            document
+            .querySelector('[data-game=""]')
+            .classList.add('active');
+        }
+
+        renderGallery(
+            document.getElementById('searchInput').value
+        );
+
+    });
+
 });
+    renderStats();
+    renderGallery('');
 
-// === ПЕРЕМЕШАТЬ ===
-document.getElementById('shuffleBtn').addEventListener('click', () => {
-  for (let i = galleryData.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [galleryData[i], galleryData[j]] = [galleryData[j], galleryData[i]];
-  }
-  renderGallery(document.getElementById('searchInput').value);
-});
+    // === LIGHTBOX ===
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxPlaceholder = document.getElementById('lightboxPlaceholder');
+    const lightboxComment = document.getElementById('lightboxComment');
+    const closeBtn = document.querySelector('.close-btn');
 
-updateStats();
-renderGallery('');
+    function openLightbox(src, comment) {
+        if (src) {
+            lightboxImg.src = src;
+            lightboxImg.style.display = 'block';
+            lightboxPlaceholder.style.display = 'none';
+        } else {
+            lightboxImg.style.display = 'none';
+            lightboxPlaceholder.style.display = 'block';
+        }
 
-// === LIGHTBOX ===
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightboxImg');
-const lightboxPlaceholder = document.getElementById('lightboxPlaceholder');
-const lightboxComment = document.getElementById('lightboxComment');
-const closeBtn = document.querySelector('.close-btn');
+        if (comment) {
+            lightboxComment.textContent = comment;
+            lightboxComment.style.display = 'block';
+        } else {
+            lightboxComment.style.display = 'none';
+        }
 
-function openLightbox(src, comment) {
-  if (src) {
-    lightboxImg.src = src;
-    lightboxImg.style.display = 'block';
-    lightboxPlaceholder.style.display = 'none';
-  } else {
-    lightboxImg.style.display = 'none';
-    lightboxPlaceholder.style.display = 'block';
-  }
-  if (comment) {
-    lightboxComment.textContent = comment;
-    lightboxComment.style.display = 'block';
-  } else {
-    lightboxComment.style.display = 'none';
-  }
-  lightbox.classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
 
-function closeLightbox() {
-  lightbox.classList.remove('active');
-  document.body.style.overflow = '';
-  lightboxComment.textContent = '';
-}
+    function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+        lightboxComment.textContent = '';
+    }
 
-grid.addEventListener('click', (e) => {
-  const card = e.target.closest('.gallery-item');
-  if (!card) return;
-  const img = card.querySelector('img');
-  const comment = card.dataset.comment || '';
-  if (img) {
-    openLightbox(img.src, comment);
-  } else {
-    openLightbox(null, comment);
-  }
-});
+    grid.addEventListener('click', (e) => {
+        const card = e.target.closest('.gallery-item');
+        if (!card) return;
+        const img = card.querySelector('img');
+        const comment = card.dataset.comment || '';
+        if (img) {
+            openLightbox(img.src, comment);
+        } else {
+            openLightbox(null, comment);
+        }
+    });
 
-lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
-closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeLightbox(); });
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
-});
-lightboxImg.addEventListener('click', (e) => e.stopPropagation());
-lightboxPlaceholder.addEventListener('click', (e) => e.stopPropagation());
-lightboxComment.addEventListener('click', (e) => e.stopPropagation());
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeLightbox();
+    });
+
+    closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+            closeLightbox();
+        }
+    });
+
+    lightboxImg.addEventListener('click', (e) => e.stopPropagation());
+    lightboxPlaceholder.addEventListener('click', (e) => e.stopPropagation());
+    lightboxComment.addEventListener('click', (e) => e.stopPropagation());
 </script>
 </body>
 </html>
