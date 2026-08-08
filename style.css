@@ -1959,3 +1959,38 @@ body.posts-page::after {
 .post-card:hover {
   background: linear-gradient(180deg, rgba(32, 32, 48, 0.55), rgba(20, 20, 30, 0.58));
 }
+/* ═══════════════════════════════════════════
+   ПРОЗРАЧНОСТЬ БЛОКОВ: ГАЛЕРЕЯ + ПРОЕКТЫ
+   Добавить в конец style.css
+   ═══════════════════════════════════════════ */
+
+/* ── Карточки статистики галереи (109 / 5 / Minecraft) ── */
+.stat-chip {
+  background: rgba(30, 18, 40, 0.2);
+}
+
+.stat-chip:hover {
+  background: rgba(30, 18, 40, 0.3);
+}
+
+/* ── Карточки фото в галерее ── */
+.gallery-item {
+  background: linear-gradient(180deg, rgba(17, 17, 30, 0.4), rgba(12, 12, 20, 0.42));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.gallery-item:hover {
+  background: linear-gradient(180deg, rgba(17, 17, 30, 0.55), rgba(12, 12, 20, 0.58));
+}
+
+/* ── Карточки проектов ── */
+.project-card {
+  background: linear-gradient(180deg, rgba(18, 18, 30, 0.4), rgba(14, 14, 22, 0.42));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.project-card:hover {
+  background: linear-gradient(180deg, rgba(18, 18, 30, 0.55), rgba(14, 14, 22, 0.58));
+}
