@@ -1994,3 +1994,23 @@ body.posts-page::after {
 .project-card:hover {
   background: linear-gradient(180deg, rgba(18, 18, 30, 0.55), rgba(14, 14, 22, 0.58));
 }
+/* ═══════════════════════════════════════════
+   ИНТЕРАКТИВ: без затемнения фона + карточки прозрачнее
+   Добавить в конец style.css (после предыдущих правок для posts-page)
+   ═══════════════════════════════════════════ */
+
+/* Убрали тёмный градиент поверх фото — теперь просто картинка без затемнения */
+body.posts-page {
+  background-image: url("images/interactive-bg.png");
+}
+
+/* Карточки постов ещё прозрачнее */
+.post-card {
+  background: linear-gradient(180deg, rgba(27, 27, 38, 0.2), rgba(16, 16, 24, 0.22));
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.post-card:hover {
+  background: linear-gradient(180deg, rgba(32, 32, 48, 0.32), rgba(20, 20, 30, 0.34));
+}
