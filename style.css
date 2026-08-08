@@ -1900,3 +1900,62 @@ body.projects-page::after {
     radial-gradient(circle at 94% 20%, rgba(167, 139, 250, 0.10), transparent 30%),
     radial-gradient(circle at 50% 90%, rgba(80, 40, 160, 0.14), transparent 32%);
 }
+/* ═══════════════════════════════════════════
+   ФОН ДЛЯ СТРАНИЦЫ "ИНТЕРАКТИВ"
+   Добавить в конец style.css
+   ═══════════════════════════════════════════ */
+
+/* Фон-картинка на весь body, закреплена, как у галереи/проектов */
+body.posts-page {
+  background-image:
+    linear-gradient(180deg,
+      rgba(9, 9, 13, 0.15) 0%,
+      rgba(9, 9, 13, 0.6) 40%,
+      var(--bg-primary) 78%
+    ),
+    url("images/interactive-bg.png");
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+/* Убираем декоративный паттерн-подложку, чтобы не накладывался на фото */
+body.posts-page::before {
+  display: none;
+}
+
+/* Лёгкие цветные пятна поверх — синхронизированы с гаммой картинки */
+body.posts-page::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 8% 15%, rgba(138, 93, 255, 0.12), transparent 28%),
+    radial-gradient(circle at 92% 20%, rgba(167, 139, 250, 0.10), transparent 30%),
+    radial-gradient(circle at 50% 90%, rgba(80, 40, 160, 0.12), transparent 32%);
+}
+
+/* Убираем серый блок-подложку под поиском/счётчиком/лентой постов —
+   оставляем только содержимое, без своей рамки и фона */
+.posts-shell {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Делаем карточки постов полупрозрачными — фон картинки должен
+   немного просвечивать сквозь них. Текст, картинки и даты не трогаем. */
+.post-card {
+  background: linear-gradient(180deg, rgba(27, 27, 38, 0.42), rgba(16, 16, 24, 0.46));
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.post-card:hover {
+  background: linear-gradient(180deg, rgba(32, 32, 48, 0.55), rgba(20, 20, 30, 0.58));
+}
