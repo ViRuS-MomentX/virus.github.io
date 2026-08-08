@@ -1449,14 +1449,11 @@ body.gallery-page .wrapper {
 }
 
 /* ── Статистика галереи (авточисла из данных) ── */
-.gallery-stats {
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-top: 1.8rem;
-}
+/* ═══════════════════════════════════════════
+   НОВЫЙ ВИД КАРТОЧЕК СТАТИСТИКИ ГАЛЕРЕИ
+   Заменяет старый блок .stat-chip / .stat-num / .stat-label
+   в разделе "ДОПОЛНЕНИЯ ДЛЯ СТРАНИЦЫ ГАЛЕРЕИ"
+   ═══════════════════════════════════════════ */
 
 .stat-chip {
   display: flex;
@@ -1466,25 +1463,30 @@ body.gallery-page .wrapper {
   gap: 0.2rem;
   min-width: 150px;
   padding: 1rem 1.6rem;
-  background: var(--bg-card);
-  backdrop-filter: blur(8px);
-  border: 1px solid var(--border-color);
+  background: rgba(30, 18, 40, 0.32);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 16px;
+  box-shadow:
+    0 12px 34px rgba(20, 8, 30, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
   transition: all 0.3s ease;
 }
 
 .stat-chip:hover {
-  border-color: var(--accent);
+  border-color: rgba(255, 200, 160, 0.4);
   transform: translateY(-3px);
-  box-shadow: var(--shadow);
+  box-shadow:
+    0 16px 40px rgba(20, 8, 30, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.09);
 }
 
 .stat-num {
   font-family: 'JetBrains Mono', monospace;
   font-size: 1.6rem;
   font-weight: 700;
-  color: var(--text-primary);
-  background: linear-gradient(270deg, #5865F2, #a78bfa, #5865F2);
+  background: linear-gradient(120deg, #ffd8b0, #ff9ecf, #b09bff);
   background-size: 200% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1493,7 +1495,7 @@ body.gallery-page .wrapper {
 
 .stat-label {
   font-size: 0.75rem;
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.68);
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
@@ -1869,4 +1871,11 @@ body.gallery-page .gallery-grid {
   .gallery-hero {
     padding: 2rem 1.2rem 1.8rem;
   }
+   /* Убираем декоративный паттерн-подложку (кружки, звёзды, квадраты)
+   на странице галереи — она перебивает картинку заката.
+   Добавить в конец style.css (или сразу после body::before) */
+
+body.gallery-page::before {
+  display: none;
+}
 }
