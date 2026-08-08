@@ -100,4 +100,11 @@ const posts = [
     text: "Добавлен задний фон для проектов",
     image: "images/projects-bg.png"
   },
+          {
+    title: "Обновление интерактива",
+    date: "2026-08-08",
+    time: "22:00",
+    text: "Добавлен задний фон для интерактива",
+    image: "images/interactive-bg.png"
+  },
 ];
