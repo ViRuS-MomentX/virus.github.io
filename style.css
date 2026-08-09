@@ -2007,3 +2007,153 @@ body.posts-page::after {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
+/* ═══════════════════════════════════════════
+   ГЛАВНАЯ: АНИМАЦИИ И СВЕЧЕНИЕ
+   Добавить в конец style.css
+   ═══════════════════════════════════════════ */
+
+/* ── Плавающие огоньки за карточкой героя ── */
+.hero {
+  position: relative;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(220px circle at 15% 30%, rgba(138, 93, 255, 0.35), transparent 60%),
+    radial-gradient(260px circle at 85% 70%, rgba(50, 214, 255, 0.28), transparent 60%),
+    radial-gradient(180px circle at 60% 15%, rgba(255, 79, 216, 0.22), transparent 60%);
+  filter: blur(10px);
+  animation: floatGlow 12s ease-in-out infinite alternate;
+}
+
+.hero-grid {
+  z-index: 1;
+}
+
+@keyframes floatGlow {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(2%, -3%) scale(1.06);
+  }
+  100% {
+    transform: translate(-2%, 2%) scale(1);
+  }
+}
+
+/* ── Пульсирующее свечение вокруг аватарки + лёгкий наклон при наведении ── */
+.hero-avatar {
+  position: relative;
+  transition: transform 0.4s ease;
+}
+
+.hero-avatar::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 30px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent));
+  background-size: 300% 300%;
+  z-index: -1;
+  opacity: 0.55;
+  filter: blur(14px);
+  animation: avatarPulse 3.5s ease-in-out infinite, avatarShift 6s linear infinite;
+}
+
+@keyframes avatarPulse {
+  0%, 100% {
+    opacity: 0.4;
+    filter: blur(12px);
+  }
+  50% {
+    opacity: 0.75;
+    filter: blur(18px);
+  }
+}
+
+@keyframes avatarShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 300% 50%;
+  }
+}
+
+.hero-avatar:hover {
+  transform: translateY(-4px) rotate(-1.5deg) scale(1.02);
+}
+
+/* ── Иконки соцсетей: пульс + свечение при наведении ── */
+.hero-socials .social-icon {
+  position: relative;
+}
+
+.hero-socials .social-icon:hover {
+  animation: iconPulse 0.6s ease;
+}
+
+@keyframes iconPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(138, 93, 255, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 0 14px rgba(138, 93, 255, 0);
+  }
+}
+
+/* ── CTA-кнопки: пробегающий блик при наведении ── */
+.cta.p {
+  position: relative;
+  overflow: hidden;
+}
+
+.cta.p::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+}
+
+.cta.p:hover::before {
+  left: 130%;
+}
+
+/* ── Бегущая строка с ИИ: иконки мягко пульсируют ── */
+.ai-chip i {
+  animation: chipGlow 2.4s ease-in-out infinite;
+}
+
+.ai-chip:nth-child(even) i {
+  animation-delay: 0.6s;
+}
+
+@keyframes chipGlow {
+  0%, 100% {
+    text-shadow: 0 0 0 rgba(138, 93, 255, 0);
+  }
+  50% {
+    text-shadow: 0 0 10px rgba(138, 93, 255, 0.85);
+  }
+}
+
+/* ── Уважение к пользователям с отключёнными анимациями ── */
+@media (prefers-reduced-motion: reduce) {
+  .hero::after,
+  .hero-avatar::before,
+  .hero-socials .social-icon:hover,
+  .ai-chip i {
+    animation: none !important;
+  }
+}
