@@ -1397,7 +1397,7 @@ body.gallery-page {
       rgba(9, 9, 13, 0.55) 42%,
       var(--bg-primary) 74%
     ),
-    url("images/gallery-bg.png");
+    url("images/gallery-bg.webp");
   background-size: cover;
   background-position: center top;
   background-attachment: fixed;
@@ -1874,7 +1874,7 @@ body.projects-page {
       rgba(9, 9, 13, 0.6) 40%,
       var(--bg-primary) 78%
     ),
-    url("images/projects-bg.png");
+    url("images/projects-bg.webp");
   background-size: cover;
   background-position: center top;
   background-attachment: fixed;
@@ -1913,7 +1913,7 @@ body.posts-page {
       rgba(9, 9, 13, 0.6) 40%,
       var(--bg-primary) 78%
     ),
-    url("images/interactive-bg.png");
+    url("images/interactive-bg.webp");
   background-size: cover;
   background-position: center top;
   background-attachment: fixed;
@@ -2155,5 +2155,19 @@ body.posts-page::after {
   .hero-socials .social-icon:hover,
   .ai-chip i {
     animation: none !important;
+  }
+}
+/* ═══════════════════════════════════════════
+   ОПТИМИЗАЦИЯ: добавить в конец style.css
+   ═══════════════════════════════════════════ */
+
+/* background-attachment: fixed сильно тормозит скролл на телефонах
+   (особенно iOS Safari) — на мобильных переключаем на обычный scroll */
+@media (max-width: 768px) {
+  body,
+  body.gallery-page,
+  body.projects-page,
+  body.posts-page {
+    background-attachment: scroll;
   }
 }
