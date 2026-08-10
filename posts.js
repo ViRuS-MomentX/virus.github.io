@@ -91,20 +91,20 @@ const posts = [
     date: "2026-08-08",
     time: "19:00",
     text: "Добавлен задний фон для галереи",
-    image: "images/gallery-bg.png"
+    image: "images/gallery-bg.webp"
   },
         {
     title: "Обновление проектов",
     date: "2026-08-08",
     time: "19:00",
     text: "Добавлен задний фон для проектов",
-    image: "images/projects-bg.png"
+    image: "images/projects-bg.webp"
   },
           {
     title: "Обновление интерактива",
     date: "2026-08-08",
     time: "22:00",
     text: "Добавлен задний фон для интерактива",
-    image: "images/interactive-bg.png"
+    image: "images/interactive-bg.webp"
   },
 ];
