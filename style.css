@@ -20,7 +20,7 @@
   --text-secondary: #a6a5bb;
   --text-muted: #7f7d96;
   --accent: #8a5dff;
-  --accent-hover: #7352f5; 
+  --accent-hover: #7352f5;
   --accent-2: #32d6ff;
   --accent-3: #ff4fd8;
   --shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
@@ -575,93 +575,16 @@ img {
   backdrop-filter: blur(10px);
 }
 
-.posts-spotlight {
-  display: grid;
-  grid-template-columns: 1.4fr 0.8fr;
-  gap: 1rem;
-  padding: 1.15rem;
-  margin-bottom: 1rem;
-  border-radius: 22px;
-  background: linear-gradient(135deg, rgba(138, 93, 255, 0.14), rgba(50, 214, 255, 0.08));
-  border: 1px solid rgba(138, 93, 255, 0.18);
-}
 
-.posts-spotlight-copy h2 {
-  font-size: 1.3rem;
-  margin-bottom: 0.45rem;
-}
 
-.posts-spotlight-copy p {
-  color: var(--text-secondary);
-  font-weight: 300;
-  line-height: 1.65;
-}
 
-.spotlight-kicker {
-  display: inline-block;
-  margin-bottom: 0.6rem;
-  font-size: 0.66rem;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: #d8d4ff;
-}
 
-.posts-spotlight-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.65rem;
-}
 
-.posts-spotlight-stats div {
-  padding: 0.9rem;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  text-align: center;
-}
 
-.posts-spotlight-stats strong {
-  display: block;
-  font-size: 1.3rem;
-  color: #fff;
-}
 
-.posts-spotlight-stats span {
-  color: var(--text-secondary);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-}
 
-.posts-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.7rem;
-  margin-bottom: 1.1rem;
-}
 
-.posts-tab {
-  border: 1px solid rgba(124, 92, 252, 0.2);
-  background: rgba(255, 255, 255, 0.03);
-  color: var(--text-secondary);
-  border-radius: 999px;
-  padding: 0.55rem 1rem;
-  cursor: pointer;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  transition: all 0.22s ease;
-}
 
-.posts-tab:hover,
-.posts-tab.active {
-  color: #fff;
-  border-color: rgba(124, 92, 252, 0.5);
-  background: linear-gradient(135deg, rgba(124, 92, 252, 0.22), rgba(90, 78, 255, 0.18));
-  box-shadow: 0 10px 24px rgba(124, 92, 252, 0.16);
-}
 
 #postsFeed {
   display: flex;
@@ -727,60 +650,12 @@ img {
   margin: 0 auto 1.4rem;
 }
 
-.showcase-main h2 {
-  margin-bottom: 0.45rem;
-  font-size: 1.35rem;
-}
 
-.showcase-main p {
-  color: var(--text-secondary);
-  line-height: 1.7;
-}
 
-.showcase-label {
-  display: inline-block;
-  margin-bottom: 0.7rem;
-  padding: 0.3rem 0.7rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(138, 93, 255, 0.22);
-  color: #d5d0ff;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.65rem;
-}
 
-.gallery-showcase {
-  display: grid;
-  grid-template-columns: 1.3fr 0.7fr;
-  gap: 1rem;
-  margin: 0 0 1.4rem;
-  padding: 1.25rem;
-  border-radius: 24px;
-  border: 1px solid rgba(138, 93, 255, 0.18);
-  background: linear-gradient(135deg, rgba(138, 93, 255, 0.1), rgba(50, 214, 255, 0.05));
-}
 
-.showcase-side {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-}
 
-.showcase-chip {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.8rem 0.9rem;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  color: var(--text-primary);
-}
 
-.showcase-chip span {
-  font-size: 1rem;
-}
 
 /* ── Счётчик постов (страница "Интерактив") ── */
 .posts-shell .posts-count {
@@ -1450,7 +1325,7 @@ body.gallery-page .wrapper {
   gap: 0.2rem;
   min-width: 150px;
   padding: 1rem 1.6rem;
-  background: rgba(30, 18, 40, 0.32);
+  background: rgba(30, 18, 40, 0.2);
   backdrop-filter: blur(18px) saturate(160%);
   -webkit-backdrop-filter: blur(18px) saturate(160%);
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -1900,18 +1775,18 @@ body.projects-page::after {
     radial-gradient(circle at 94% 20%, rgba(167, 139, 250, 0.10), transparent 30%),
     radial-gradient(circle at 50% 90%, rgba(80, 40, 160, 0.14), transparent 32%);
 }
+
 /* ═══════════════════════════════════════════
-   ФОН ДЛЯ СТРАНИЦЫ "ИНТЕРАКТИВ"
-   Добавить в конец style.css
+   СТРАНИЦА "ИНТЕРАКТИВ" — фон, без серого блока,
+   прозрачные карточки постов
    ═══════════════════════════════════════════ */
 
-/* Фон-картинка на весь body, закреплена, как у галереи/проектов */
 body.posts-page {
   background-image:
     linear-gradient(180deg,
       rgba(9, 9, 13, 0.15) 0%,
-      rgba(9, 9, 13, 0.6) 40%,
-      var(--bg-primary) 78%
+      rgba(9, 9, 13, 0.3) 50%,
+      rgba(9, 9, 13, 0.4) 100%
     ),
     url("images/interactive-bg.webp");
   background-size: cover;
@@ -1920,12 +1795,10 @@ body.posts-page {
   background-repeat: no-repeat;
 }
 
-/* Убираем декоративный паттерн-подложку, чтобы не накладывался на фото */
 body.posts-page::before {
   display: none;
 }
 
-/* Лёгкие цветные пятна поверх — синхронизированы с гаммой картинки */
 body.posts-page::after {
   content: '';
   position: fixed;
@@ -1938,8 +1811,6 @@ body.posts-page::after {
     radial-gradient(circle at 50% 90%, rgba(80, 40, 160, 0.12), transparent 32%);
 }
 
-/* Убираем серый блок-подложку под поиском/счётчиком/лентой постов —
-   оставляем только содержимое, без своей рамки и фона */
 .posts-shell {
   background: transparent;
   border: none;
@@ -1948,32 +1819,20 @@ body.posts-page::after {
   -webkit-backdrop-filter: none;
 }
 
-/* Делаем карточки постов полупрозрачными — фон картинки должен
-   немного просвечивать сквозь них. Текст, картинки и даты не трогаем. */
 .post-card {
-  background: linear-gradient(180deg, rgba(27, 27, 38, 0.42), rgba(16, 16, 24, 0.46));
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: linear-gradient(180deg, rgba(27, 27, 38, 0.2), rgba(16, 16, 24, 0.22));
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 .post-card:hover {
-  background: linear-gradient(180deg, rgba(32, 32, 48, 0.55), rgba(20, 20, 30, 0.58));
+  background: linear-gradient(180deg, rgba(32, 32, 48, 0.32), rgba(20, 20, 30, 0.34));
 }
+
 /* ═══════════════════════════════════════════
    ПРОЗРАЧНОСТЬ БЛОКОВ: ГАЛЕРЕЯ + ПРОЕКТЫ
-   Добавить в конец style.css
    ═══════════════════════════════════════════ */
 
-/* ── Карточки статистики галереи (109 / 5 / Minecraft) ── */
-.stat-chip {
-  background: rgba(30, 18, 40, 0.2);
-}
-
-.stat-chip:hover {
-  background: rgba(30, 18, 40, 0.3);
-}
-
-/* ── Карточки фото в галерее ── */
 .gallery-item {
   background: linear-gradient(180deg, rgba(17, 17, 30, 0.4), rgba(12, 12, 20, 0.42));
   backdrop-filter: blur(8px);
@@ -1984,17 +1843,7 @@ body.posts-page::after {
   background: linear-gradient(180deg, rgba(17, 17, 30, 0.55), rgba(12, 12, 20, 0.58));
 }
 
-/* ── Карточки проектов ── */
-.project-card {
-  background: linear-gradient(180deg, rgba(18, 18, 30, 0.4), rgba(14, 14, 22, 0.42));
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-.project-card:hover {
-  background: linear-gradient(180deg, rgba(18, 18, 30, 0.55), rgba(14, 14, 22, 0.58));
-}
-/* Карточки проектов: без фона и блюра в обычном состоянии,
+/* Карточки проектов: без фона и блюра по умолчанию,
    размытие + затемнение появляются только при наведении */
 .project-card {
   background: transparent;
@@ -2007,12 +1856,11 @@ body.posts-page::after {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
+
 /* ═══════════════════════════════════════════
    ГЛАВНАЯ: АНИМАЦИИ И СВЕЧЕНИЕ
-   Добавить в конец style.css
    ═══════════════════════════════════════════ */
 
-/* ── Плавающие огоньки за карточкой героя ── */
 .hero {
   position: relative;
 }
@@ -2036,18 +1884,11 @@ body.posts-page::after {
 }
 
 @keyframes floatGlow {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(2%, -3%) scale(1.06);
-  }
-  100% {
-    transform: translate(-2%, 2%) scale(1);
-  }
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(2%, -3%) scale(1.06); }
+  100% { transform: translate(-2%, 2%) scale(1); }
 }
 
-/* ── Пульсирующее свечение вокруг аватарки + лёгкий наклон при наведении ── */
 .hero-avatar {
   position: relative;
   transition: transform 0.4s ease;
@@ -2067,30 +1908,19 @@ body.posts-page::after {
 }
 
 @keyframes avatarPulse {
-  0%, 100% {
-    opacity: 0.4;
-    filter: blur(12px);
-  }
-  50% {
-    opacity: 0.75;
-    filter: blur(18px);
-  }
+  0%, 100% { opacity: 0.4; filter: blur(12px); }
+  50% { opacity: 0.75; filter: blur(18px); }
 }
 
 @keyframes avatarShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 300% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
 }
 
 .hero-avatar:hover {
   transform: translateY(-4px) rotate(-1.5deg) scale(1.02);
 }
 
-/* ── Иконки соцсетей: пульс + свечение при наведении ── */
 .hero-socials .social-icon {
   position: relative;
 }
@@ -2100,15 +1930,10 @@ body.posts-page::after {
 }
 
 @keyframes iconPulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(138, 93, 255, 0.5);
-  }
-  100% {
-    box-shadow: 0 0 0 14px rgba(138, 93, 255, 0);
-  }
+  0% { box-shadow: 0 0 0 0 rgba(138, 93, 255, 0.5); }
+  100% { box-shadow: 0 0 0 14px rgba(138, 93, 255, 0); }
 }
 
-/* ── CTA-кнопки: пробегающий блик при наведении ── */
 .cta.p {
   position: relative;
   overflow: hidden;
@@ -2130,7 +1955,6 @@ body.posts-page::after {
   left: 130%;
 }
 
-/* ── Бегущая строка с ИИ: иконки мягко пульсируют ── */
 .ai-chip i {
   animation: chipGlow 2.4s ease-in-out infinite;
 }
@@ -2140,15 +1964,10 @@ body.posts-page::after {
 }
 
 @keyframes chipGlow {
-  0%, 100% {
-    text-shadow: 0 0 0 rgba(138, 93, 255, 0);
-  }
-  50% {
-    text-shadow: 0 0 10px rgba(138, 93, 255, 0.85);
-  }
+  0%, 100% { text-shadow: 0 0 0 rgba(138, 93, 255, 0); }
+  50% { text-shadow: 0 0 10px rgba(138, 93, 255, 0.85); }
 }
 
-/* ── Уважение к пользователям с отключёнными анимациями ── */
 @media (prefers-reduced-motion: reduce) {
   .hero::after,
   .hero-avatar::before,
@@ -2157,12 +1976,13 @@ body.posts-page::after {
     animation: none !important;
   }
 }
+
 /* ═══════════════════════════════════════════
-   ОПТИМИЗАЦИЯ: добавить в конец style.css
+   ПРОИЗВОДИТЕЛЬНОСТЬ
    ═══════════════════════════════════════════ */
 
-/* background-attachment: fixed сильно тормозит скролл на телефонах
-   (особенно iOS Safari) — на мобильных переключаем на обычный scroll */
+/* background-attachment: fixed тормозит скролл на телефонах —
+   на мобильных переключаем на обычный scroll */
 @media (max-width: 768px) {
   body,
   body.gallery-page,
