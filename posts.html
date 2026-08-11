@@ -8,7 +8,8 @@
   <link rel="manifest" href="icons/site.webmanifest">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Интерактив</title>
+  <title>Интерактив — Моя страничка</title>
+  <meta name="description" content="Новости, мысли и чэнджлоги страницы.">
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -72,12 +73,10 @@ function formatDate(date, time){
     + " · " + time;
 }
 
-// нормализация текста для поиска
 function norm(str){
   return (str || "").toLowerCase().trim();
 }
 
-// экранирование HTML, чтобы текст постов не ломал разметку
 function escapeHtml(str){
   return (str || "")
     .replace(/&/g, "&amp;")
@@ -85,12 +84,10 @@ function escapeHtml(str){
     .replace(/>/g, "&gt;");
 }
 
-// экранирование спецсимволов для регулярки
 function escapeRegExp(str){
   return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-// подсветка совпадений (как в Telegram)
 function highlight(text, query){
   const safe = escapeHtml(text);
   if(!query) return safe;
@@ -103,10 +100,8 @@ function render(){
   const query = norm(rawQuery);
   let list = [...posts];
 
-  // сортировка (новые сверху)
   list.sort((a,b)=> new Date(b.date+"T"+b.time) - new Date(a.date+"T"+a.time));
 
-  // фильтр поиска (по title + text)
   if(query){
     list = list.filter(p =>
       norm(p.title).includes(query) ||
@@ -125,7 +120,7 @@ function render(){
     <div class="post-card">
       ${p.tag ? `<div class="post-tag">${highlight(p.tag, rawQuery)}</div>` : ""}
       <h3 class="post-title">${highlight(p.title, rawQuery)}</h3>
-      ${p.image ? `<div class="post-image-wrap"><img class="post-image" src="${p.image}"><div class="post-zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i></div></div>` : ""}
+      ${p.image ? `<div class="post-image-wrap"><img class="post-image" src="${p.image}" loading="lazy" decoding="async" alt="${escapeHtml(p.title)}"><div class="post-zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i></div></div>` : ""}
       <div class="post-body">${highlight(p.text || "", rawQuery)}</div>
       <div class="post-meta">
         <span class="post-date-time"><i class="fa-regular fa-clock"></i>${formatDate(p.date,p.time)}</span>
@@ -162,8 +157,6 @@ function closeLightbox() {
   document.body.style.overflow = '';
 }
 
-// делегирование клика: посты перерисовываются при поиске,
-// поэтому вешаем слушатель на постоянный контейнер #postsFeed
 feed.addEventListener('click', (e) => {
   const wrap = e.target.closest('.post-image-wrap');
   if (!wrap) return;
