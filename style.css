@@ -1830,6 +1830,47 @@ body.posts-page::after {
 }
 
 /* ═══════════════════════════════════════════
+   ТЁМНАЯ ПЛАШКА НА ВСЮ ВЫСОТУ КОНТЕНТА
+   — "проекты" и "интерактив": вертикальный
+   полупрозрачный прямоугольник от хедера до футера,
+   по центру страницы
+   ═══════════════════════════════════════════ */
+body.projects-page .page-panel,
+body.posts-page .page-panel {
+  position: relative;
+  z-index: 1;
+  max-width: 1220px;
+  margin: 1.5rem auto;
+  padding: 2.5rem 2rem 3rem;
+  background: rgba(10, 10, 16, 0.55);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  box-shadow:
+    0 20px 55px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* внутри плашки .wrapper уже задаёт свои отступы —
+   убираем боковой паддинг, чтобы не удваивался */
+body.projects-page .page-panel .wrapper,
+body.posts-page .page-panel .wrapper {
+  padding-left: 0;
+  padding-right: 0;
+  max-width: none;
+}
+
+@media (max-width: 768px) {
+  body.projects-page .page-panel,
+  body.posts-page .page-panel {
+    margin: 1rem 0.8rem;
+    padding: 1.8rem 1.2rem 2.2rem;
+    border-radius: 18px;
+  }
+}
+
+/* ═══════════════════════════════════════════
    ПРОЗРАЧНОСТЬ БЛОКОВ: ГАЛЕРЕЯ + ПРОЕКТЫ
    ═══════════════════════════════════════════ */
 
