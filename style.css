@@ -1830,6 +1830,35 @@ body.posts-page::after {
 }
 
 /* ═══════════════════════════════════════════
+   ТЁМНАЯ ПЛАШКА ПОД ЗАГОЛОВКОМ
+   — "проекты" и "интерактив": заголовок читается
+   поверх фоновой картинки, плашка по центру
+   ═══════════════════════════════════════════ */
+body.projects-page .page-title,
+body.posts-page .page-title {
+  max-width: 640px;
+  margin: 2rem auto 0;
+  padding: 2.2rem 2.4rem;
+  background: rgba(10, 10, 16, 0.55);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 22px;
+  box-shadow:
+    0 20px 55px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+@media (max-width: 768px) {
+  body.projects-page .page-title,
+  body.posts-page .page-title {
+    margin: 1.5rem 1rem 0;
+    padding: 1.6rem 1.4rem;
+    border-radius: 18px;
+  }
+}
+
+/* ═══════════════════════════════════════════
    ПРОЗРАЧНОСТЬ БЛОКОВ: ГАЛЕРЕЯ + ПРОЕКТЫ
    ═══════════════════════════════════════════ */
 
